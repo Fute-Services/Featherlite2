@@ -26,10 +26,10 @@ const Homepage = () => {
             ))}
 
             {/* readability wash behind the copy */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/10 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/45 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r " />
+            <div className="absolute inset-x-0 bottom-0 h-1/3  " />
 
-            <div className="relative z-10 flex h-full items-center px-6 sm:px-10 lg:px-20">
+            <div className="relative z-10 flex h-full items-center px-6 sm:px-10 lg:pl-[50px] lg:pr-10">
                 <div className="max-w-2xl">
                     <h1 className="font-display text-4xl leading-[1.1] font-normal text-white sm:text-6xl lg:text-6xl">
                         Designed For

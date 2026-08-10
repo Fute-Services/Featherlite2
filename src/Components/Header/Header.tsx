@@ -8,7 +8,7 @@ const Header = () => {
   const showThemeToggle = pathname === '/'
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex items-start justify-between px-5 py-5 sm:px-10 sm:py-7">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex items-start justify-between px-5 py-5 sm:px-10 sm:py-10">
       <Link to="/" className="pointer-events-auto">
         <img
           src={logo}
