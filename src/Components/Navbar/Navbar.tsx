@@ -28,14 +28,14 @@ const MaskIcon = ({ src }: { src: string }) => (
     />
 )
 
-export type NavItem = {
+type NavItem = {
     label: string
     path: string
     /** either an imported PNG url (masked) or a lucide component */
     icon: string | React.ComponentType<LucideProps>
 }
 
-export const navItems: NavItem[] = [
+const navItems: NavItem[] = [
     { label: 'Home', path: '/', icon: Home },
     { label: 'Location', path: '/location', icon: MapPin },
     { label: 'Floor Plan', path: '/floor-plan', icon: floorPlanIcon },
@@ -57,8 +57,8 @@ const Navbar = () => {
                                     'group flex items-center gap-1.5 rounded-full transition-all duration-300',
                                     'px-2.5 py-1 sm:px-3 sm:py-1.5',
                                     isActive
-                                        ? 'bg-gradient-to-b from-[#5c1a15] to-[#220706] text-white shadow-[inset_1px_1px_0_rgba(255,255,255,0.35),inset_-1px_-1px_0_rgba(255,255,255,0.2),0_4px_16px_rgba(232,50,28,0.4)]'
-                                        : 'bg-white/[0.04] text-white/85 shadow-[inset_1px_1px_0_rgba(255,255,255,0.30),inset_-1px_-1px_0_rgba(255,255,255,0.15),0_2px_8px_rgba(0,0,0,0.2)] hover:from-[#5c1a15] hover:to-[#220706] hover:bg-gradient-to-b hover:text-white hover:shadow-[inset_1px_1px_0_rgba(255,255,255,0.35),inset_-1px_-1px_0_rgba(255,255,255,0.2),0_4px_16px_rgba(232,50,28,0.4)]',
+                                        ? 'bg-[rgba(231,33,0,0.20)] text-white shadow-[inset_1px_1px_0_rgba(255,255,255,0.35),inset_-1px_-1px_0_rgba(255,255,255,0.2),0_4px_16px_rgba(231,33,0,0.25)]'
+                                        : 'bg-white/[0.04] text-white/85 shadow-[inset_1px_1px_0_rgba(255,255,255,0.30),inset_-1px_-1px_0_rgba(255,255,255,0.15),0_2px_8px_rgba(0,0,0,0.2)] hover:bg-[rgba(231,33,0,0.20)] hover:text-white hover:shadow-[inset_1px_1px_0_rgba(255,255,255,0.35),inset_-1px_-1px_0_rgba(255,255,255,0.2),0_4px_16px_rgba(231,33,0,0.25)]',
                                 ].join(' ')}
                             >
                                 {/* Icon wrapper circle */}
