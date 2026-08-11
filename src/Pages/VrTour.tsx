@@ -77,7 +77,7 @@ export default function Vr() {
     },
     scenes: {
       ext_entry_gate: {
-        panorama: "/virtual tour/CAM 01 Entry Gate Hero View.jpeg",
+        panorama: "/vr/CAM_01_Entry_Gate_Hero_View_1_1_n8epa4.jpg",
         yaw: 350,
         hotSpots: [
           {
@@ -90,7 +90,7 @@ export default function Vr() {
         ],
       },
       ext_entry_perspective: {
-        panorama: "/virtual tour/Cam 02 Entry Perspective Inside.jpeg",
+        panorama: "/vr/Cam_02_Entry_Perspective_Inside_1_1_gnb1hi.jpg",
         yaw: 260,
         hotSpots: [
           {
@@ -117,7 +117,7 @@ export default function Vr() {
         ],
       },
       ext_drop_off_area: {
-        panorama: "/virtual tour/Cam 11 Drop Off Area.jpeg",
+        panorama: "/vr/Cam_11_Drop_Off_Area_opt.jpg",
         hotSpots: [
           {
             pitch: -20,
@@ -143,7 +143,7 @@ export default function Vr() {
         ],
       },
       ext_kids_play_area: {
-        panorama: "/virtual tour/Cam 06 Kids Play Area.jpeg",
+        panorama: "/vr/Cam_06_Kids_Play_Area_1_1_feonwl.jpg",
         pitch: -15,
 
         hotSpots: [
@@ -157,7 +157,7 @@ export default function Vr() {
         ],
       },
       ext_open_seating: {
-        panorama: "/virtual tour/Cam 07 GF Open Seating Area.jpeg",
+        panorama: "/vr/Cam_07_GF_Open_Seating_Area_1_1_livzbf.jpg",
         pitch: -15,
         hotSpots: [
           {
@@ -170,7 +170,7 @@ export default function Vr() {
         ],
       },
       ext_terrace_cafe_1: {
-        panorama: "/virtual tour/Cam 08 Terrace Cafe Area.jpeg",
+        panorama: "/vr/Cam_08_Terrace_Cafe_Area_1_1_hpgybq.jpg",
         pitch: -20,
         hotSpots: [
           {
@@ -190,7 +190,7 @@ export default function Vr() {
         ],
       },
       ext_terrace_cafe_2: {
-        panorama: "/virtual tour/Cam 10 Terrace Cafe Area 02.jpeg",
+        panorama: "/vr/Cam_10_Terrace_Cafe_Area_02_1_1_pubwuq.jpg",
         pitch: -20,
         hotSpots: [
           {
@@ -210,7 +210,7 @@ export default function Vr() {
         ],
       },
       ext_multipurpose_court: {
-        panorama: "/virtual tour/Cam 09 Terrace Multipurpose Court.jpeg",
+        panorama: "/vr/Cam_09_Terrace_Multipurpose_Court_2_1_1_eeujyx.jpg",
         pitch: -10,
         hotSpots: [
           {
@@ -230,7 +230,7 @@ export default function Vr() {
         ],
       },
       int_reception_lobby: {
-        panorama: "/virtual tour/Cam 03 Reception Lobby.jpeg",
+        panorama: "/vr/Cam_03_Reception_Lobby_opt.jpg",
         pitch: -10,
         yaw: -50,
         hotSpots: [
@@ -258,7 +258,7 @@ export default function Vr() {
         ],
       },
       int_lift_lobby: {
-        panorama: "/virtual tour/Cam 04 Lift Lobby.jpeg",
+        panorama: "/vr/Cam_04_Lift_Lobby_opt.jpg",
         pitch: -25,
         hotSpots: [
           {
@@ -278,7 +278,7 @@ export default function Vr() {
         ],
       },
       int_lift_lobby_2: {
-        panorama: "/virtual tour/Cam 04 Lift Lobby.jpeg",
+        panorama: "/vr/Cam_04_Lift_Lobby_opt.jpg",
         pitch: -25,
         hotSpots: [
           {
@@ -305,7 +305,7 @@ export default function Vr() {
         ],
       },
       int_gf_cafe_waiting: {
-        panorama: "/virtual tour/Cam 05 GF Cafe & Waiting Area.jpeg",
+        panorama: "/vr/Cam_05_GF_Cafe_Waiting_opt.jpg",
         pitch: -10,
         yaw: 180,
         hotSpots: [
@@ -319,7 +319,7 @@ export default function Vr() {
         ],
       },
       int_workstation_1: {
-        panorama: "/virtual tour/CAM 05 Workstation 01.jpeg",
+        panorama: "/vr/CAM_05_Workstation_01_opt.jpg",
         hotSpots: [
           {
             pitch: -15,
@@ -331,7 +331,7 @@ export default function Vr() {
         ],
       },
       int_workstation_2: {
-        panorama: "/virtual tour/CAM 05 Workstation 02.jpeg",
+        panorama: "/vr/CAM_05_Workstation_02_opt.jpg",
         pitch: -15,
         hotSpots: [
           {
