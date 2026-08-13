@@ -42,15 +42,15 @@ const Router = () => {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Homepage />} />
           <Route path="/location" element={<Location />} />
-          <Route path="/masterplan" element={<MasterplanPage/>}/>
-          <Route path="/floor-plan" element={<FloorPlan />} />
           <Route path="/amenities" element={<Amenities />} />
           <Route path="/media" element={<Media />} />
         </Route>
 
-        {/* Routes WITHOUT Navbar (e.g. full-screen VR Tour or Unit Plan) */}
+        {/* Routes WITHOUT Navbar (e.g. full-screen VR Tour, Floor Plan/Masterplan, or Unit Plan) */}
         <Route element={<PlainLayout />}>
           <Route path="/vr-tour" element={<VrTour />} />
+          <Route path="/floor-plan" element={<FloorPlan />} />
+          <Route path="/masterplan" element={<MasterplanPage />} />
           <Route path="/unitplan/:id" element={<UnitPlanPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>

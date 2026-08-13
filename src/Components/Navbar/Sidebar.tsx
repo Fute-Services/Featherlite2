@@ -27,7 +27,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onLayoutSelect,
     onSectionSelect,
 }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(true);
 
 
     // Inside your Sidebar component:
