@@ -5,15 +5,24 @@ import heroLight from '../assets/Home/Home page Light.png'
 import heroDark from '../assets/Home/Home page dark.png'
 
 const stats = ['10 floors', '2 Acre Area', '43% Ground Area', '25% Green Cover']
+const headingLines = [
+    ['Designed', 'For'],
+    ['Better', 'Tomorrow'],
+]
 
-const headingVariants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { opacity: 1, y: 0 },
+const headingContainerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+}
+
+const wordVariants = {
+    hidden: { opacity: 0, y: '60%', filter: 'blur(8px)' },
+    visible: { opacity: 1, y: '0%', filter: 'blur(0px)' },
 }
 
 const statsContainerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.25, delayChildren: 0.9 } },
+    visible: { transition: { staggerChildren: 0.25, delayChildren: 1.3 } },
 }
 
 const statItemVariants = {
@@ -52,13 +61,23 @@ const Homepage = () => {
                     <motion.h1
                         initial="hidden"
                         animate={introDone ? 'visible' : 'hidden'}
-                        variants={headingVariants}
-                        transition={{ duration: 1.4, ease: 'easeOut' }}
+                        variants={headingContainerVariants}
                         className="font-display text-4xl leading-[1.1] font-normal text-white sm:text-6xl lg:text-6xl"
                     >
-                        Designed For
-                        <br />
-                        Better Tomorrow
+                        {headingLines.map((line, lineIndex) => (
+                            <span key={lineIndex} className="block overflow-hidden py-1">
+                                {line.map((word) => (
+                                    <motion.span
+                                        key={word}
+                                        variants={wordVariants}
+                                        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+                                        className="mr-3 inline-block last:mr-0"
+                                    >
+                                        {word}
+                                    </motion.span>
+                                ))}
+                            </span>
+                        ))}
                     </motion.h1>
 
                     <motion.div

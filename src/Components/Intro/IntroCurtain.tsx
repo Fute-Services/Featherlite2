@@ -3,49 +3,38 @@ import { motion, AnimatePresence } from 'framer-motion'
 import logo from '../../assets/Logo.png'
 import { useIntro } from '../../Context/IntroContext'
 
-const SESSION_KEY = 'featherlite-intro-played'
-
 const LOGO_FADE_IN_DELAY = 200
 const LOGO_FADE_DURATION = 0.6
 const LOGO_HOLD = 900
 const CURTAIN_OPEN_DURATION = 0.8
 
 /**
- * One-time entrance sequence: the screen starts fully covered by a black
- * curtain (the homepage is never visible underneath), the logo fades in,
- * holds briefly, then fades out while the curtain panels slide apart to
- * reveal the homepage. Plays once per browser session.
+ * Entrance sequence: the screen starts fully covered by a black curtain
+ * (the homepage is never visible underneath), the logo fades in, holds
+ * briefly, then fades out while the curtain panels slide apart to reveal
+ * the homepage. Plays on every full page load/refresh.
  */
 const IntroCurtain = () => {
-    const [visible, setVisible] = useState(() => {
-        if (typeof window === 'undefined') return false
-        return sessionStorage.getItem(SESSION_KEY) !== '1'
-    })
+    const [visible, setVisible] = useState(true)
     const [showLogo, setShowLogo] = useState(false)
     const [opening, setOpening] = useState(false)
     const { markIntroDone } = useIntro()
 
     useEffect(() => {
-        if (!visible) {
-            // intro is skipped (already played this session) - let the page content show right away
-            markIntroDone()
-            return
-        }
-
         const toLogo = setTimeout(() => setShowLogo(true), LOGO_FADE_IN_DELAY)
         const toOpen = setTimeout(
             () => {
                 setShowLogo(false)
                 setOpening(true)
-                // page content starts animating in the instant the curtain begins to lift
-                markIntroDone()
             },
             LOGO_FADE_IN_DELAY + LOGO_FADE_DURATION * 1000 + LOGO_HOLD,
         )
         const toDone = setTimeout(
             () => {
-                sessionStorage.setItem(SESSION_KEY, '1')
                 setVisible(false)
+                // page content (heading/stats/navbar) only starts animating in
+                // once the curtain has fully finished opening
+                markIntroDone()
             },
             LOGO_FADE_IN_DELAY + LOGO_FADE_DURATION * 1000 + LOGO_HOLD + CURTAIN_OPEN_DURATION * 1000,
         )
@@ -56,7 +45,7 @@ const IntroCurtain = () => {
             clearTimeout(toDone)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [visible])
+    }, [])
 
     return (
         <AnimatePresence>
