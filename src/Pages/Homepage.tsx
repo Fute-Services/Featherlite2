@@ -1,11 +1,29 @@
+import { motion } from 'framer-motion'
 import { useTheme } from '../Context/ThemeContext'
+import { useIntro } from '../Context/IntroContext'
 import heroLight from '../assets/Home/Home page Light.png'
 import heroDark from '../assets/Home/Home page dark.png'
 
 const stats = ['10 floors', '2 Acre Area', '43% Ground Area', '25% Green Cover']
 
+const headingVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: { opacity: 1, y: 0 },
+}
+
+const statsContainerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.25, delayChildren: 0.9 } },
+}
+
+const statItemVariants = {
+    hidden: { opacity: 0, y: 12 },
+    visible: { opacity: 1, y: 0 },
+}
+
 const Homepage = () => {
     const { theme } = useTheme()
+    const { introDone } = useIntro()
 
     return (
         <section className="relative h-dvh w-full overflow-hidden">
@@ -31,20 +49,36 @@ const Homepage = () => {
 
             <div className="relative z-10 flex h-full items-center px-6 sm:px-10 lg:pl-[50px] lg:pr-10">
                 <div className="max-w-2xl">
-                    <h1 className="font-display text-4xl leading-[1.1] font-normal text-white sm:text-6xl lg:text-6xl">
+                    <motion.h1
+                        initial="hidden"
+                        animate={introDone ? 'visible' : 'hidden'}
+                        variants={headingVariants}
+                        transition={{ duration: 1.4, ease: 'easeOut' }}
+                        className="font-display text-4xl leading-[1.1] font-normal text-white sm:text-6xl lg:text-6xl"
+                    >
                         Designed For
                         <br />
                         Better Tomorrow
-                    </h1>
+                    </motion.h1>
 
-                    <div className="mt-6 ml-[5px] -translate-y-[15px] flex flex-wrap items-center gap-x-2 gap-y-2 font-['IBM_Plex_Sans'] text-xs text-white/85 sm:mt-8 sm:gap-x-6 sm:text-sm">
+                    <motion.div
+                        initial="hidden"
+                        animate={introDone ? 'visible' : 'hidden'}
+                        variants={statsContainerVariants}
+                        className="mt-2 ml-[5px] -translate-y-[15px] flex flex-wrap items-center gap-x-2 gap-y-2 font-['IBM_Plex_Sans'] text-xs text-white/85 sm:mt-3 sm:gap-x-6 sm:text-sm"
+                    >
                         {stats.map((stat, index) => (
-                            <span key={stat} className="flex items-center gap-4 sm:gap-2">
+                            <motion.span
+                                key={stat}
+                                variants={statItemVariants}
+                                transition={{ duration: 0.9, ease: 'easeOut' }}
+                                className="flex items-center gap-4 sm:gap-2"
+                            >
                                 {index > 0 && <span className="h-4 w-px bg-white" />}
                                 {stat}
-                            </span>
+                            </motion.span>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
