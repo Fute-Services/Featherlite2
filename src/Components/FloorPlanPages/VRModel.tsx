@@ -1,3 +1,4 @@
+import PanoramaViewer from '../../components/FloorPlanPages/Pano';
 import PanoramaViewer from '../../Components/FloorPlanPages/Pano';
 interface VRModelProps {
     setShowVRModal: React.Dispatch<React.SetStateAction<boolean>>;

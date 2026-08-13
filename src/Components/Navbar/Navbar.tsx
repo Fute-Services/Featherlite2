@@ -46,6 +46,8 @@ const navItems: NavItem[] = [
 
 const Navbar = () => {
     return (
+        <nav className="pointer-events-none fixed inset-x-0  z-50 flex 
+        justify-center px-3 bottom-2">
         <nav className="pointer-events-none fixed inset-x-0 bottom-3 z-50 flex justify-center px-3 sm:bottom-8">
             {/* Main Container - Light Frosted Glass */}
             <div className="no-scrollbar pointer-events-auto flex max-w-full items-center gap-2 overflow-x-auto rounded-full border border-white/[0.12] bg-neutral-900/35 px-2.5 py-1 shadow-[inset_1px_1px_0_rgba(255,255,255,0.2),inset_-1px_-1px_0_rgba(255,255,255,0.05),0_20px_40px_-10px_rgba(0,0,0,0.6)] backdrop-blur-2xl sm:gap-2.5 sm:px-3.5 sm:py-2">

@@ -18,6 +18,10 @@ import image from '../assets/floorplan/unit/7th floor 2.png';
 import left from '../assets/floorplan/icons/leftside.png';
 import right from '../assets/floorplan/icons/right.png'
 
+import VRModel from '../components/FloorPlanPages/VRModel';
+import BackButton from '../components/FloorPlanPages/BackButton';
+import UnitPlanContentPage from '../components/FloorPlanPages/UnitPlanContentPage';
+import UnitPlanSideContent from '../components/FloorPlanPages/UnitPlanSideContent';
 import VRModel from '../Components/FloorPlanPages/VRModel';
 import BackButton from '../Components/FloorPlanPages/BackButton';
 import UnitPlanContentPage from '../Components/FloorPlanPages/UnitPlanContentPage';

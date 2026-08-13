@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
-import Header from '../Components/Header/Header'
-import Navbar from '../Components/Navbar/Navbar'
+import Header from '../components/Header/Header'
+import Navbar from '../components/Navbar/Navbar'
 import Homepage from '../Pages/Homepage'
 import Location from '../Pages/Location'
 import FloorPlan from '../Pages/FloorPlanPage'

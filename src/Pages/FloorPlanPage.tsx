@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 
 import building from '../assets/floorplan/Floorplan_Building.png'
+import Building from '../components/FloorPlanPages/Building'
+import Table from '../components/FloorPlanPages/Table'
+
+import { type FloorData } from '../types/Floorplan'
+import { useNavigate } from 'react-router-dom'
+import  Sidebar from '../components/Navbar/Sidebar'
 import Building from '../Components/FloorPlanPages/Building'
 import Table from '../Components/FloorPlanPages/Table'
 
