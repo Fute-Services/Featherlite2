@@ -1,5 +1,6 @@
 import Masterplan from '../assets/floorplan/masterplan.png'
 import Sidebar from '../components/Navbar/Sidebar'
+import Sidebar from '../Components/Navbar/Sidebar'
 
 export default function MasterplanPage() {
   return (

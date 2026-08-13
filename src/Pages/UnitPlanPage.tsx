@@ -22,6 +22,10 @@ import VRModel from '../components/FloorPlanPages/VRModel';
 import BackButton from '../components/FloorPlanPages/BackButton';
 import UnitPlanContentPage from '../components/FloorPlanPages/UnitPlanContentPage';
 import UnitPlanSideContent from '../components/FloorPlanPages/UnitPlanSideContent';
+import VRModel from '../Components/FloorPlanPages/VRModel';
+import BackButton from '../Components/FloorPlanPages/BackButton';
+import UnitPlanContentPage from '../Components/FloorPlanPages/UnitPlanContentPage';
+import UnitPlanSideContent from '../Components/FloorPlanPages/UnitPlanSideContent';
 
 
 export default function UnitPlanPage() {
