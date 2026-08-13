@@ -1,0 +1,98 @@
+[
+    {
+        "id": "lift-lobby",
+        "title": "Lift Lobby",
+        "description": "Lift lobby providing access to the rooftop amenities.",
+        "polygon": "3051,1107,2458,1112",
+        "x": 525,
+        "y": 265
+    },
+    {
+        "id": "multipurpose-court",
+        "title": "Multipurpose Court",
+        "description": "Sports court on the terrace for basketball, tennis, and more.",
+        "polygon": "2985,1572,2487,1576,2487,1830,2487,1576",
+        "x": 580,
+        "y": 450
+    },
+    {
+        "id": "rooftop-lunch-cafe",
+        "title": "Main entry to Rooftop Lunch Cafe",
+        "description": "Main entry to the rooftop lunch cafe.",
+        "polygon": "3423,1190,3423,1919",
+        "x": 760,
+        "y": 470
+    },
+    {
+        "id": "table-tennis",
+        "title": "Table Tennis",
+        "description": "Outdoor table tennis area.",
+        "polygon": "3738,1675,3747,1976,3822,1981,3747,1976",
+        "x": 890,
+        "y": 470
+    },
+    {
+        "id": "services-chillers",
+        "title": "Services (Chillers & Cooling)",
+        "description": "Building chillers, services, and cooling towers.",
+        "polygon": "",
+        "x": 885,
+        "y": 270
+    },
+    {
+        "id": "high-top-tables",
+        "title": "High Top Tables",
+        "description": "Seating area with high-top tables.",
+        "polygon": "3489,619,3489,722,3846,722,3841,534",
+        "x": 880,
+        "y": 110
+    },
+    {
+        "id": "serving-kiosks",
+        "title": "Serving Kiosks",
+        "description": "Rooftop food and beverage serving kiosks.",
+        "polygon": "3173,647,3173,506,3437,497,3705,497,3714,647,3710,502,3441,493,3432,389",
+        "x": 780,
+        "y": 85
+    },
+    {
+        "id": "restroom-shower",
+        "title": "Rest Room & Shower",
+        "description": "Convenient restroom and shower facilities on the terrace.",
+        "polygon": "4368,930 4627,930 4665,1170; 4373,1104 4622,1099 4665,1170; 4368,1231 4622,1240 4665,1170; 4368,1396 4622,1386 4665,1170",
+        "x": 1090,
+        "y": 280
+    },
+    {
+        "id": "elevator-shaft-top",
+        "title": "Elevator Shafts",
+        "description": "Service and passenger elevator access.",
+        "polygon": "4382,774,4707,783,4707,732",
+        "x": 1080,
+        "y": 160
+    },
+    {
+        "id": "elevator-shaft-bottom",
+        "title": "Elevator Shafts",
+        "description": "Service and passenger elevator access.",
+        "polygon": "4340,1475,4650,1475,4650,1606",
+        "x": 1070,
+        "y": 380
+    },
+    {
+        "id": "fire-tower-top",
+        "title": "Fire Tower",
+        "description": "Emergency exit and fire tower access.",
+        "polygon": "4321,750,4321,581,4829,586,4829,520",
+        "x": 1110,
+        "y": 105
+    },
+    {
+        "id": "fire-tower-bottom",
+        "title": "Fire Tower",
+        "description": "Emergency exit and fire tower access.",
+        "polygon": "4316,1564,4316,1663,4820,1677,4820,1771",
+        "x": 1100,
+        "y": 430
+    }
+]
