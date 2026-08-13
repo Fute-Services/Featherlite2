@@ -1,5 +1,7 @@
 export interface FloorData {
   id: string
+  yaxis:number,
+   idnew:number
   name: string
   label: string
   area: string

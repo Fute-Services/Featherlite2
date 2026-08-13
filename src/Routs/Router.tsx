@@ -49,7 +49,7 @@ const Router = () => {
         {/* Routes WITHOUT Navbar (e.g. full-screen VR Tour or Unit Plan) */}
         <Route element={<PlainLayout />}>
           <Route path="/vr-tour" element={<VrTour />} />
-          <Route path="/unitplan/:id" element={<UnitPlanPage />} />
+          <Route path="/unitplan/:idnew" element={<UnitPlanPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -44,23 +44,23 @@ export default function UnitPlanSideContent({
                 {activePoint.subtitle}
             </p>
 
-            {/* Action CTA Buttons */}
+            {/* Action CTA Buttons 
             <div className="flex flex-col gap-2 mt-2">
                 <button
                     onClick={() => setShowVRModal(true)}
                     className="flex items-center justify-center gap-2 w-full py-2 px-3 bg-cyan-950/60 hover:bg-cyan-900/80 border border-white/40 rounded-full text-xs text-bg-white/80 font-medium transition-all shadow-md active:scale-98">
-                    {/* <Glasses className="w-4 h-4" /> */}
+                    
                     <img src={vr} className="w-4 h-4" />
                     View in VR
                 </button>
                 <button
                     onClick={() => setViewdata((prev: any) => !prev)}
                     className="flex items-center justify-center gap-2 w-full py-2 px-3 bg-cyan-950/60 hover:bg-cyan-900/80 border border-white/40 rounded-full text-xs text-bg-white/80 font-medium transition-all shadow-md active:scale-98">
-                    {/* <Eye className="w-4 h-4" /> */}
+                  
                     <img src={`${viewdata ? hidedetails : view}`} className="w-4 h-4" />
                     {viewdata ? " Hide details" : " View details"}
                 </button>
-            </div>
+            </div>*/}
         </div>
     </>)
 }
