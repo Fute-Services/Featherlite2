@@ -1,4 +1,4 @@
-import PageShell from '../Components/PageShell/PageShell'
+import PageShell from '../components/PageShell/PageShell'
 
 const Location = () => (
   <PageShell title="Location" subtitle="Connectivity, neighbourhood and site map for Featherlite Signature." />
