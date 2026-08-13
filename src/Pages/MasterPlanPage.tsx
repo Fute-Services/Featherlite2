@@ -16,7 +16,7 @@ export default function MasterplanPage() {
         <Sidebar onLayoutSelect={handleLayoutSelect} />
       </div>
 
-      <div className="flex h-full w-full items-center justify-center p-4 pt-24 pl-24 sm:pt-28 sm:pl-[17rem]">
+      <div className="flex h-full w-full items-center justify-center p-4 pl-24 sm:pl-[17rem]">
         <div className="relative max-h-full max-w-full">
           {/* Soft brand-red glow behind the card */}
           <div
@@ -24,7 +24,7 @@ export default function MasterplanPage() {
             className="pointer-events-none absolute -inset-6 -z-10 rounded-[32px] bg-[#e8321c]/40 blur-3xl sm:-inset-10"
           />
           <div className="max-h-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 p-2 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)] backdrop-blur-xl sm:p-3">
-            <div className="relative max-h-[78vh] max-w-full overflow-hidden rounded-lg border border-white/20">
+            <div className="relative max-h-[88vh] max-w-full overflow-hidden rounded-lg border border-white/20">
               {/* invisible sizer - gives the box real dimensions since the
                   cross-fading images below are all position:absolute and
                   wouldn't otherwise contribute any size */}
@@ -32,7 +32,7 @@ export default function MasterplanPage() {
                 src={MasterplanGround}
                 alt=""
                 aria-hidden
-                className="invisible max-h-[78vh] max-w-full object-contain"
+                className="invisible max-h-[88vh] max-w-full object-contain"
               />
               {/* both stay mounted so the layout switch cross-fades instead of flashing */}
               {[

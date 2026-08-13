@@ -1,6 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronUp, Plus, Minus } from "lucide-react";
 
 declare global {
   interface Window {
@@ -14,7 +12,6 @@ const vrCategories: Record<string, { id: string; name: string }[]> = {};
 export default function Vr() {
   const [currentScene, setCurrentScene] = useState<string>("");
   const viewerRef = useRef<any>(null);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const tourConfig: any = {
     default: {
@@ -58,14 +55,6 @@ export default function Vr() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleZoomIn = () =>
-    viewerRef.current?.setHfov(viewerRef.current.getHfov() - 10);
-  const handleZoomOut = () =>
-    viewerRef.current?.setHfov(viewerRef.current.getHfov() + 10);
-
-
-
-
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-black font-sans">
@@ -80,66 +69,7 @@ export default function Vr() {
       </button> 
       */}
 
-      {/* Zoom Controls */}
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3">
-        <button
-          aria-label="Zoom In"
-          onClick={handleZoomIn}
-          className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur-md shadow-lg transition-transform hover:scale-105 hover:bg-black/70 cursor-pointer"
-        >
-          <Plus className="size-5" />
-        </button>
-        <button
-          aria-label="Zoom Out"
-          onClick={handleZoomOut}
-          className="flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur-md shadow-lg transition-transform hover:scale-105 hover:bg-black/70 cursor-pointer"
-        >
-          <Minus className="size-5" />
-        </button>
-      </div>
-
       <div id="pan-container" className="w-full h-full"></div>
-
-      {/* Custom Level/Area Dropdown */}
-      <div className="absolute bottom-24 left-36 sm:left-[24%] lg:left-[18%]  z-50">
-        <div className="relative">
-          {/* Dropdown Button */}
-          <button
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center gap-3 px-8 py-2 bg-black/50 backdrop-blur-md border border-white/10 text-white rounded-full font-medium hover:bg-black/60 transition-colors shadow-lg"
-          >
-            <span>Levels</span>
-            <div className="bg-[#FF0000] rounded-full p-1 flex items-center justify-center">
-              <ChevronUp
-                size={16}
-                strokeWidth={3}
-                className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
-              />
-            </div>
-          </button>
-
-          {/* Dropdown Menu */}
-          <AnimatePresence>
-            {isDropdownOpen && (
-              <>
-                {/* Click outside overlay */}
-                <div
-                  className="fixed inset-0 z-0 cursor-default"
-                  onClick={() => setIsDropdownOpen(false)}
-                />
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute bottom-[calc(100%+12px)]  transform -translate-x-1/2 flex flex-col gap-3 min-w-[140px] items-stretch z-10"
-                >
-                  {/* Level buttons removed along with the tour data */}
-                </motion.div>
-              </>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
 
       {/* Active Scene Display Label */}
       <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-50">

@@ -29,11 +29,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onLabelsToggle,
     onCirculationSelect,
 }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(true);
-
-
     // Inside your Sidebar component:
     const location = useLocation();
+    // Floor Plan already has its own floor table on the right, so the panel
+    // starts collapsed there; Masterplan starts with it open
+    const [isOpen, setIsOpen] = useState<boolean>(() => !location.pathname.includes("floor-plan"));
 
     useEffect(() => {
         if (location.pathname.includes("floor-plan")) {

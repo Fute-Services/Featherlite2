@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom'
 import Header from '../Components/Header/Header'
 import Navbar from '../Components/Navbar/Navbar'
 import IntroCurtain from '../Components/Intro/IntroCurtain'
@@ -12,42 +12,37 @@ import NotFound from '../Pages/NotFound'
 import UnitPlanPage from '../Pages/UnitPlanPage'
 import MasterplanPage from '../Pages/MasterPlanPage'
 
-/** Full Layout: Includes Header + Navbar */
-const MainLayout = () => (
-  <div className="relative min-h-dvh w-full">
-    <Header />
-    <main>
-      <Outlet />
-    </main>
-    <Navbar />
-  </div>
-)
+// routes that keep the bottom pill Navbar - everything else (full-screen
+// viewers like Floor Plan, Masterplan, Unit Plan) hides it
+const ROUTES_WITH_NAVBAR = ['/', '/location', '/amenities', '/media', '/vr-tour']
 
-/** Minimal Layout: Header only (No Navbar) */
-const PlainLayout = () => (
-  <div className="relative min-h-dvh w-full">
-    <Header />
-    <main>
-      <Outlet />
-    </main>
-  </div>
-)
+/** Single persistent layout - Header (and Navbar, on the routes that use it)
+ *  never unmount between navigations, page content swaps instantly. */
+const Layout = () => {
+  const { pathname } = useLocation()
+  const showNavbar = ROUTES_WITH_NAVBAR.includes(pathname)
+
+  return (
+    <div className="relative min-h-dvh w-full">
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      {showNavbar && <Navbar />}
+    </div>
+  )
+}
 
 const Router = () => {
   return (
     <BrowserRouter>
       <IntroCurtain />
       <Routes>
-        {/* Routes WITH Navbar */}
-        <Route element={<MainLayout />}>
+        <Route element={<Layout />}>
           <Route path="/" element={<Homepage />} />
           <Route path="/location" element={<Location />} />
           <Route path="/amenities" element={<Amenities />} />
           <Route path="/media" element={<Media />} />
-        </Route>
-
-        {/* Routes WITHOUT Navbar (e.g. full-screen VR Tour, Floor Plan/Masterplan, or Unit Plan) */}
-        <Route element={<PlainLayout />}>
           <Route path="/vr-tour" element={<VrTour />} />
           <Route path="/floor-plan" element={<FloorPlan />} />
           <Route path="/masterplan" element={<MasterplanPage />} />
