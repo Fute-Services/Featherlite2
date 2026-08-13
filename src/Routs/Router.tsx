@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
 import Header from '../Components/Header/Header'
 import Navbar from '../Components/Navbar/Navbar'
+import IntroCurtain from '../Components/Intro/IntroCurtain'
 import Homepage from '../Pages/Homepage'
 import Location from '../Pages/Location'
 import FloorPlan from '../Pages/FloorPlanPage'
@@ -35,6 +36,7 @@ const PlainLayout = () => (
 const Router = () => {
   return (
     <BrowserRouter>
+      <IntroCurtain />
       <Routes>
         {/* Routes WITH Navbar */}
         <Route element={<MainLayout />}>
