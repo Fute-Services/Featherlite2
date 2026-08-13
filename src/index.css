@@ -10,6 +10,7 @@
   font-variation-settings:
     "wdth" 100;
 }
+
 @theme {
   --color-brand: #E23A26;
   --color-brand-dark: #B92B1A;
@@ -41,4 +42,14 @@
 
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+@utility filter-gold {
+  filter: brightness(0) saturate(100%) invert(67%) sepia(35%) saturate(1478%) hue-rotate(15deg) brightness(98%) contrast(93%);
+}
+
+@utility filter-gold-hover {
+  &:hover {
+    filter: brightness(0) saturate(100%) invert(67%) sepia(35%) saturate(1478%) hue-rotate(15deg) brightness(98%) contrast(93%);
+  }
 }

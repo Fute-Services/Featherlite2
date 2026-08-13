@@ -6,7 +6,7 @@ import Table from '../Components/FloorPlanPages/Table'
 
 import { type FloorData } from '../types/Floorplan'
 import { useNavigate } from 'react-router-dom'
-import  Sidebar from '../Components/Navbar/Sidebar'
+import Sidebar from '../Components/Navbar/Sidebar'
 const FLOORS: FloorData[] = [
     {
         id: 'terrace', name: 'Terrace', label: 'Terrace', area: 'N/A',
