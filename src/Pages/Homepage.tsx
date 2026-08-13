@@ -37,10 +37,10 @@ const Homepage = () => {
                         Better Tomorrow
                     </h1>
 
-                    <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-white/85 sm:mt-8 sm:gap-x-6 sm:text-sm">
+                    <div className="mt-6 ml-[5px] -translate-y-[15px] flex flex-wrap items-center gap-x-2 gap-y-2 font-['IBM_Plex_Sans'] text-xs text-white/85 sm:mt-8 sm:gap-x-6 sm:text-sm">
                         {stats.map((stat, index) => (
-                            <span key={stat} className="flex items-center gap-4 sm:gap-6">
-                                {index > 0 && <span className="h-4 w-px bg-white/30" />}
+                            <span key={stat} className="flex items-center gap-4 sm:gap-2">
+                                {index > 0 && <span className="h-4 w-px bg-white" />}
                                 {stat}
                             </span>
                         ))}

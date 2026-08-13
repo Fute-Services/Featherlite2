@@ -5,6 +5,7 @@
   --color-brand-dark: #B92B1A;
   --font-display: "Abhaya Libre", "Playfair Display", "Georgia", serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-ibm: "IBM Plex Sans", sans-serif;
 }
 
 @layer base {
