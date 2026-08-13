@@ -1,4 +1,3 @@
-import PageShell from '../components/PageShell/PageShell'
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronUp, Plus, Minus } from "lucide-react";

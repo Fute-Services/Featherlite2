@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
-import Header from '../components/Header/Header'
-import Navbar from '../components/Navbar/Navbar'
+import Header from '../Components/Header/Header'
+import Navbar from '../Components/Navbar/Navbar'
 import Homepage from '../Pages/Homepage'
 import Location from '../Pages/Location'
 import FloorPlan from '../Pages/FloorPlanPage'
@@ -42,13 +42,13 @@ const Router = () => {
           <Route path="/location" element={<Location />} />
           <Route path="/masterplan" element={<MasterplanPage/>}/>
           <Route path="/floor-plan" element={<FloorPlan />} />
+          <Route path="/vr-tour" element={<VrTour />} />
           <Route path="/amenities" element={<Amenities />} />
           <Route path="/media" element={<Media />} />
         </Route>
 
         {/* Routes WITHOUT Navbar (e.g. full-screen VR Tour or Unit Plan) */}
         <Route element={<PlainLayout />}>
-          <Route path="/vr-tour" element={<VrTour />} />
           <Route path="/unitplan/:id" element={<UnitPlanPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>

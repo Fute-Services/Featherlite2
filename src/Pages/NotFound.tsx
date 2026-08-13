@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import PageShell from '../components/PageShell/PageShell'
+import PageShell from '../Components/PageShell/PageShell'
 
 const NotFound = () => (
   <PageShell title="404" subtitle="This page does not exist.">
