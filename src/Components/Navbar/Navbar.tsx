@@ -38,7 +38,7 @@ type NavItem = {
 const navItems: NavItem[] = [
     { label: 'Home', path: '/', icon: Home },
     { label: 'Location', path: '/location', icon: MapPin },
-    { label: 'Floor Plan', path: '/floor-plan', icon: floorPlanIcon },
+    { label: 'Floor Plan', path: '/masterplan', icon: floorPlanIcon },
     { label: 'VR Tour', path: '/vr-tour', icon: vrIcon },
     { label: 'Amenities', path: '/amenities', icon: amenitiesIcon },
     { label: 'Media', path: '/media', icon: galleryIcon },
