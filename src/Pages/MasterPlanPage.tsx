@@ -1,11 +1,19 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import MasterplanGround from "../assets/floorplan/masterplan-ground.png";
 import MasterplanTerrace from "../assets/floorplan/masterplan-terrace.png";
 import Sidebar from "../Components/Navbar/Sidebar";
 import sitePlanLocal from "../Data/sitePlanConfig.json";
 import terracePlanLocal from "../Data/terracePlanConfig.json";
+import circulationConfig from "../Data/circulationConfig.json";
 import HotspotMarker from "../Components/SitePlan/HotspotMarker";
+import CirculationArrow from "../Components/SitePlan/CirculationArrow";
+
+type CirculationDirection = "up" | "down" | "left" | "right";
+const CIRCULATION_POINTS = circulationConfig as Record<
+  string,
+  { x: number; y: number; direction: CirculationDirection }[]
+>;
 
 interface MasterPlanItem {
   id: string;
@@ -75,6 +83,7 @@ const ensureHighResMultipleLines = (polygonStr?: string, currentLevel: "ground" 
 export default function MasterplanPage() {
   const [isTerrace, setIsTerrace] = useState<boolean>(false);
   const [isLabelsVisible, setIsLabelsVisible] = useState<boolean>(false);
+  const [selectedCirculation, setSelectedCirculation] = useState<string | null>(null);
 
   const handleLayoutSelect = (layout: string) => {
     setIsTerrace(layout === "Terrace layout");
@@ -82,12 +91,15 @@ export default function MasterplanPage() {
 
   const currentLevel = isTerrace ? "terrace" : "ground";
   const activeData: MasterPlanItem[] = isTerrace ? terracePlanLocal : sitePlanLocal;
+  // circulation markings are only defined for the ground layout
+  const circulationArrows = !isTerrace && selectedCirculation ? CIRCULATION_POINTS[selectedCirculation] ?? [] : [];
 
   return (
     <div className="relative h-screen w-screen overflow-hidden bg-black">
-      <Sidebar 
-        onLayoutSelect={handleLayoutSelect} 
+      <Sidebar
+        onLayoutSelect={handleLayoutSelect}
         onLabelsToggle={(show) => setIsLabelsVisible(show)}
+        onCirculationSelect={setSelectedCirculation}
       />
 
       <div className="flex h-full w-full items-center justify-center p-4 pl-24 sm:pl-[17rem]">
@@ -208,6 +220,20 @@ export default function MasterplanPage() {
                     </g>
                   );
                 })}
+
+                {/* Circulation entry/exit arrows for the selected circulation type */}
+                <AnimatePresence>
+                  {circulationArrows.map((point, index) => (
+                    <CirculationArrow
+                      key={`${selectedCirculation}-${index}`}
+                      id={`${selectedCirculation}-${index}`}
+                      x={ensureHighResCoordinate(point.x, "x", currentLevel)}
+                      y={ensureHighResCoordinate(point.y, "y", currentLevel)}
+                      direction={point.direction}
+                      scale={currentLevel === "ground" ? 5121 / 1200 : 5325 / 1200}
+                    />
+                  ))}
+                </AnimatePresence>
               </svg>
             </div>
           </div>

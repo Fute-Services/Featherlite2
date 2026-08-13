@@ -353,7 +353,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                                 key={item}
                                                 onClick={() => {
                                                     setSelectedCirculation(item);
-                                                    setIsCirculationOpen(false);
                                                     if (onCirculationSelect) onCirculationSelect(item);
                                                 }}
                                                 className={`w-full text-left px-3 py-[3.5px] text-[9px] transition-colors cursor-pointer border-b border-white/10 last:border-0 ${isSelected
