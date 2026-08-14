@@ -32,7 +32,7 @@ export default function UnitPlanSideContent({
             {/* Location Image Preview */}
             <div className="w-full h-36 rounded-xl overflow-hidden border border-white/20 shadow-inner">
                 <img
-                    onClick={() => setShowVRModal(true)}
+                    // onClick={() => setShowVRModal(true)}
                     src={activePoint.detailImage}
                     alt={activePoint.name}
                     className="w-full h-full object-cover transition-transform 
