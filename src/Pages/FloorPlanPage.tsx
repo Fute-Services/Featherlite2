@@ -4,9 +4,9 @@ import building from '../assets/floorplan/Floorplan_Building.png'
 import Building from '../Components/FloorPlanPages/Building'
 import Table from '../Components/FloorPlanPages/Table'
 
-import { type FloorData } from '../types/Floorplan'
 import { useNavigate } from 'react-router-dom'
 import Sidebar from '../Components/Navbar/Sidebar'
+import { FLOORS } from '../Data/FloorPlanData'
 const FLOORS: FloorData[] = [
     {
         id: 'terrace', name: 'Terrace', label: 'Terrace', area: 'N/A',
@@ -70,13 +70,13 @@ export default function FloorPlanPage() {
         scrollToFloor(id)
     }
 
-    const handleOpenUnitPlan = (id: string) => {
-        navigate(`/unitplan/${id}`);
+    const handleOpenUnitPlan = (id1: string) => {
+        navigate(`/unitplan/${id1}`);
     };
     return (
         <div className="relative ibm-plex-sans  h-screen w-screen
          bg-slate-950 overflow-hidden select-none flex flex-col md:flex-row items-center justify-center">
-          {/* <div className='absolute z-[999] left-0 top-0'> */}
+            {/* <div className='absolute z-[999] left-0 top-0'> */}
             <Sidebar />
             {/* </div> */}
 

@@ -44,6 +44,7 @@ const Router = () => {
           <Route path="/amenities" element={<Amenities />} />
           <Route path="/media" element={<Media />} />
           <Route path="/vr-tour" element={<VrTour />} />
+          <Route path="/unitplan/:idnew" element={<UnitPlanPage />} />
           <Route path="/floor-plan" element={<FloorPlan />} />
           <Route path="/masterplan" element={<MasterplanPage />} />
           <Route path="/unitplan/:id" element={<UnitPlanPage />} />
