@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 
 import building from '../assets/floorplan/Floorplan_Building.png'
-import Building from '../components/FloorPlanPages/Building'
-import Table from '../components/FloorPlanPages/Table'
+import Building from '../Components/FloorPlanPages/Building'
+import Table from '../Components/FloorPlanPages/Table'
 
 import { useNavigate } from 'react-router-dom'
-import Sidebar from '../components/Navbar/Sidebar'
+import Sidebar from '../Components/Navbar/Sidebar'
 import { FLOORS } from '../Data/FloorPlanData'
 
 // Floor facade bounds (X-coordinates in SVG coordinate space)

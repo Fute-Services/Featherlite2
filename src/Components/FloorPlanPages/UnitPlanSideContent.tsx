@@ -1,6 +1,6 @@
-import hidedetails from '../../assets/floorplan/icons/hide_details.png'
-import vr from '../../assets/floorplan/icons/view-vr.png'
-import view from '../../assets/floorplan/icons/table details.png'
+// import hidedetails from '../../assets/floorplan/icons/hide_details.png'
+// import vr from '../../assets/floorplan/icons/view-vr.png'
+// import view from '../../assets/floorplan/icons/table details.png'
 interface UnitPlanSideContentProps {
     activePoint: any;
     setShowVRModal: (show: boolean) => void;
@@ -10,9 +10,9 @@ interface UnitPlanSideContentProps {
 
 export default function UnitPlanSideContent({
     activePoint,
-    setShowVRModal,
-    viewdata,
-    setViewdata,
+    // setShowVRModal,
+    // viewdata,
+    // setViewdata,
 }: UnitPlanSideContentProps) {
     return (<>
 

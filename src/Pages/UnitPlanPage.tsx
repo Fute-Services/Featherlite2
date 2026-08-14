@@ -2,24 +2,26 @@ import { useState } from 'react';
 
 import { pointsData } from '../Data/UnitPlanData'
 
-import left from '../assets/floorplan/icons/leftside.png';
-import right from '../assets/floorplan/icons/right.png'
+// import left from '../assets/floorplan/icons/leftside.png';
+// import right from '../assets/floorplan/icons/right.png'
 
-import VRModel from '../components/FloorPlanPages/VRModel';
-import BackButton from '../components/FloorPlanPages/BackButton';
-import UnitPlanContentPage from '../components/FloorPlanPages/UnitPlanContentPage';
-import UnitPlanSideContent from '../components/FloorPlanPages/UnitPlanSideContent';
+import VRModel from '../Components/FloorPlanPages/VRModel';
+import BackButton from '../Components/FloorPlanPages/BackButton';
+import UnitPlanContentPage from '../Components/FloorPlanPages/UnitPlanContentPage';
+import UnitPlanSideContent from '../Components/FloorPlanPages/UnitPlanSideContent';
 import { useParams } from 'react-router-dom';
-import { FLOORS } from '../Data/FloorPlanData'
-import { Search } from 'lucide-react';
-import { Plus, Minus, Expand } from 'lucide-react';
+// import { FLOORS } from '../Data/FloorPlanData'
+// import { Search } from 'lucide-react';
+// import { Plus, Minus, Expand } from 'lucide-react';
 import { FaChevronRight } from "react-icons/fa";
 import { RiResetRightFill } from "react-icons/ri";
 
 
 import { FaAngleLeft } from "react-icons/fa6";
 
-import { ZoomIn, ZoomOut, Target, Maximize2 } from 'lucide-react';
+import { ZoomIn, ZoomOut, 
+    // Target, 
+    Maximize2 } from 'lucide-react';
 
 
 export default function UnitPlanPage() {
