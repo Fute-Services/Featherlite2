@@ -12,9 +12,9 @@ import NotFound from '../Pages/NotFound'
 import UnitPlanPage from '../Pages/UnitPlanPage'
 import MasterplanPage from '../Pages/MasterPlanPage'
 
-// routes that keep the bottom pill Navbar - everything else (full-screen
-// viewers like Floor Plan, Masterplan, Unit Plan) hides it
-const ROUTES_WITH_NAVBAR = ['/', '/location', '/amenities', '/media', '/vr-tour']
+// routes that keep the bottom pill Navbar - everything else (Unit Plan)
+// hides it
+const ROUTES_WITH_NAVBAR = ['/', '/location', '/amenities', '/media', '/vr-tour', '/masterplan', '/floor-plan']
 
 /** Single persistent layout - Header (and Navbar, on the routes that use it)
  *  never unmount between navigations, page content swaps instantly. */

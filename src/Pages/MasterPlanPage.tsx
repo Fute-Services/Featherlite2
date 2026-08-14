@@ -14,6 +14,12 @@ const CIRCULATION_POINTS = circulationConfig as Record<
   string,
   { x: number; y: number; direction: CirculationDirection }[]
 >;
+const OPPOSITE_DIRECTION: Record<CirculationDirection, CirculationDirection> = {
+  up: "down",
+  down: "up",
+  left: "right",
+  right: "left",
+};
 
 interface MasterPlanItem {
   id: string;
@@ -102,46 +108,28 @@ export default function MasterplanPage() {
         onCirculationSelect={setSelectedCirculation}
       />
 
-      <div className="flex h-full w-full items-center justify-center p-4 pl-24 sm:pl-[17rem]">
-        <div className="relative max-h-full max-w-full">
-          {/* Soft brand-red glow behind the card */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -inset-6 -z-10 rounded-[32px] bg-[#e8321c]/40 blur-3xl sm:-inset-10"
-          />
-          <div className="max-h-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/60 p-2 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)] backdrop-blur-xl sm:p-3">
-            <div className="relative max-h-[88vh] max-w-full overflow-hidden rounded-lg border border-white/20">
-              {/* invisible sizer - gives the box real dimensions since the
-                  cross-fading images below are all position:absolute and
-                  wouldn't otherwise contribute any size */}
-              <img
-                src={MasterplanGround}
-                alt=""
-                aria-hidden
-                className="invisible max-h-[88vh] max-w-full object-contain"
-              />
-              {/* both stay mounted so the layout switch cross-fades instead of flashing */}
-              {[
-                { src: MasterplanGround, active: !isTerrace },
-                { src: MasterplanTerrace, active: isTerrace },
-              ].map(({ src, active }) => (
-                <img
-                  key={src}
-                  src={src}
-                  alt="Project Masterplan"
-                  className={[
-                    "absolute inset-0 size-full object-contain transition-opacity duration-[900ms] ease-in-out",
-                    active ? "opacity-100" : "opacity-0",
-                  ].join(" ")}
-                />
-              ))}
+      {/* both stay mounted so the layout switch cross-fades instead of flashing */}
+      {[
+        { src: MasterplanGround, active: !isTerrace },
+        { src: MasterplanTerrace, active: isTerrace },
+      ].map(({ src, active }) => (
+        <img
+          key={src}
+          src={src}
+          alt="Project Masterplan"
+          className={[
+            "absolute inset-0 size-full object-cover transition-opacity duration-[900ms] ease-in-out",
+            active ? "opacity-100" : "opacity-0",
+          ].join(" ")}
+        />
+      ))}
 
-              {/* Overlay SVG Markings Layer */}
-              <svg
-                className="absolute inset-0 w-full h-full z-10 pointer-events-none"
-                viewBox={currentLevel === "ground" ? "0 0 5121 2382" : "0 0 5325 2638"}
-                preserveAspectRatio="xMidYMid meet"
-              >
+      {/* Overlay SVG Markings Layer - slice matches the image's object-cover crop */}
+      <svg
+        className="pointer-events-none absolute inset-0 z-10 h-full w-full"
+        viewBox={currentLevel === "ground" ? "0 0 5121 2382" : "0 0 5325 2638"}
+        preserveAspectRatio="xMidYMid slice"
+      >
                 <defs>
                   <radialGradient
                     id="circle-gradient"
@@ -221,24 +209,41 @@ export default function MasterplanPage() {
                   );
                 })}
 
-                {/* Circulation entry/exit arrows for the selected circulation type */}
+                {/* Circulation entry (lime) / exit (red) arrow pairs for the selected type */}
                 <AnimatePresence>
-                  {circulationArrows.map((point, index) => (
-                    <CirculationArrow
-                      key={`${selectedCirculation}-${index}`}
-                      id={`${selectedCirculation}-${index}`}
-                      x={ensureHighResCoordinate(point.x, "x", currentLevel)}
-                      y={ensureHighResCoordinate(point.y, "y", currentLevel)}
-                      direction={point.direction}
-                      scale={currentLevel === "ground" ? 5121 / 1200 : 5325 / 1200}
-                    />
-                  ))}
+                  {circulationArrows.map((point, index) => {
+                    const arrowScale = currentLevel === "ground" ? 5121 / 1200 : 5325 / 1200;
+                    const arrowX = ensureHighResCoordinate(point.x, "x", currentLevel);
+                    const arrowY = ensureHighResCoordinate(point.y, "y", currentLevel);
+                    // same local offset for both - since their rotations differ by
+                    // 180 degrees, it naturally places them on opposite world sides
+                    const pairOffset = -18 * arrowScale;
+
+                    return (
+                      <g key={`${selectedCirculation}-${index}`}>
+                        <CirculationArrow
+                          id={`${selectedCirculation}-${index}-entry`}
+                          x={arrowX}
+                          y={arrowY}
+                          direction={point.direction}
+                          tone="entry"
+                          offset={pairOffset}
+                          scale={arrowScale}
+                        />
+                        <CirculationArrow
+                          id={`${selectedCirculation}-${index}-exit`}
+                          x={arrowX}
+                          y={arrowY}
+                          direction={OPPOSITE_DIRECTION[point.direction]}
+                          tone="exit"
+                          offset={pairOffset}
+                          scale={arrowScale}
+                        />
+                      </g>
+                    );
+                  })}
                 </AnimatePresence>
               </svg>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
