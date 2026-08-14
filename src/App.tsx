@@ -1,10 +1,13 @@
 import { ThemeProvider } from './Context/ThemeContext'
+import { IntroProvider } from './Context/IntroContext'
 import Router from './Routs/Router'
 
 const App = () => {
   return (
     <ThemeProvider>
-      <Router />
+      <IntroProvider>
+        <Router />
+      </IntroProvider>
     </ThemeProvider>
   )
 }
