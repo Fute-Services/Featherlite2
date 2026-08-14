@@ -84,7 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     };
 
     return (
-        <aside className={`fixed top-0 left-0 w-screen h-screen flex select-none pointer-events-none transition-all duration-300 ${isOpen ? "z-[1005]" : "z-[999]"}`}>
+        <aside className={`fixed top-0 left-0 w-full h-dvh flex select-none pointer-events-none transition-all duration-300 ${isOpen ? "z-[1005]" : "z-[999]"}`}>
             {/* 1. Left Curved Icon Rail (Enable pointer-events-auto directly on the container) */}
             <div className="relative w-[6%] h-full text-white flex flex-col justify-between py-6 px-3 z-20 pointer-events-auto">
 

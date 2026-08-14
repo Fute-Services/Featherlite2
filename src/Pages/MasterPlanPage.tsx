@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import MasterplanGround from "../assets/floorplan/masterplan-ground.png";
-import MasterplanTerrace from "../assets/floorplan/masterplan-terrace.png";
+import MasterplanGround from "../assets/floorplan/masterplan-ground.jpg";
+import MasterplanTerrace from "../assets/floorplan/masterplan-terrace.jpg";
 import Sidebar from "../Components/Navbar/Sidebar";
 import sitePlanLocal from "../Data/sitePlanConfig.json";
 import terracePlanLocal from "../Data/terracePlanConfig.json";
@@ -101,7 +101,7 @@ export default function MasterplanPage() {
   const circulationArrows = !isTerrace && selectedCirculation ? CIRCULATION_POINTS[selectedCirculation] ?? [] : [];
 
   return (
-    <div className="relative h-screen w-screen overflow-hidden bg-black">
+    <div className="relative h-dvh w-full overflow-hidden bg-black">
       <Sidebar
         onLayoutSelect={handleLayoutSelect}
         onLabelsToggle={(show) => setIsLabelsVisible(show)}
