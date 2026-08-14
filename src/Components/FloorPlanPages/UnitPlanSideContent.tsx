@@ -1,6 +1,6 @@
-import hidedetails from '../../assets/floorplan/icons/hide_details.png'
-import vr from '../../assets/floorplan/icons/view-vr.png'
-import view from '../../assets/floorplan/icons/table details.png'
+// import hidedetails from '../../assets/floorplan/icons/hide_details.png'
+// import vr from '../../assets/floorplan/icons/view-vr.png'
+// import view from '../../assets/floorplan/icons/table details.png'
 interface UnitPlanSideContentProps {
     activePoint: any;
     setShowVRModal: (show: boolean) => void;
@@ -10,9 +10,9 @@ interface UnitPlanSideContentProps {
 
 export default function UnitPlanSideContent({
     activePoint,
-    setShowVRModal,
-    viewdata,
-    setViewdata,
+    // setShowVRModal,
+    // viewdata,
+    // setViewdata,
 }: UnitPlanSideContentProps) {
     return (<>
 
@@ -32,7 +32,7 @@ export default function UnitPlanSideContent({
             {/* Location Image Preview */}
             <div className="w-full h-36 rounded-xl overflow-hidden border border-white/20 shadow-inner">
                 <img
-                    onClick={() => setShowVRModal(true)}
+                    // onClick={() => setShowVRModal(true)}
                     src={activePoint.detailImage}
                     alt={activePoint.name}
                     className="w-full h-full object-cover transition-transform 
@@ -44,23 +44,23 @@ export default function UnitPlanSideContent({
                 {activePoint.subtitle}
             </p>
 
-            {/* Action CTA Buttons */}
+            {/* Action CTA Buttons 
             <div className="flex flex-col gap-2 mt-2">
                 <button
                     onClick={() => setShowVRModal(true)}
                     className="flex items-center justify-center gap-2 w-full py-2 px-3 bg-cyan-950/60 hover:bg-cyan-900/80 border border-white/40 rounded-full text-xs text-bg-white/80 font-medium transition-all shadow-md active:scale-98">
-                    {/* <Glasses className="w-4 h-4" /> */}
+                    
                     <img src={vr} className="w-4 h-4" />
                     View in VR
                 </button>
                 <button
                     onClick={() => setViewdata((prev: any) => !prev)}
                     className="flex items-center justify-center gap-2 w-full py-2 px-3 bg-cyan-950/60 hover:bg-cyan-900/80 border border-white/40 rounded-full text-xs text-bg-white/80 font-medium transition-all shadow-md active:scale-98">
-                    {/* <Eye className="w-4 h-4" /> */}
+                  
                     <img src={`${viewdata ? hidedetails : view}`} className="w-4 h-4" />
                     {viewdata ? " Hide details" : " View details"}
                 </button>
-            </div>
+            </div>*/}
         </div>
     </>)
 }
