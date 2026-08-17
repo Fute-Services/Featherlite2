@@ -1,15 +1,17 @@
-import React from 'react';
+
 
 interface UnitPlanContentPageProps {
-    setSelectedId: React.Dispatch<React.SetStateAction<number>>;
+    setSelectedId:any;
     pointsData: any[];
     selectedId: string | number;
+   
 }
 
 export default function UnitPlanContentPage({
     setSelectedId,
     pointsData = [],
     selectedId,
+
 }: UnitPlanContentPageProps) {
     if (!pointsData || pointsData.length === 0) return null;
 
@@ -17,107 +19,114 @@ export default function UnitPlanContentPage({
         <>
             {/* Layer 2: Connecting Lines & Target Markers */}
             <g className="pointer-events-none bg-transparent">
-                {pointsData.map((point) => {
-                    const isActive = point.id === selectedId;
+                {pointsData
+                    .filter((point) => point.id !== 101)
+                    .map((point) => {
+                        const isActive = point.id === selectedId;
 
-                    // 1. Guard against undefined or empty points array
-                    const pointsList = point.points || [];
-                    const startCoords = pointsList[0];
+                        // 1. Guard against undefined or empty points array
+                        const pointsList = point.points || [];
+                        const startCoords = pointsList[0];
 
-                    // If there are no points defined for this item, skip rendering marker
-                    if (!startCoords) return null;
+                        // If there are no points defined for this item, skip rendering marker
+                        if (!startCoords) return null;
 
-                    return (
-                        <g key={`marker-${point.id}`}>
-                            {/* SVG Radial Glow Filter (Add inside <defs> or render inline) */}
-                            <defs>
-                                <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stopColor="#ffea9f" stopOpacity="1" />
-                                    <stop offset="60%" stopColor="#f59e0b" stopOpacity="0.8" />
-                                    <stop offset="100%" stopColor="#d97706" stopOpacity="0" />
-                                </radialGradient>
-                            </defs>
+                        return (
+                            <g key={`marker-${point.id}`}>
+                                {/* SVG Radial Glow Filter (Add inside <defs> or render inline) */}
+                                <defs>
+                                    <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stopColor="#ffea9f" stopOpacity="1" />
+                                        <stop offset="60%" stopColor="#f59e0b" stopOpacity="0.8" />
+                                        <stop offset="100%" stopColor="#d97706" stopOpacity="0" />
+                                    </radialGradient>
+                                </defs>
 
-                            {/* 1. Elbow Line */}
-                            <polyline
-                                points={pointsList.map((p: any) => `${p.x},${p.y}`).join(' ')}
-                                fill="none"
-                                stroke={isActive ? '#c89d52' : 'rgba(200, 157, 82, 0.45)'}
-                                strokeWidth={isActive ? '2' : '1.2'}
-                                strokeDasharray="none"
-                                vectorEffect="non-scaling-stroke"
-                                className="transition-all duration-300 ease-out"
-                            />
+                                {/* 1. Elbow Line */}
+                                <polyline
+                                    points={pointsList.map((p: any) => `${p.x},${p.y}`).join(' ')}
+                                    fill="none"
+                                    stroke={isActive ? '#c89d52' : 'rgba(200, 157, 82, 0.45)'}
+                                    strokeWidth={isActive ? '2' : '1.2'}
+                                    strokeDasharray="none"
+                                    vectorEffect="non-scaling-stroke"
+                                    className="transition-all duration-300 ease-out"
+                                />
 
-                            {/* 2. Outer Glowing Halo Ring (Active State) */}
-                            {isActive && (
-                                <>
-                                    {/* Translucent Gold Blur Halo */}
+                                {/* 2. Outer Glowing Halo Ring (Active State) */}
+                                {isActive && (
+                                    <>
+                                        {/* Translucent Gold Blur Halo */}
+                                        <circle
+                                            cx={startCoords.x}
+                                            cy={startCoords.y}
+                                            r="24"
+                                            fill="rgba(245, 158, 11, 0.15)"
+                                            stroke="#c89d52"
+                                            strokeWidth="1"
+                                            strokeOpacity="0.6"
+                                            vectorEffect="non-scaling-stroke"
+                                            className="transition-all duration-500 ease-out"
+                                        />
+
+                                        {/* Subtle Outer Pulsing Wave */}
+                                        <circle
+                                            cx={startCoords.x}
+                                            cy={startCoords.y}
+                                            r="28"
+                                            fill="none"
+                                            stroke="#f59e0b"
+                                            strokeWidth="1"
+                                            vectorEffect="non-scaling-stroke"
+                                            className="animate-ping opacity-40"
+                                        />
+                                    </>
+                                )}
+
+                                {/* 3. Outer Border Ring for Inactive State */}
+                                {!isActive && (
                                     <circle
                                         cx={startCoords.x}
                                         cy={startCoords.y}
-                                        r="24"
-                                        fill="rgba(245, 158, 11, 0.15)"
-                                        stroke="#c89d52"
-                                        strokeWidth="1"
-                                        strokeOpacity="0.6"
-                                        vectorEffect="non-scaling-stroke"
-                                        className="transition-all duration-500 ease-out"
-                                    />
-
-                                    {/* Subtle Outer Pulsing Wave */}
-                                    <circle
-                                        cx={startCoords.x}
-                                        cy={startCoords.y}
-                                        r="28"
+                                        r="14"
                                         fill="none"
-                                        stroke="#f59e0b"
+                                        stroke="rgba(200, 157, 82, 0.5)"
                                         strokeWidth="1"
                                         vectorEffect="non-scaling-stroke"
-                                        className="animate-ping opacity-40"
                                     />
-                                </>
-                            )}
+                                )}
 
-                            {/* 3. Outer Border Ring for Inactive State */}
-                            {!isActive && (
+                                {/* 4. Glowing Center Gold Dot */}
                                 <circle
                                     cx={startCoords.x}
                                     cy={startCoords.y}
-                                    r="14"
-                                    fill="none"
-                                    stroke="rgba(200, 157, 82, 0.5)"
-                                    strokeWidth="1"
+                                    r={isActive ? '10' : '6'}
+                                    fill={isActive ? '#fff3d1' : '#c89d52'}
+                                    stroke={isActive ? '#f1b752' : '#a17834'}
+                                    strokeWidth={isActive ? '2' : '1.5'}
                                     vectorEffect="non-scaling-stroke"
+                                    className="transition-all duration-300 ease-out shadow-lg"
+                                    style={{
+                                        filter: isActive
+                                            ? 'drop-shadow(0px 0px 8px rgba(245, 158, 11, 0.9))'
+                                            : 'none',
+                                    }}
                                 />
-                            )}
-
-                            {/* 4. Glowing Center Gold Dot */}
-                            <circle
-                                cx={startCoords.x}
-                                cy={startCoords.y}
-                                r={isActive ? '10' : '6'}
-                                fill={isActive ? '#fff3d1' : '#c89d52'}
-                                stroke={isActive ? '#f1b752' : '#a17834'}
-                                strokeWidth={isActive ? '2' : '1.5'}
-                                vectorEffect="non-scaling-stroke"
-                                className="transition-all duration-300 ease-out shadow-lg"
-                                style={{
-                                    filter: isActive
-                                        ? 'drop-shadow(0px 0px 8px rgba(245, 158, 11, 0.9))'
-                                        : 'none',
-                                }}
-                            />
-                        </g>
-                    );
-                })}
+                            </g>
+                        );
+                    })}
             </g>
 
             {/* Layer 3: Hotspot Cards */}
             <g className="pointer-events-auto">
+
                 {[...pointsData]
-                    // 1. Filter out duplicates (keeps the first occurrence of each ID)
-                    .filter((point, index, self) => index === self.findIndex((p) => p.id === point.id))
+                    // 1. Exclude ID 1 and filter out duplicates
+                    .filter(
+                        (point, index, self) =>
+                            point.id !== 101 &&
+                            index === self.findIndex((p) => p.id === point.id)
+                    )
                     // 2. Sort so selected card renders on top
                     .sort((a, b) => (a.id === selectedId ? 1 : b.id === selectedId ? -1 : 0))
                     .map((point) => {

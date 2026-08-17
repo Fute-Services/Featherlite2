@@ -14,9 +14,14 @@ export default function UnitPlanSideContent({
     // viewdata,
     // setViewdata,
 }: UnitPlanSideContentProps) {
+
+
+  const active= activePoint.id!==101
     return (<>
 
-        <div className="hidden lg:flex absolute right-6 top-1/2 -translate-y-1/2
+     {active && (
+
+     <div className="hidden lg:flex absolute right-6 top-1/2 -translate-y-1/2
                  z-30 w-64 md:w-52 h-[52%] bg-[#082338]/90 backdrop-blur-xl border border-white/30 rounded-2xl
                   p-4 flex-col gap-3 shadow-2xl transition-all duration-300">
             <div className="flex items-center gap-2">
@@ -61,6 +66,6 @@ export default function UnitPlanSideContent({
                     {viewdata ? " Hide details" : " View details"}
                 </button>
             </div>*/}
-        </div>
+        </div> )}  
     </>)
 }

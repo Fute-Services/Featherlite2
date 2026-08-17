@@ -51,7 +51,7 @@ export interface FloorPointsData {
 }
 export const pointsData: FloorPointsData[] = [
 {
-    id:1,
+    id:101,
     name:"Terrace",
     image:image1,
     imagesvg:"0 0 2000 1125",
@@ -59,189 +59,27 @@ export const pointsData: FloorPointsData[] = [
     imageh:1125,
     units:[
   {
-        id: 1,
+        id: 101,
       
-        name: 'AHU Room',
-        subtitle: 'Mechanical ventilation and air-handling zone',
+        name: '',
+        subtitle: '',
         iconType: 'fan',
         icon: fan,
-        x: 900,
-        y: 480,
-        labelX: 570,
-        labelY: 290,
+        x: 0,
+        y: 0,
+        labelX: 0,
+        labelY: 0,
 
         points: [
             {
-                x: 1003,
-                y: 322
+                x: 0,
+                y: 0
             },
-            {
-                x: 896,
-                y: 322
-            },
-            {
-                x: 900,
-                y: 280
-            },
-            {
-                x: 740,
-                y: 281
-            }
+           
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
     },
-    {
-        id: 2,
-        name: 'Fire Tower',
-        subtitle: 'Fire escape stairs and safety zone',
-        icon: health,
-        iconType: 'shield',
-        x: 850,
-        y: 600,
-        labelX: 550,
-        labelY: 560,
-        points: [
-            {
-                x: 1083,
-                y: 323
-            },
-            {
-                x: 1071,
-                y: 544
-            },
-            {
-                x: 699,
-                y: 545
-            }
-        ],
-        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
-    },
-    {
-        id: 3,
-        name: "Women's Washroom",
-        subtitle: 'Dedicated washroom facilities',
-        icon: women,
-        iconType: 'user',
-        x: 950,
-        y: 700,
-        labelX: 530,
-        labelY: 820,
-        points: [
-            {
-                x: 1246,
-                y: 315
-            },
-            {
-                x: 1234,
-                y: 805
-            },
-            {
-                x: 618,
-                y: 809
-            }
-        ],
-        detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
-    },
-    {
-        id: 4,
-        name: 'Office Space',
-        subtitle: 'Massive customizable office space.',
-        icon: office,
-        iconType: 'monitor',
-        x: 1250,
-        y: 400,
-        labelX: 1180,
-        labelY: 125,
-        points: [
-            {
-          x: 1157,
-          y: 503
-        },
-        {
-          x: 1160,
-          y: 208
-        }
-        ],
-        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776410532/retail_qzuvno.jpg',
-    },
-    {
-        id: 5,
-        name: 'ODU Balcony',
-        subtitle: 'Outdoor unit placement area',
-        icon: balcony,
-        iconType: 'box',
-        x: 1550,
-        y: 500,
-        labelX: 1800,
-        labelY: 290,
-        points: [
-            {
-                x: 1488,
-                y: 276
-            },
-            {
-                x: 1656,
-                y: 276
-            }
-        ],
-        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
-    },
-    {
-        id: 6,
-        name: "Men's Washroom",
-        subtitle: 'Dedicated washroom facilities',
-        icon: mens,
-        iconType: 'user',
-        x: 1500,
-        y: 650,
-        labelX: 1850,
-        labelY: 500,
-        points: [
-            {
-                x: 1352,
-                y: 325
-            },
-            {
-                x: 1356,
-                y: 480
-            },
-            {
-                x: 1757,
-                y: 476
-            }
-        ],
-        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
-    },
-    {
-        id: 7,
-        name: 'Lift Lobby',
-        subtitle: '6 passenger\'s and 2 service lift for smooth flow',
-        icon: elevator,
-        iconType: 'user',
-        x: 1450,
-        y: 750,
-        labelX: 1890,
-        labelY: 820,
-        points: [
-            {
-                x: 1303,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 811
-            },
-            {
-                x: 1788,
-                y: 815
-            }
-        ],
-        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776409574/leftlobby_hhdbqu.jpg',
-    },
+  
 ]
 },
 
@@ -263,26 +101,19 @@ export const pointsData: FloorPointsData[] = [
         icon: fan,
         x: 900,
         y: 480,
-        labelX: 570,
-        labelY: 290,
+        labelX: 1500,
+        labelY: 120,
 
         points: [
-            {
-                x: 1003,
-                y: 322
-            },
-            {
-                x: 896,
-                y: 322
-            },
-            {
-                x: 900,
-                y: 280
-            },
-            {
-                x: 740,
-                y: 281
-            }
+                  {
+          "x": 1184,
+          "y": 135
+        },
+        {
+          "x": 1379,
+          "y": 135
+        }
+
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
     },
@@ -294,21 +125,57 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'shield',
         x: 850,
         y: 600,
-        labelX: 550,
-        labelY: 560,
+        labelX: 420,
+        labelY: 280,
         points: [
-            {
-                x: 1083,
-                y: 323
-            },
-            {
-                x: 1071,
-                y: 544
-            },
-            {
-                x: 699,
-                y: 545
-            }
+          {
+          "x": 847,
+          "y": 137
+        },
+        {
+          "x": 828,
+          "y": 299
+        },
+        {
+          "x": 541,
+          "y": 302
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
+    },
+
+     {
+        id: 2,
+        name: 'Fire Tower',
+        subtitle: 'Fire escape stairs and safety zone',
+        icon: health,
+        iconType: 'shield',
+        x: 850,
+        y: 600,
+        labelX: 420,
+        labelY: 280,
+        points: [
+      {
+          "x": 1128,
+          "y": 140
+        },
+        {
+          "x": 1129,
+          "y": 201,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        },
+        {
+          "x": 836,
+          "y": 199
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
     },
@@ -320,21 +187,57 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 950,
         y: 700,
-        labelX: 530,
-        labelY: 820,
+        labelX: 380,
+        labelY: 480,
+        points: [
+           {
+          "x": 953,
+          "y": 136
+        },
+        {
+          "x": 947,
+          "y": 487
+        },
+        {
+          "x": 484,
+          "y": 487
+        }
+        ],
+        detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
+    },
+
+       {
+        id: 3,
+        name: "Women's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: women,
+        iconType: 'user',
+        x: 950,
+        y: 700,
+        labelX: 380,
+        labelY: 480,
         points: [
             {
-                x: 1246,
-                y: 315
-            },
-            {
-                x: 1234,
-                y: 805
-            },
-            {
-                x: 618,
-                y: 809
-            }
+          "x": 1006,
+          "y": 138
+        },
+        {
+          "x": 1006,
+          "y": 170,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        },
+        {
+          "x": 952,
+          "y": 170
+        }
         ],
         detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
     },
@@ -346,16 +249,25 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'monitor',
         x: 1250,
         y: 400,
-        labelX: 1180,
-        labelY: 125,
+        labelX: 1500,
+        labelY: 305,
         points: [
-            {
-          x: 1157,
-          y: 503
+         {
+          "x": 1071,
+          "y": 291
         },
         {
-          x: 1160,
-          y: 208
+          "x": 1411,
+          "y": 295,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
         }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776410532/retail_qzuvno.jpg',
@@ -368,17 +280,30 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'box',
         x: 1550,
         y: 500,
-        labelX: 1800,
-        labelY: 290,
+        labelX: 470,
+        labelY: 100,
         points: [
             {
-                x: 1488,
-                y: 276
-            },
-            {
-                x: 1656,
-                y: 276
-            }
+          "x": 788,
+          "y": 105
+        },
+        {
+          "x": 788,
+          "y": 71,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        },
+        {
+          "x": 597,
+          "y": 71
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
     },
@@ -390,21 +315,57 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1500,
         y: 650,
-        labelX: 1850,
+        labelX: 1550,
+        labelY: 520,
+        points: [
+             {
+          "x": 900,
+          "y": 140
+        },
+        {
+          "x": 883,
+          "y": 529
+        },
+        {
+          "x": 1445,
+          "y": 531
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
+    },
+
+     {
+        id: 6,
+        name: "Men's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: mens,
+        iconType: 'user',
+        x: 1500,
+        y: 650,
+        labelX: 1550,
         labelY: 500,
         points: [
-            {
-                x: 1352,
-                y: 325
-            },
-            {
-                x: 1356,
-                y: 480
-            },
-            {
-                x: 1757,
-                y: 476
-            }
+        {
+          "x": 1071,
+          "y": 134
+        },
+        {
+          "x": 1070,
+          "y": 182,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        },
+        {
+          "x": 899,
+          "y": 182
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
     },
@@ -416,28 +377,35 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1450,
         y: 750,
-        labelX: 1890,
-        labelY: 820,
+        labelX: 330,
+        labelY: 650,
         points: [
             {
-                x: 1303,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 811
-            },
-            {
-                x: 1788,
-                y: 815
-            }
+          "x": 969,
+          "y": 361
+        },
+        {
+          "x": 966,
+          "y": 657,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        },
+        {
+          "x": 431,
+          "y": 663
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776409574/leftlobby_hhdbqu.jpg',
     },
+
+    
 ]
 },
 
@@ -458,26 +426,45 @@ export const pointsData: FloorPointsData[] = [
         icon: fan,
         x: 900,
         y: 480,
-        labelX: 570,
-        labelY: 290,
-
+           labelX: 450,
+        labelY: 180,
         points: [
             {
-                x: 1003,
-                y: 322
-            },
-            {
-                x: 896,
-                y: 322
-            },
-            {
-                x: 900,
-                y: 280
-            },
-            {
-                x: 740,
-                y: 281
-            }
+          "x": 775,
+          "y": 171
+        },
+        {
+          "x": 574,
+          "y": 172
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
+    },
+
+     {
+        id: 1,
+      
+        name: 'AHU Room',
+        subtitle: 'Mechanical ventilation and air-handling zone',
+        iconType: 'fan',
+        icon: fan,
+        x: 900,
+        y: 480,
+           labelX: 400,
+        labelY: 280,
+        points: [
+             {
+          "x": 1187,
+          "y": 173
+        },
+        {
+          "x": 1192,
+          "y": 228
+        },
+        {
+          "x": 775,
+          "y": 230
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
     },
@@ -489,21 +476,44 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'shield',
         x: 850,
         y: 600,
-        labelX: 550,
+        labelX: 1535,
+        labelY: 480,
+        points: [
+          {
+          "x": 829,
+          "y": 182
+        },
+        {
+          "x": 800,
+          "y": 534
+        },
+        {
+          "x": 1470,
+          "y": 534
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
+    },
+
+     {
+        id: 2,
+        name: 'Fire Tower',
+        subtitle: 'Fire escape stairs and safety zone',
+        icon: health,
+        iconType: 'shield',
+        x: 850,
+        y: 600,
+        labelX: 450,
         labelY: 560,
         points: [
-            {
-                x: 1083,
-                y: 323
-            },
-            {
-                x: 1071,
-                y: 544
-            },
-            {
-                x: 699,
-                y: 545
-            }
+           {
+          "x": 1135,
+          "y": 175
+        },
+        {
+          "x": 1141,
+          "y": 533
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
     },
@@ -515,21 +525,48 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 950,
         y: 700,
-        labelX: 530,
-        labelY: 820,
+        labelX: 380,
+        labelY: 520,
         points: [
-            {
-                x: 1246,
-                y: 315
-            },
-            {
-                x: 1234,
-                y: 805
-            },
-            {
-                x: 618,
-                y: 809
-            }
+           {
+          "x": 959,
+          "y": 168
+        },
+        {
+          "x": 947,
+          "y": 505
+        },
+        {
+          "x": 435,
+          "y": 511
+        }
+        ],
+        detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
+    },
+
+      {
+        id: 3,
+        name: "Women's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: women,
+        iconType: 'user',
+        x: 950,
+        y: 700,
+        labelX: 380,
+        labelY: 520,
+        points: [
+         {
+          "x": 1003,
+          "y": 169
+        },
+        {
+          "x": 1002,
+          "y": 341
+        },
+        {
+          "x": 953,
+          "y": 341
+        }
         ],
         detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
     },
@@ -541,20 +578,26 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'monitor',
         x: 1250,
         y: 400,
-        labelX: 1180,
-        labelY: 125,
+        labelX: 1600,
+        labelY: 735,
         points: [
-            {
-          x: 1157,
-          y: 503
+           {
+          "x": 1048,
+          "y": 311
         },
         {
-          x: 1160,
-          y: 208
+          "x": 1048,
+          "y": 748
+        },
+        {
+          "x": 1529,
+          "y": 746
         }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776410532/retail_qzuvno.jpg',
     },
+
+
     {
         id: 5,
         name: 'ODU Balcony',
@@ -563,17 +606,57 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'box',
         x: 1550,
         y: 500,
-        labelX: 1800,
+        labelX: 1510,
+        labelY: 150,
+        points: [
+             {
+          "x": 788,
+          "y": 146
+        },
+        {
+          "x": 790,
+          "y": 112,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        },
+        {
+          "x": 1235,
+          "y": 113
+        },
+        {
+          "x": 1235,
+          "y": 142
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
+    },
+
+     {
+        id: 5,
+        name: 'ODU Balcony',
+        subtitle: 'Outdoor unit placement area',
+        icon: balcony,
+        iconType: 'box',
+        x: 1550,
+        y: 500,
+        labelX: 1500,
         labelY: 290,
         points: [
-            {
-                x: 1488,
-                y: 276
-            },
-            {
-                x: 1656,
-                y: 276
-            }
+          {
+          "x": 1186,
+          "y": 142
+        },
+        {
+          "x": 1432,
+          "y": 144
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
     },
@@ -585,21 +668,53 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1500,
         y: 650,
-        labelX: 1850,
-        labelY: 500,
+        labelX: 1515,
+        labelY: 300,
         points: [
-            {
-                x: 1352,
-                y: 325
-            },
-            {
-                x: 1356,
-                y: 480
-            },
-            {
-                x: 1757,
-                y: 476
-            }
+             {
+          "x": 892,
+          "y": 170
+        },
+        {
+          "x": 886,
+          "y": 283
+        },
+        {
+          "x": 1439,
+          "y": 284
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
+    },
+
+     {
+        id: 6,
+        name: "Men's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: mens,
+        iconType: 'user',
+        x: 1500,
+        y: 650,
+        labelX: 1550,
+        labelY: 600,
+        points: [
+           {
+          "x": 1065,
+          "y": 170
+        },
+        {
+          "x": 1067,
+          "y": 282,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
     },
@@ -611,25 +726,21 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1450,
         y: 750,
-        labelX: 1890,
-        labelY: 820,
+        labelX: 370,
+        labelY: 720,
         points: [
-            {
-                x: 1303,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 811
-            },
-            {
-                x: 1788,
-                y: 815
-            }
+              {
+          "x": 975,
+          "y": 391
+        },
+        {
+          "x": 968,
+          "y": 728
+        },
+        {
+          "x": 345,
+          "y": 732
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776409574/leftlobby_hhdbqu.jpg',
     },
@@ -655,29 +766,63 @@ export const pointsData: FloorPointsData[] = [
         icon: fan,
         x: 900,
         y: 480,
-        labelX: 570,
-        labelY: 290,
+        labelX: 450,
+        labelY: 210,
 
         points: [
             {
-                x: 1003,
-                y: 322
-            },
-            {
-                x: 896,
-                y: 322
-            },
-            {
-                x: 900,
-                y: 280
-            },
-            {
-                x: 740,
-                y: 281
-            }
+          "x": 779,
+          "y": 210
+        },
+        {
+          "x": 588,
+          "y": 210
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
     },
+  {
+        id: 1,
+      
+        name: 'AHU Room',
+        subtitle: 'Mechanical ventilation and air-handling zone',
+        iconType: 'fan',
+        icon: fan,
+        x: 900,
+        y: 480,
+        labelX: 370,
+        labelY: 290,
+
+        points: [
+           {
+          "x": 1181,
+          "y": 209
+        },
+        {
+          "x": 1182,
+          "y": 237,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        },
+        {
+          "x": 764,
+          "y": 236
+        },
+        {
+          "x": 765,
+          "y": 209
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
+    },
+
     {
         id: 2,
         name: 'Fire Tower',
@@ -686,21 +831,53 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'shield',
         x: 850,
         y: 600,
-        labelX: 550,
-        labelY: 560,
+        labelX: 425,
+        labelY: 360,
         points: [
-            {
-                x: 1083,
-                y: 323
-            },
-            {
-                x: 1071,
-                y: 544
-            },
-            {
-                x: 699,
-                y: 545
-            }
+          {
+          "x": 1131,
+          "y": 215
+        },
+        {
+          "x": 1139,
+          "y": 363
+        },
+        {
+          "x": 564,
+          "y": 365
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
+    },
+
+    {
+        id: 2,
+        name: 'Fire Tower',
+        subtitle: 'Fire escape stairs and safety zone',
+        icon: health,
+        iconType: 'shield',
+        x: 850,
+        y: 600,
+        labelX: 450,
+        labelY: 360,
+        points: [
+          {
+          "x": 829,
+          "y": 216
+        },
+        {
+          "x": 817,
+          "y": 366,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
     },
@@ -712,21 +889,43 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 950,
         y: 700,
-        labelX: 530,
+        labelX: 1550,
+        labelY: 370,
+        points: [
+              {
+          "x": 962,
+          "y": 207
+        },
+        {
+          "x": 960,
+          "y": 378
+        },
+        {
+          "x": 1481,
+          "y": 375
+        }
+        ],
+        detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
+    },
+      {
+        id: 3,
+        name: "Women's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: women,
+        iconType: 'user',
+        x: 950,
+        y: 700,
+        labelX: 1530,
         labelY: 820,
         points: [
             {
-                x: 1246,
-                y: 315
-            },
-            {
-                x: 1234,
-                y: 805
-            },
-            {
-                x: 618,
-                y: 809
-            }
+          "x": 1009,
+          "y": 205
+        },
+        {
+          "x": 1012,
+          "y": 378
+        }
         ],
         detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
     },
@@ -738,16 +937,20 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'monitor',
         x: 1250,
         y: 400,
-        labelX: 1180,
-        labelY: 125,
+        labelX: 1580,
+        labelY: 625,
         points: [
             {
-          x: 1157,
-          y: 503
+          "x": 1062,
+          "y": 322
         },
         {
-          x: 1160,
-          y: 208
+          "x": 1070,
+          "y": 599
+        },
+        {
+          "x": 1485,
+          "y": 597
         }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776410532/retail_qzuvno.jpg',
@@ -760,17 +963,57 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'box',
         x: 1550,
         y: 500,
-        labelX: 1800,
-        labelY: 290,
+        labelX: 1490,
+        labelY: 180,
         points: [
             {
-                x: 1488,
-                y: 276
-            },
-            {
-                x: 1656,
-                y: 276
-            }
+          "x": 787,
+          "y": 185
+        },
+        {
+          "x": 788,
+          "y": 153,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        },
+        {
+          "x": 1221,
+          "y": 156
+        },
+        {
+          "x": 1222,
+          "y": 192
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
+    },
+
+     {
+        id: 5,
+        name: 'ODU Balcony',
+        subtitle: 'Outdoor unit placement area',
+        icon: balcony,
+        iconType: 'box',
+        x: 1550,
+        y: 500,
+        labelX: 1500,
+        labelY: 150,
+        points: [
+       {
+          "x": 1178,
+          "y": 192
+        },
+        {
+          "x": 1369,
+          "y": 191
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
     },
@@ -782,21 +1025,48 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1500,
         y: 650,
-        labelX: 1850,
+        labelX: 370,
+        labelY: 650,
+        points: [
+             {
+          "x": 898,
+          "y": 207
+        },
+        {
+          "x": 879,
+          "y": 647
+        },
+        {
+          "x": 508,
+          "y": 648
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
+    },
+
+     {
+        id: 6,
+        name: "Men's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: mens,
+        iconType: 'user',
+        x: 1500,
+        y: 650,
+        labelX: 1550,
         labelY: 500,
         points: [
-            {
-                x: 1352,
-                y: 325
-            },
-            {
-                x: 1356,
-                y: 480
-            },
-            {
-                x: 1757,
-                y: 476
-            }
+              {
+          "x": 1067,
+          "y": 209
+        },
+        {
+          "x": 1069,
+          "y": 269
+        },
+        {
+          "x": 896,
+          "y": 269
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
     },
@@ -808,25 +1078,21 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1450,
         y: 750,
-        labelX: 1890,
-        labelY: 820,
+        labelX: 1600,
+        labelY: 780,
         points: [
-            {
-                x: 1303,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 811
-            },
-            {
-                x: 1788,
-                y: 815
-            }
+             {
+          "x": 980,
+          "y": 431
+        },
+        {
+          "x": 977,
+          "y": 760
+        },
+        {
+          "x": 1491,
+          "y": 763
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776409574/leftlobby_hhdbqu.jpg',
     },
@@ -855,7 +1121,7 @@ export const pointsData: FloorPointsData[] = [
         icon: fan,
         x: 900,
         y: 480,
-        labelX: 570,
+        labelX: 600,
         labelY: 290,
 
         points: [
@@ -1056,26 +1322,51 @@ export const pointsData: FloorPointsData[] = [
         icon: fan,
         x: 900,
         y: 480,
-        labelX: 570,
+        labelX: 430,
         labelY: 290,
 
         points: [
             {
-                x: 1003,
-                y: 322
-            },
-            {
-                x: 896,
-                y: 322
-            },
-            {
-                x: 900,
-                y: 280
-            },
-            {
-                x: 740,
-                y: 281
-            }
+          "x": 785,
+          "y": 279
+        },
+        {
+          "x": 568,
+          "y": 280
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
+    },
+
+     {
+        id: 1,
+      
+        name: 'AHU Room',
+        subtitle: 'Mechanical ventilation and air-handling zone',
+        iconType: 'fan',
+        icon: fan,
+        x: 900,
+        y: 480,
+        labelX: 570,
+        labelY: 290,
+
+        points: [
+          {
+          "x": 1179,
+          "y": 278
+        },
+        {
+          "x": 1183,
+          "y": 323
+        },
+        {
+          "x": 711,
+          "y": 325
+        },
+        {
+          "x": 712,
+          "y": 282
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
     },
@@ -1087,21 +1378,48 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'shield',
         x: 850,
         y: 600,
+        labelX: 360,
+        labelY: 490,
+        points: [
+             {
+          "x": 835,
+          "y": 287
+        },
+        {
+          "x": 821,
+          "y": 527
+        },
+        {
+          "x": 494,
+          "y": 528
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
+    },
+
+     {
+        id: 2,
+        name: 'Fire Tower',
+        subtitle: 'Fire escape stairs and safety zone',
+        icon: health,
+        iconType: 'shield',
+        x: 850,
+        y: 600,
         labelX: 550,
         labelY: 560,
         points: [
-            {
-                x: 1083,
-                y: 323
-            },
-            {
-                x: 1071,
-                y: 544
-            },
-            {
-                x: 699,
-                y: 545
-            }
+           {
+          "x": 1132,
+          "y": 285
+        },
+        {
+          "x": 1140,
+          "y": 424
+        },
+        {
+          "x": 825,
+          "y": 427
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
     },
@@ -1113,25 +1431,60 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 950,
         y: 700,
-        labelX: 530,
-        labelY: 820,
+        labelX: 1470,
+        labelY: 400,
         points: [
             {
-                x: 1246,
-                y: 315
-            },
-            {
-                x: 1234,
-                y: 805
-            },
-            {
-                x: 618,
-                y: 809
-            }
+          "x": 960,
+          "y": 277
+        },
+        {
+          "x": 959,
+          "y": 388
+        },
+        {
+          "x": 1342,
+          "y": 386
+        }
         ],
         detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
     },
-    {
+
+     {
+        id: 3,
+        name: "Women's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: women,
+        iconType: 'user',
+        x: 950,
+        y: 700,
+        labelX: 1540,
+        labelY: 720,
+        points: [
+                 {
+          "x": 1005,
+          "y": 278
+        },
+        {
+          "x": 1006,
+          "y": 388,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
+
+        ],
+        detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
+    },
+
+
+      {
         id: 4,
         name: 'Office Space',
         subtitle: 'Massive customizable office space.',
@@ -1139,21 +1492,53 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'monitor',
         x: 1250,
         y: 400,
-        labelX: 1180,
-        labelY: 125,
+        labelX: 1580,
+        labelY: 765,
         points: [
-            {
-          x: 1157,
-          y: 503
+           {
+          "x": 1148,
+          "y": 529
         },
         {
-          x: 1160,
-          y: 208
+          "x": 1148,
+          "y": 792
+        },
+        {
+          "x": 1586,
+          "y": 797
         }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776410532/retail_qzuvno.jpg',
     },
+  
     {
+        id: 5,
+        name: 'ODU Balcony',
+        subtitle: 'Outdoor unit placement area',
+        icon: balcony,
+        iconType: 'box',
+        x: 1550,
+        y: 500,
+        labelX: 1490,
+        labelY: 230,
+        points: [
+             {
+          "x": 790,
+          "y": 248
+        },
+        {
+          "x": 792,
+          "y": 205
+        },
+        {
+          "x": 1362,
+          "y": 202
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
+    },
+
+     {
         id: 5,
         name: 'ODU Balcony',
         subtitle: 'Outdoor unit placement area',
@@ -1164,14 +1549,23 @@ export const pointsData: FloorPointsData[] = [
         labelX: 1800,
         labelY: 290,
         points: [
-            {
-                x: 1488,
-                y: 276
-            },
-            {
-                x: 1656,
-                y: 276
-            }
+             {
+          "x": 1181,
+          "y": 250
+        },
+        {
+          "x": 1182,
+          "y": 204,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
     },
@@ -1183,21 +1577,61 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1500,
         y: 650,
-        labelX: 1850,
+        labelX: 1540,
+        labelY: 550,
+        points: [
+              {
+          "x": 900,
+          "y": 273
+        },
+        {
+          "x": 896,
+          "y": 460
+        },
+        {
+          "x": 1120,
+          "y": 460
+        },
+        {
+          "x": 1123,
+          "y": 555
+        },
+        {
+          "x": 1411,
+          "y": 553
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
+    },
+
+     {
+        id: 6,
+        name: "Men's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: mens,
+        iconType: 'user',
+        x: 1500,
+        y: 650,
+        labelX: 1550,
         labelY: 500,
         points: [
-            {
-                x: 1352,
-                y: 325
-            },
-            {
-                x: 1356,
-                y: 480
-            },
-            {
-                x: 1757,
-                y: 476
-            }
+           {
+          "x": 1068,
+          "y": 276
+        },
+        {
+          "x": 1074,
+          "y": 461,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
     },
@@ -1209,25 +1643,21 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1450,
         y: 750,
-        labelX: 1890,
-        labelY: 820,
+        labelX: 320,
+        labelY: 720,
         points: [
-            {
-                x: 1303,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 811
-            },
-            {
-                x: 1788,
-                y: 815
-            }
+           {
+          "x": 976,
+          "y": 523
+        },
+        {
+          "x": 977,
+          "y": 713
+        },
+        {
+          "x": 443,
+          "y": 725
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776409574/leftlobby_hhdbqu.jpg',
     },
@@ -1252,29 +1682,54 @@ export const pointsData: FloorPointsData[] = [
         icon: fan,
         x: 900,
         y: 480,
-        labelX: 570,
-        labelY: 290,
+        labelX: 435,
+        labelY: 350,
 
         points: [
             {
-                x: 1003,
-                y: 322
-            },
-            {
-                x: 896,
-                y: 322
-            },
-            {
-                x: 900,
-                y: 280
-            },
-            {
-                x: 740,
-                y: 281
-            }
+          "x": 788,
+          "y": 311
+        },
+        {
+          "x": 785,
+          "y": 365
+        },
+        {
+          "x": 551,
+          "y": 364
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
     },
+  {
+        id: 1,
+      
+        name: 'AHU Room',
+        subtitle: 'Mechanical ventilation and air-handling zone',
+        iconType: 'fan',
+        icon: fan,
+        x: 900,
+        y: 480,
+        labelX: 370,
+        labelY: 290,
+
+        points: [
+           {
+          "x": 1180,
+          "y": 313
+        },
+        {
+          "x": 1181,
+          "y": 364
+        },
+        {
+          "x": 786,
+          "y": 364
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
+    },
+
     {
         id: 2,
         name: 'Fire Tower',
@@ -1283,21 +1738,48 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'shield',
         x: 850,
         y: 600,
-        labelX: 550,
-        labelY: 560,
+        labelX: 430,
+        labelY: 500,
         points: [
-            {
-                x: 1083,
-                y: 323
-            },
-            {
-                x: 1071,
-                y: 544
-            },
-            {
-                x: 699,
-                y: 545
-            }
+           {
+          "x": 847,
+          "y": 317
+        },
+        {
+          "x": 833,
+          "y": 480
+        },
+        {
+          "x": 565,
+          "y": 481
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
+    },
+
+     {
+        id: 2,
+        name: 'Fire Tower',
+        subtitle: 'Fire escape stairs and safety zone',
+        icon: health,
+        iconType: 'shield',
+        x: 850,
+        y: 600,
+        labelX: 420,
+        labelY: 500,
+        points: [
+           {
+          "x": 1112,
+          "y": 316
+        },
+        {
+          "x": 1117,
+          "y": 478
+        },
+        {
+          "x": 832,
+          "y": 479
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
     },
@@ -1309,25 +1791,67 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 950,
         y: 700,
-        labelX: 530,
-        labelY: 820,
+        labelX: 1550,
+        labelY: 670,
         points: [
-            {
-                x: 1246,
-                y: 315
-            },
-            {
-                x: 1234,
-                y: 805
-            },
-            {
-                x: 618,
-                y: 809
-            }
+          {
+          "x": 959,
+          "y": 315
+        },
+        {
+          "x": 955,
+          "y": 493
+        },
+        {
+          "x": 1081,
+          "y": 493
+        },
+        {
+          "x": 1084,
+          "y": 666
+        },
+        {
+          "x": 1436,
+          "y": 668
+        }
         ],
         detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
     },
-    {
+
+
+     {
+        id: 3,
+        name: "Women's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: women,
+        iconType: 'user',
+        x: 950,
+        y: 700,
+        labelX: 1530,
+        labelY: 820,
+        points: [
+              {
+          "x": 1005,
+          "y": 315
+        },
+        {
+          "x": 1005,
+          "y": 494,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
+        ],
+        detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
+    },
+
+      {
         id: 4,
         name: 'Office Space',
         subtitle: 'Massive customizable office space.',
@@ -1335,21 +1859,53 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'monitor',
         x: 1250,
         y: 400,
-        labelX: 1180,
-        labelY: 125,
+        labelX: 1570,
+        labelY: 820,
         points: [
-            {
-          x: 1157,
-          y: 503
+           {
+          "x": 1140,
+          "y": 483
         },
         {
-          x: 1160,
-          y: 208
+          "x": 1145,
+          "y": 782
+        },
+        {
+          "x": 1559,
+          "y": 787
         }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776410532/retail_qzuvno.jpg',
     },
+   
     {
+        id: 5,
+        name: 'ODU Balcony',
+        subtitle: 'Outdoor unit placement area',
+        icon: balcony,
+        iconType: 'box',
+        x: 1550,
+        y: 500,
+        labelX: 1510,
+        labelY: 250,
+        points: [
+            {
+          "x": 789,
+          "y": 285
+        },
+        {
+          "x": 792,
+          "y": 232
+        },
+        {
+          "x": 1384,
+          "y": 229
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
+    },
+
+      {
         id: 5,
         name: 'ODU Balcony',
         subtitle: 'Outdoor unit placement area',
@@ -1360,14 +1916,23 @@ export const pointsData: FloorPointsData[] = [
         labelX: 1800,
         labelY: 290,
         points: [
-            {
-                x: 1488,
-                y: 276
-            },
-            {
-                x: 1656,
-                y: 276
-            }
+           {
+          "x": 1172,
+          "y": 283
+        },
+        {
+          "x": 1172,
+          "y": 231,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
     },
@@ -1379,21 +1944,61 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1500,
         y: 650,
-        labelX: 1850,
-        labelY: 500,
+        labelX: 1540,
+        labelY: 450,
         points: [
             {
-                x: 1352,
-                y: 325
-            },
-            {
-                x: 1356,
-                y: 480
-            },
-            {
-                x: 1757,
-                y: 476
-            }
+          "x": 898,
+          "y": 315
+        },
+        {
+          "x": 897,
+          "y": 372
+        },
+        {
+          "x": 1128,
+          "y": 372
+        },
+        {
+          "x": 1132,
+          "y": 445
+        },
+        {
+          "x": 1413,
+          "y": 443
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
+    },
+
+     {
+        id: 6,
+        name: "Men's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: mens,
+        iconType: 'user',
+        x: 1500,
+        y: 650,
+        labelX: 1540,
+        labelY: 450,
+        points: [
+           {
+          "x": 1063,
+          "y": 311
+        },
+        {
+          "x": 1064,
+          "y": 373,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
     },
@@ -1405,25 +2010,25 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1450,
         y: 750,
-        labelX: 1890,
-        labelY: 820,
+        labelX: 360,
+        labelY: 720,
         points: [
-            {
-                x: 1303,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 811
-            },
-            {
-                x: 1788,
-                y: 815
-            }
+          {
+          "x": 979,
+          "y": 553
+        },
+        {
+          "x": 839,
+          "y": 553
+        },
+        {
+          "x": 829,
+          "y": 712
+        },
+        {
+          "x": 482,
+          "y": 716
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776409574/leftlobby_hhdbqu.jpg',
     },
@@ -1448,26 +2053,50 @@ export const pointsData: FloorPointsData[] = [
         icon: fan,
         x: 900,
         y: 480,
-        labelX: 570,
+        labelX: 380,
+        labelY: 390,
+
+        points: [
+          {
+          "x": 791,
+          "y": 347
+        },
+        {
+          "x": 783,
+          "y": 427
+        },
+        {
+          "x": 517,
+          "y": 427
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
+    },
+      {
+        id: 1,
+      
+        name: 'AHU Room',
+        subtitle: 'Mechanical ventilation and air-handling zone',
+        iconType: 'fan',
+        icon: fan,
+        x: 900,
+        y: 480,
+        labelX: 370,
         labelY: 290,
 
         points: [
-            {
-                x: 1003,
-                y: 322
-            },
-            {
-                x: 896,
-                y: 322
-            },
-            {
-                x: 900,
-                y: 280
-            },
-            {
-                x: 740,
-                y: 281
-            }
+           {
+          "x": 1175,
+          "y": 349
+        },
+        {
+          "x": 1179,
+          "y": 427
+        },
+        {
+          "x": 786,
+          "y": 427
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
     },
@@ -1479,21 +2108,43 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'shield',
         x: 850,
         y: 600,
-        labelX: 550,
-        labelY: 560,
+        labelX: 1500,
+        labelY: 395,
         points: [
-            {
-                x: 1083,
-                y: 323
-            },
-            {
-                x: 1071,
-                y: 544
-            },
-            {
-                x: 699,
-                y: 545
-            }
+              {
+          "x": 852,
+          "y": 348
+        },
+        {
+          "x": 844,
+          "y": 441
+        },
+        {
+          "x": 1380,
+          "y": 436
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
+    },
+     {
+        id: 2,
+        name: 'Fire Tower',
+        subtitle: 'Fire escape stairs and safety zone',
+        icon: health,
+        iconType: 'shield',
+        x: 850,
+        y: 600,
+        labelX: 1550,
+        labelY: 660,
+        points: [
+             {
+          "x": 1108,
+          "y": 338
+        },
+        {
+          "x": 1110,
+          "y": 441
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
     },
@@ -1505,25 +2156,57 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 950,
         y: 700,
-        labelX: 530,
-        labelY: 820,
+        labelX: 1515,
+        labelY: 540,
         points: [
-            {
-                x: 1246,
-                y: 315
-            },
-            {
-                x: 1234,
-                y: 805
-            },
-            {
-                x: 618,
-                y: 809
-            }
+        {
+          "x": 958,
+          "y": 343
+        },
+        {
+          "x": 958,
+          "y": 521
+        },
+        {
+          "x": 1386,
+          "y": 520
+        }
         ],
         detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
     },
-    {
+     {
+        id: 3,
+        name: "Women's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: women,
+        iconType: 'user',
+        x: 950,
+        y: 700,
+        labelX: 1520,
+        labelY: 950,
+        points: [
+           {
+          "x": 1011,
+          "y": 342
+        },
+        {
+          "x": 1018,
+          "y": 521,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
+        ],
+        detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
+    },
+
+      {
         id: 4,
         name: 'Office Space',
         subtitle: 'Massive customizable office space.',
@@ -1531,20 +2214,25 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'monitor',
         x: 1250,
         y: 400,
-        labelX: 1180,
-        labelY: 125,
+        labelX: 1550,
+        labelY: 800,
         points: [
-            {
-          x: 1157,
-          y: 503
+           {
+          "x": 1170,
+          "y": 470
         },
         {
-          x: 1160,
-          y: 208
+          "x": 1177,
+          "y": 785
+        },
+        {
+          "x": 1596,
+          "y": 790
         }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776410532/retail_qzuvno.jpg',
     },
+   
     {
         id: 5,
         name: 'ODU Balcony',
@@ -1553,17 +2241,54 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'box',
         x: 1550,
         y: 500,
-        labelX: 1800,
-        labelY: 290,
+        labelX: 1460,
+        labelY: 250,
         points: [
-            {
-                x: 1488,
-                y: 276
-            },
-            {
-                x: 1656,
-                y: 276
-            }
+              {
+          "x": 796,
+          "y": 321
+        },
+        {
+          "x": 799,
+          "y": 273
+        },
+        {
+          "x": 1345,
+          "y": 273
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
+    },
+
+     {
+        id: 5,
+        name: 'ODU Balcony',
+        subtitle: 'Outdoor unit placement area',
+        icon: balcony,
+        iconType: 'box',
+        x: 1550,
+        y: 500,
+        labelX: 1460,
+        labelY: 250,
+        points: [
+             {
+          "x": 1170,
+          "y": 314
+        },
+        {
+          "x": 1170,
+          "y": 274,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        }
+
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
     },
@@ -1575,21 +2300,57 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1500,
         y: 650,
-        labelX: 1850,
-        labelY: 500,
+        labelX: 360,
+        labelY: 750,
         points: [
-            {
-                x: 1352,
-                y: 325
-            },
-            {
-                x: 1356,
-                y: 480
-            },
-            {
-                x: 1757,
-                y: 476
-            }
+             {
+          "x": 904,
+          "y": 347
+        },
+        {
+          "x": 883,
+          "y": 745
+        },
+        {
+          "x": 495,
+          "y": 753
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
+    },
+
+     {
+        id: 6,
+        name: "Men's Washroom",
+        subtitle: 'Dedicated washroom facilities',
+        icon: mens,
+        iconType: 'user',
+        x: 1500,
+        y: 650,
+        labelX: 350,
+        labelY: 600,
+        points: [
+          {
+          "x": 1067,
+          "y": 346
+        },
+        {
+          "x": 1067,
+          "y": 378,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
+        },
+        {
+          "x": 901,
+          "y": 377
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183182/cafenew_1_ejb6xp.jpg',
     },
@@ -1601,25 +2362,17 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'user',
         x: 1450,
         y: 750,
-        labelX: 1890,
-        labelY: 820,
+        labelX: 350,
+        labelY: 550,
         points: [
-            {
-                x: 1303,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 586
-            },
-            {
-                x: 1431,
-                y: 811
-            },
-            {
-                x: 1788,
-                y: 815
-            }
+          {
+          "x": 975,
+          "y": 578
+        },
+        {
+          "x": 500,
+          "y": 578
+        }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776409574/leftlobby_hhdbqu.jpg',
     },
@@ -1792,6 +2545,33 @@ export const pointsData: FloorPointsData[] = [
         }
         ],
         detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
+    },
+
+     {
+        id: 4,
+        name: 'Office Space',
+        subtitle: 'Massive customizable office space.',
+        icon: office,
+        iconType: 'monitor',
+        x: 1250,
+        y: 400,
+        labelX: 1550,
+        labelY: 800,
+        points: [
+           {
+          "x": 1135,
+          "y": 526
+        },
+        {
+          "x": 1143,
+          "y": 821
+        },
+        {
+          "x": 1542,
+          "y": 821
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776410532/retail_qzuvno.jpg',
     },
    
     {
@@ -2111,6 +2891,33 @@ export const pointsData: FloorPointsData[] = [
         }
         ],
         detailImage: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80',
+    },
+
+     {
+        id: 4,
+        name: 'Office Space',
+        subtitle: 'Massive customizable office space.',
+        icon: office,
+        iconType: 'monitor',
+        x: 1250,
+        y: 400,
+        labelX: 1550,
+        labelY: 850,
+        points: [
+           {
+          "x": 1128,
+          "y": 595
+        },
+        {
+          "x": 1140,
+          "y": 882
+        },
+        {
+          "x": 1618,
+          "y": 880
+        }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776410532/retail_qzuvno.jpg',
     },
    
     {
