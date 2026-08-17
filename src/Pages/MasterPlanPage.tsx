@@ -243,7 +243,7 @@ export default function MasterplanPage() {
         {/* Lightbox / Modal for Image Preview */}
         {modalImage && (
           <div
-            className="fixed inset-0 bg-black/60 backdrop-blur-[3px] z-[2000] flex items-center justify-center p-4 cursor-pointer"
+            className="absolute inset-0 bg-black/60 backdrop-blur-[3px] z-40 flex items-center justify-center p-4 cursor-pointer"
             onClick={() => setModalImage(null)}
           >
             <div
