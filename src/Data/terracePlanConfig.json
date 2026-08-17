@@ -3,32 +3,24 @@
         "id": "lift-lobby",
         "title": "Lift Lobby",
         "description": "Lift lobby providing access to the rooftop amenities.",
-        "polygon": "3051,1107,2458,1112",
-        "x": 525,
-        "y": 265
+        "polygon": "1399,786,1101,791",
+        "x": 485,
+        "y": 310
     },
     {
         "id": "multipurpose-court",
         "title": "Multipurpose Court",
         "description": "Sports court on the terrace for basketball, tennis, and more.",
-        "polygon": "2985,1572,2487,1576,2487,1830,2487,1576",
-        "x": 580,
-        "y": 450
+        "polygon": "1426,999,1172,999,1172,1100",
+        "x": 540,
+        "y": 440
     },
     {
         "id": "rooftop-lunch-cafe",
         "title": "Main entry to Rooftop Lunch Cafe",
         "description": "Main entry to the rooftop lunch cafe.",
-        "polygon": "3423,1190,3423,1919",
+        "polygon": "1580,802,1582,1157",
         "x": 760,
-        "y": 470
-    },
-    {
-        "id": "table-tennis",
-        "title": "Table Tennis",
-        "description": "Outdoor table tennis area.",
-        "polygon": "3738,1675,3747,1976,3822,1981,3747,1976",
-        "x": 890,
         "y": 470
     },
     {
@@ -36,63 +28,73 @@
         "title": "Services (Chillers & Cooling)",
         "description": "Building chillers, services, and cooling towers.",
         "polygon": "",
-        "x": 885,
-        "y": 270
+        "x": 850,
+        "y": 320
     },
     {
         "id": "high-top-tables",
         "title": "High Top Tables",
         "description": "Seating area with high-top tables.",
-        "polygon": "3489,619,3489,722,3846,722,3841,534",
-        "x": 880,
-        "y": 110
+        "polygon": "1609,564,1607,605,1788,605,1790,459",
+        "x": 830,
+        "y": 175
     },
     {
         "id": "serving-kiosks",
         "title": "Serving Kiosks",
         "description": "Rooftop food and beverage serving kiosks.",
-        "polygon": "3173,647,3173,506,3437,497,3705,497,3714,647,3710,502,3441,493,3432,389",
-        "x": 780,
-        "y": 85
+        "polygon": [
+            "1458,542,1458,482,1596,482,1596,448",
+            "1731,539,1731,480,1596,480"
+        ],
+        "x": 740,
+        "y": 175
     },
     {
         "id": "restroom-shower",
         "title": "Rest Room & Shower",
         "description": "Convenient restroom and shower facilities on the terrace.",
-        "polygon": "4368,930 4627,930 4665,1170; 4373,1104 4622,1099 4665,1170; 4368,1231 4622,1240 4665,1170; 4368,1396 4622,1386 4665,1170",
-        "x": 1090,
-        "y": 280
+        "polygon": [
+            "2024,686,2152,688",
+            "2152,688,2152,901",
+            "2150,761,2026,761",
+            "2150,834,2029,832",
+            "2152,901,2029,903",
+            "2152,795,2184,795"
+        ],
+        "x": 1055,
+        "y": 315
     },
     {
         "id": "elevator-shaft-top",
         "title": "Elevator Shafts",
         "description": "Service and passenger elevator access.",
-        "polygon": "4382,774,4707,783,4707,732",
-        "x": 1080,
-        "y": 160
+        "polygon": "2010,640,2155,640,2155,599",
+        "x": 1025,
+        "y": 230
     },
     {
         "id": "elevator-shaft-bottom",
         "title": "Elevator Shafts",
         "description": "Service and passenger elevator access.",
-        "polygon": "4340,1475,4650,1475,4650,1606",
-        "x": 1070,
-        "y": 380
+        "polygon": "2008,953,2159,953,2157,990",
+        "x": 1025,
+        "y": 400
     },
     {
         "id": "fire-tower-top",
         "title": "Fire Tower",
         "description": "Emergency exit and fire tower access.",
-        "polygon": "4321,750,4321,581,4829,586,4829,520",
-        "x": 1110,
-        "y": 105
+        "polygon": "2015,605,2013,530,2150,528,2150,491",
+        "x": 1020,
+        "y": 190
     },
     {
         "id": "fire-tower-bottom",
         "title": "Fire Tower",
         "description": "Emergency exit and fire tower access.",
-        "polygon": "4316,1564,4316,1663,4820,1677,4820,1771",
-        "x": 1100,
-        "y": 430
+        "polygon": "2010,992,2008,1082,2159,1084,2159,1116",
+        "x": 1020,
+        "y": 450
     }
 ]

@@ -29,11 +29,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onLabelsToggle,
     onCirculationSelect,
 }) => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+
     // Inside your Sidebar component:
     const location = useLocation();
-    // Floor Plan already has its own floor table on the right, so the panel
-    // starts collapsed there; Masterplan starts with it open
-    const [isOpen, setIsOpen] = useState<boolean>(() => !location.pathname.includes("floor-plan"));
 
     useEffect(() => {
         if (location.pathname.includes("floor-plan")) {
@@ -85,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     };
 
     return (
-        <aside className={`fixed top-0 left-0 w-full h-dvh flex select-none pointer-events-none transition-all duration-300 ${isOpen ? "z-[1005]" : "z-[999]"}`}>
+        <aside className={`fixed top-0 left-0 w-screen h-screen flex select-none pointer-events-none transition-all duration-300 ${isOpen ? "z-[1005]" : "z-[999]"}`}>
             {/* 1. Left Curved Icon Rail (Enable pointer-events-auto directly on the container) */}
             <div className="relative w-[6%] h-full text-white flex flex-col justify-between py-6 px-3 z-20 pointer-events-auto">
 
@@ -193,7 +193,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         to="/floor-plan"
                         onClick={() => {
                             setActiveTab("section");
-                            setIsOpen(false);        // Floor Plan starts with the panel collapsed
+                            setIsOpen(true);         // Opens the main side glass panel
                             setIsLayoutOpen(false);
                         }}
                         className="group relative flex items-center justify-center p-1 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
@@ -221,7 +221,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     /* Glassmorphism Core */
     bg-gradient-to-b from-black/55 via-black/70 to-black/85 
     backdrop-blur-xl backdrop-saturate-150
-    border-r border-white/50
+    border-r border-neutral-500/35
     shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
     /* Subtle Inner Highlight for Glass Reflection */
     inset-shadow-sm inset-shadow-white/10
@@ -354,6 +354,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                                 key={item}
                                                 onClick={() => {
                                                     setSelectedCirculation(item);
+                                                    setIsCirculationOpen(false);
                                                     if (onCirculationSelect) onCirculationSelect(item);
                                                 }}
                                                 className={`w-full text-left px-3 py-[3.5px] text-[9px] transition-colors cursor-pointer border-b border-white/10 last:border-0 ${isSelected
