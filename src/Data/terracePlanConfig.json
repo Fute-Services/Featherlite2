@@ -11,7 +11,7 @@
         "id": "multipurpose-court",
         "title": "Multipurpose Court",
         "description": "Sports court on the terrace for basketball, tennis, and more.",
-        "polygon": "1426,999,1172,999,1172,1100,1172,999",
+        "polygon": "1426,999,1172,999,1172,1100",
         "x": 540,
         "y": 440
     },
@@ -54,7 +54,14 @@
         "id": "restroom-shower",
         "title": "Rest Room & Shower",
         "description": "Convenient restroom and shower facilities on the terrace.",
-        "polygon": "2024,686,2152,688,2150,761,2026,761,2150,761,2150,834,2029,832,2150,834,2152,901,2029,903,2152,901,2152,795,2184,795,2150,795,2150,688",
+        "polygon": [
+            "2024,686,2152,688",
+            "2152,688,2152,901",
+            "2150,761,2026,761",
+            "2150,834,2029,832",
+            "2152,901,2029,903",
+            "2152,795,2184,795"
+        ],
         "x": 1055,
         "y": 315
     },
@@ -62,7 +69,7 @@
         "id": "elevator-shaft-top",
         "title": "Elevator Shafts",
         "description": "Service and passenger elevator access.",
-        "polygon": "2010,640,2155,640,2155,599,2155,642",
+        "polygon": "2010,640,2155,640,2155,599",
         "x": 1025,
         "y": 230
     },
@@ -70,7 +77,7 @@
         "id": "elevator-shaft-bottom",
         "title": "Elevator Shafts",
         "description": "Service and passenger elevator access.",
-        "polygon": "2008,953,2159,953,2157,990,2159,953",
+        "polygon": "2008,953,2159,953,2157,990",
         "x": 1025,
         "y": 400
     },
@@ -78,7 +85,7 @@
         "id": "fire-tower-top",
         "title": "Fire Tower",
         "description": "Emergency exit and fire tower access.",
-        "polygon": "2015,605,2013,530,2150,528,2150,491,2152,528,2013,528",
+        "polygon": "2015,605,2013,530,2150,528,2150,491",
         "x": 1020,
         "y": 190
     },
@@ -86,7 +93,7 @@
         "id": "fire-tower-bottom",
         "title": "Fire Tower",
         "description": "Emergency exit and fire tower access.",
-        "polygon": "2010,992,2008,1082,2159,1084,2159,1116,2161,1082,2010,1084",
+        "polygon": "2010,992,2008,1082,2159,1084,2159,1116",
         "x": 1020,
         "y": 450
     }

@@ -63,16 +63,6 @@ const ensureHighResCoordinate = (val: number, type: "x" | "y") => {
 const ensureHighResPoints = (polygonStr?: string) => {
   const points = parsePoints(polygonStr);
   if (!points) return null;
-
-  const isHighRes = points.some(pt => pt.x > 1200 || pt.y > 629);
-
-  if (!isHighRes) {
-    return points.map(pt => ({
-      x: pt.x * (2593 / 1200),
-      y: pt.y * (1589 / 629)
-    }));
-  }
-
   return points;
 };
 
@@ -174,15 +164,12 @@ export default function MasterplanPage() {
 
                       return (
                         <g key={`line-${lIndex}`}>
-                          <motion.polyline
+                          <polyline
                             points={pointsStr}
                             fill="none"
                             stroke="#EF4444"
-                            strokeWidth={1.5 * scale}
-                            strokeDasharray={`${8 * scale},${8 * scale}`}
-                            initial={{ pathLength: 0 }}
-                            animate={{ pathLength: 1 }}
-                            transition={{ duration: 0.5, ease: "easeInOut" }}
+                            strokeWidth={3}
+                            strokeDasharray="8,8"
                           />
                           <circle
                             cx={lineDotX}

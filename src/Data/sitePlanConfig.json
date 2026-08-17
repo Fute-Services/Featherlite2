@@ -3,9 +3,9 @@
         "id": "security-cabin-1",
         "title": "Security Cabin",
         "description": "Main entrance security and visitor registration.",
-        "polygon": "1025,364,941,361",
-        "x": 390,
-        "y": 140
+        "polygon": "1032,375,959,375",
+        "x": 410,
+        "y": 145
     },
     {
         "id": "security-cabin-2",
@@ -19,7 +19,7 @@
         "id": "Office users Entry",
         "title": "Office users Entry",
         "description": "Main entrance security and visitor registration.",
-        "polygon": "2182,1220,2258,1220,2258,1263,2258,1222",
+        "polygon": "2182,1220,2258,1220,2258,1263",
         "x": 1060,
         "y": 510
     },
@@ -51,9 +51,9 @@
         "id": "2-wheeler-parking-2",
         "title": "2 Wheeler Parking",
         "description": "Main entrance security and visitor registration.",
-        "polygon": "915,1365,913,1273",
-        "x": 420,
-        "y": 500
+        "polygon": "1426,1209,1426,1168,1305,1168",
+        "x": 590,
+        "y": 460
     },
     {
         "id": "creche-play-area",
@@ -75,7 +75,7 @@
         "id": "arrival-plaza",
         "title": "Arrival Plaza",
         "description": "Grand drop-off point with water features.",
-        "polygon": "1193,778,1193,677,1110,675,1193,677",
+        "polygon": "1193,778,1193,677,1110,675",
         "x": 500,
         "y": 265
     },
@@ -99,7 +99,7 @@
         "id": "green-wall",
         "title": "Green Wall",
         "description": "Safe and fun outdoor area for children.",
-        "polygon": "2221,696,2287,696,2287,662,2287,698",
+        "polygon": "2221,696,2287,696,2287,662",
         "x": 1085,
         "y": 250
     },
