@@ -1,0 +1,16 @@
+[
+  {
+    "id": "restaurant",
+    "title": "Restaurant",
+    "level": "ground",
+    "polygon": "1261,680,1250,517,1261,527,1261,511,1422,513,1426,675",
+    "image": "/src/assets/floorplan/pop/resturant.png"
+  },
+  {
+    "id": "Creche",
+    "title": "Creche",
+    "level": "ground",
+    "polygon": "1838,675,1836,536,1971,536,1971,678",
+    "image": "/src/assets/floorplan/pop/creche.png"
+  }
+]

@@ -37,7 +37,7 @@ const HotspotMarker: React.FC<HotspotMarkerProps> = ({
           className="pointer-events-auto overflow-visible"
         >
           <div className="w-full h-full flex flex-col items-center justify-center relative">
-            <div className="relative bg-black/60 border border-white/20 backdrop-blur-md text-white px-10 py-6 text-[30px] font-medium tracking-wide whitespace-nowrap cursor-pointer hover:bg-black/80 transition-colors shadow-2xl rounded-full">
+            <div className="relative bg-black/60 border border-white/20 backdrop-blur-md text-white px-5 py-2.5 text-[15px] font-medium tracking-wide whitespace-nowrap cursor-pointer hover:bg-black/80 transition-colors shadow-2xl rounded-full">
               {title}
             </div>
           </div>

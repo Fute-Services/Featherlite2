@@ -29,7 +29,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onLabelsToggle,
     onCirculationSelect,
 }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
 
     // Inside your Sidebar component:
@@ -220,7 +220,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     /* Glassmorphism Core */
     bg-gradient-to-b from-black/55 via-black/70 to-black/85 
     backdrop-blur-xl backdrop-saturate-150
-    border-r border-white/50
+    border-r border-neutral-500/35
     shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
     /* Subtle Inner Highlight for Glass Reflection */
     inset-shadow-sm inset-shadow-white/10
