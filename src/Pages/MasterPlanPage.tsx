@@ -210,8 +210,10 @@ export default function MasterplanPage() {
                 })}
               </svg>
 
-      {/* Circulation video overlay - occupies the exact same box as the masterplan image */}
-      <AnimatePresence>
+      {/* Circulation video overlay - occupies the exact same box as the masterplan image.
+          mode="wait" so only one clip's motion is ever on screen - overlapping two
+          different clips' camera motion during a crossfade read as the frame jumping. */}
+      <AnimatePresence mode="wait">
         {circulationVideo && (
           <motion.video
             ref={circulationVideoRef}
@@ -220,7 +222,7 @@ export default function MasterplanPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.9, ease: "easeInOut" }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
             className="absolute inset-0 z-40 size-full object-cover [filter:brightness(1.15)_contrast(1.08)_saturate(1.15)]"
             autoPlay
             muted
