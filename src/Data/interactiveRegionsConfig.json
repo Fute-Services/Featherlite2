@@ -4,76 +4,76 @@
     "title": "Restaurant",
     "level": "ground",
     "polygon": "1261,680,1250,517,1261,527,1261,511,1422,513,1426,675",
-    "image": "/src/assets/floorplan/pop/resturant.png"
+    "image": "/hotspot-images/resturant.png"
   },
   {
     "id": "Creche",
     "title": "Creche",
     "level": "ground",
     "polygon": "1838,675,1836,536,1971,536,1971,678",
-    "image": "/src/assets/floorplan/pop/creche.png"
+    "image": "/hotspot-images/creche.png"
   },
   {
     "id": "Main Gate",
     "title": "Main Gate",
     "level": "ground",
     "polygon": "984,543,968,517,966,295,1030,300,1039,348,1213,348,1215,540",
-    "image": "/src/assets/floorplan/pop/maingate.jpg"
+    "image": "/hotspot-images/maingate.jpg"
   },
   {
     "id": "cafe",
     "title": "cafe",
     "level": "ground",
     "polygon": "1412,948,1410,1085,1557,1090,1557,955",
-    "image": "/src/assets/floorplan/pop/cafe.jpg"
+    "image": "/hotspot-images/Cafe.jpg"
   },
   {
     "id": "cafe-seating",
     "title": "cafe-seating",
     "level": "ground",
     "polygon": "1774,1091,1774,1242,2113,1244,2111,1123,2081,1123,2061,1100",
-    "image": "/src/assets/floorplan/pop/Cafe_seating.jpeg"
+    "image": "/hotspot-images/Cafe_seating.jpeg"
   },
   {
     "id": "lift-lobby",
     "title": "lift-lobby",
     "level": "ground",
     "polygon": "1408,871,1408,745,1566,747,1568,871",
-    "image": "/src/assets/floorplan/pop/Lift_lobby.jpeg"
+    "image": "/hotspot-images/Lift_lobby.jpeg"
   },
   {
     "id": "Lbby",
     "title": "Lobby",
     "level": "ground",
     "polygon": "1266,876,1403,871,1408,1107,1247,1105,1261,963",
-    "image": "/src/assets/floorplan/pop/Lobby.jpg"
+    "image": "/hotspot-images/Lobby.jpg"
   },
   {
     "id": "entrance",
     "title": "entrance",
     "level": "ground",
     "polygon": "1252,878,1247,738,1261,743,1264,679,1406,679,1406,869",
-    "image": "/src/assets/floorplan/pop/entrance.jpg"
+    "image": "/hotspot-images/entrance.jpg"
   },
   {
     "id": "basement",
     "title": "basement",
     "level": "ground",
     "polygon": "1573,303,1577,521,2113,523,2111,303",
-    "image": "/src/assets/floorplan/pop/basement.jpg"
+    "image": "/hotspot-images/basement.jpg"
   },
   {
     "id": "cafe-entry",
     "title": "cafe-entry",
     "level": "ground",
     "polygon": "1522,1091,1522,1242,1767,1249,1770,1093",
-    "image": "/src/assets/floorplan/pop/cafe_entry.jpg"
+    "image": "/hotspot-images/cafe_entry.jpg"
   },
   {
     "id": "entry-foyer",
     "title": "entr-foyer",
     "level": "ground",
     "polygon": "1089,619,1083,876,1160,953,1238,958,1238,615,1197,617,1160,619",
-    "image": "/src/assets/floorplan/pop/Entry_foyer.jpg"
+    "image": "/hotspot-images/Entry_foyer.jpg"
   }
 ]

@@ -4,20 +4,20 @@
     "title": "Multipurpose Court",
     "level": "terrace",
     "polygon": "1270,918,1266,1081,1568,1085,1570,916",
-    "image": "src/assets/floorplan/terrace_pop/Multipurpose Court.jpeg"
+    "image": "/hotspot-images/terrace/Multipurpose_Court.jpeg"
   },
   {
     "id": "rooftop-lunch-cafe-terrace",
     "title": "Rooftop Lunch Cafe",
     "level": "terrace",
     "polygon": "1580,997,1958,995,1964,1013,2077,1013,2077,1091,1575,1089",
-    "image": "/src/assets/floorplan/terrace_pop/rooftop_lunch.jpeg"
+    "image": "/hotspot-images/terrace/Rooftop_lunch.jpeg"
   },
   {
     "id": "Terrace-cafe",
     "title": "Terrace cafe",
     "level": "terrace",
     "polygon": "1284,613,1985,610,1985,514,1280,526",
-    "image": "/src/assets/floorplan/terrace_pop/kiosk.jpg"
+    "image": "/hotspot-images/terrace/kiosk.jpg"
   }
 ]
