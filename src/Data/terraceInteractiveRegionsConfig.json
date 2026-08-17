@@ -1,0 +1,16 @@
+[
+  {
+    "id": "multipurpose-court-terrace",
+    "title": "Multipurpose Court",
+    "level": "terrace",
+    "polygon": "1100,800,1500,800,1500,1150,1100,1150",
+    "image": "/src/assets/floorplan/pop/multipurpose_court.jpg"
+  },
+  {
+    "id": "rooftop-lunch-cafe-terrace",
+    "title": "Rooftop Lunch Cafe",
+    "level": "terrace",
+    "polygon": "1500,800,1700,800,1700,1150,1500,1150",
+    "image": "/src/assets/floorplan/pop/rooftop_cafe.jpg"
+  }
+]

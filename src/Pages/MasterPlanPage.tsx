@@ -6,6 +6,7 @@ import Sidebar from "../Components/Navbar/Sidebar";
 import sitePlanLocal from "../Data/sitePlanConfig.json";
 import terracePlanLocal from "../Data/terracePlanConfig.json";
 import interactiveRegionsConfig from "../Data/interactiveRegionsConfig.json";
+import terraceInteractiveRegionsConfig from "../Data/terraceInteractiveRegionsConfig.json";
 import HotspotMarker from "../Components/SitePlan/HotspotMarker";
 
 const CIRCULATION_VIDEOS: Record<string, string> = {
@@ -96,6 +97,7 @@ export default function MasterplanPage() {
 
   const currentLevel = isTerrace ? "terrace" : "ground";
   const activeData: MasterPlanItem[] = isTerrace ? terracePlanLocal : sitePlanLocal;
+  const activeInteractiveRegions = isTerrace ? terraceInteractiveRegionsConfig : interactiveRegionsConfig;
   // circulation videos are only defined for the ground layout
   const circulationVideo = !isTerrace && selectedCirculation ? CIRCULATION_VIDEOS[selectedCirculation] : undefined;
 
@@ -197,9 +199,7 @@ export default function MasterplanPage() {
           })}
 
           {/* 2. New Separate Feature: Interactive Map Regions */}
-          {interactiveRegionsConfig
-            .filter((region) => region.level === currentLevel)
-            .map((region) => {
+          {activeInteractiveRegions.map((region) => {
               const points = parsePoints(region.polygon);
               if (!points) return null;
               const isHovered = hoveredRegionId === region.id;
@@ -209,7 +209,7 @@ export default function MasterplanPage() {
                   key={region.id}
                   points={points.map(p => `${p.x},${p.y}`).join(" ")}
                   fill={isHovered ? "rgba(239, 68, 68, 0.25)" : "rgba(255, 255, 255, 0.01)"}
-                  stroke={isHovered ? "#EF4444" : "transparent"}
+                  // stroke={isHovered ? "#EF4444" : "transparent"}
                   strokeWidth={isHovered ? 2 : 0}
                   className="cursor-pointer transition-all duration-200 pointer-events-auto"
                   onMouseEnter={() => setHoveredRegionId(region.id)}
