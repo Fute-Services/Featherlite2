@@ -80,6 +80,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const handleLayoutClick = (layout: string) => {
         setSelectedLayout(layout);
         setIsLayoutOpen(false);
+        setSelectedCirculation("Circulation");
         if (onLayoutSelect) onLayoutSelect(layout);
     };
 

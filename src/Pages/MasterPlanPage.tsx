@@ -7,6 +7,11 @@ import sitePlanLocal from "../Data/sitePlanConfig.json";
 import terracePlanLocal from "../Data/terracePlanConfig.json";
 import HotspotMarker from "../Components/SitePlan/HotspotMarker";
 
+// Per-marker preview photo, keyed by marker id. Drop the real photo into
+// src/assets/hotspots and add its entry here - falls back to a placeholder
+// card (just the title) until a photo is mapped.
+const HOTSPOT_IMAGES: Record<string, string> = {};
+
 const CIRCULATION_VIDEOS: Record<string, string> = {
   "Main Entry/Exit": "/circulation-videos/main-entry-exit.mp4",
   "Entry/Exit To Building": "/circulation-videos/entry-exit-to-building.mp4",
@@ -89,10 +94,12 @@ export default function MasterplanPage() {
   const [isTerrace, setIsTerrace] = useState<boolean>(false);
   const [isLabelsVisible, setIsLabelsVisible] = useState<boolean>(false);
   const [selectedCirculation, setSelectedCirculation] = useState<string | null>(null);
+  const [selectedHotspot, setSelectedHotspot] = useState<MasterPlanItem | null>(null);
   const circulationVideoRef = useRef<HTMLVideoElement>(null);
 
   const handleLayoutSelect = (layout: string) => {
     setIsTerrace(layout === "Terrace layout");
+    setSelectedCirculation(null);
   };
 
   const currentLevel = isTerrace ? "terrace" : "ground";
@@ -204,6 +211,7 @@ export default function MasterplanPage() {
                         y={boxDotY}
                         scale={scale}
                         isVisible={isLabelsVisible}
+                        onClick={() => setSelectedHotspot(marker)}
                       />
                     </g>
                   );
@@ -229,6 +237,49 @@ export default function MasterplanPage() {
             loop
             playsInline
           />
+        )}
+      </AnimatePresence>
+
+      {/* Hotspot preview popup - blurred backdrop keeps the sidebar/navbar readable behind it */}
+      <AnimatePresence>
+        {selectedHotspot && (
+          <motion.div
+            key={selectedHotspot.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setSelectedHotspot(null)}
+            className="absolute inset-0 z-[1010] flex items-center justify-center bg-black/60 backdrop-blur-md"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-[70vw] max-w-4xl h-[65vh] overflow-hidden rounded-[2rem] border border-white/20 shadow-2xl"
+            >
+              <button
+                onClick={() => setSelectedHotspot(null)}
+                aria-label="Close preview"
+                className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80"
+              >
+                ✕
+              </button>
+              {HOTSPOT_IMAGES[selectedHotspot.id] ? (
+                <img
+                  src={HOTSPOT_IMAGES[selectedHotspot.id]}
+                  alt={selectedHotspot.title}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-neutral-800 to-black">
+                  <span className="text-2xl font-light tracking-wide text-white/80">{selectedHotspot.title}</span>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
