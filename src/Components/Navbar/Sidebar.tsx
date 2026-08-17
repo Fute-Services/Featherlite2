@@ -193,7 +193,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         to="/floor-plan"
                         onClick={() => {
                             setActiveTab("section");
-                            setIsOpen(true);         // Opens the main side glass panel
+                            setIsOpen(false);        // Floor Plan starts with the panel collapsed
                             setIsLayoutOpen(false);
                         }}
                         className="group relative flex items-center justify-center p-1 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"

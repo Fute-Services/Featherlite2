@@ -91,6 +91,7 @@ export default function MasterplanPage() {
 
   const handleLayoutSelect = (layout: string) => {
     setIsTerrace(layout === "Terrace layout");
+    setSelectedCirculation(null);
   };
 
   const currentLevel = isTerrace ? "terrace" : "ground";
