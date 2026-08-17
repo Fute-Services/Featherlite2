@@ -21,7 +21,7 @@ const Header = () => {
           <ThemeToggle />
         </div>
       )}
-    </header>
+    </header></header>
   )
 }
 

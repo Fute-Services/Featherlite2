@@ -1,5 +1,6 @@
-import { IoReturnUpBack } from "react-icons/io5";
+// import { IoReturnUpBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { FaAngleLeft } from "react-icons/fa6";
 export default function BackButton() {
     const navigate = useNavigate();
     return (<>
@@ -11,10 +12,10 @@ export default function BackButton() {
                     border-white/70 rounded-full transition-all duration-500 ease-in-out cursor-pointer
                      hover:scale-110 active:scale-95 shadow-xl"
         >
-            {/* <ChevronLeft className="w-4 h-4 text-white/80" /> */}
+            <FaAngleLeft  className="w-4 h-4 text-white/80" />
             {/* <TiArrowBackOutline className="w-4 h-4 text-white/80"/> */}
 
-            <IoReturnUpBack className="w-4 h-4 text-white/80" />
+            {/* <IoReturnUpBack className="w-4 h-4 text-white/80" /> */}
 
         </button>
     </>)
