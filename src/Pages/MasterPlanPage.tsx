@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MasterplanGround from "../assets/floorplan/masterplan-ground.png";
@@ -86,10 +85,6 @@ const ensureHighResMultipleLines = (polygonStr?: string, currentLevel: "ground" 
     .map(lineStr => ensureHighResPoints(lineStr, currentLevel))
     .filter((line): line is { x: number; y: number }[] => line !== null);
 };
-=======
-import Masterplan from '../assets/floorplan/masterplan.png'
-import Sidebar from '../Components/Navbar/Sidebar'
->>>>>>> 3f533cf (Updated Featherlite floor plan and unit plan)
 
 export default function MasterplanPage() {
   const [isTerrace, setIsTerrace] = useState<boolean>(false);

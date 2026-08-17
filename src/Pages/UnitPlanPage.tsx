@@ -25,7 +25,7 @@ export default function UnitPlanPage() {
 
     // 2. Filter units (ignoring floor ID 1)
     const units = (floorPoints?.units || []).filter(
-        (u) => u && String(u.id) !== '1'
+        (u) => u && String(u.id) !== '0'
     );
 
     // 3. States
