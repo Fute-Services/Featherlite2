@@ -1,24 +1,23 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import MasterplanGround from "../assets/floorplan/masterplan-ground.jpg";
 import MasterplanTerrace from "../assets/floorplan/masterplan-terrace.jpg";
 import Sidebar from "../Components/Navbar/Sidebar";
 import sitePlanLocal from "../Data/sitePlanConfig.json";
 import terracePlanLocal from "../Data/terracePlanConfig.json";
-import circulationConfig from "../Data/circulationConfig.json";
 import HotspotMarker from "../Components/SitePlan/HotspotMarker";
-import CirculationArrow from "../Components/SitePlan/CirculationArrow";
 
-type CirculationDirection = "up" | "down" | "left" | "right";
-const CIRCULATION_POINTS = circulationConfig as Record<
-  string,
-  { x: number; y: number; direction: CirculationDirection }[]
->;
-const OPPOSITE_DIRECTION: Record<CirculationDirection, CirculationDirection> = {
-  up: "down",
-  down: "up",
-  left: "right",
-  right: "left",
+const CIRCULATION_VIDEOS: Record<string, string> = {
+  "Main Entry/Exit": "/circulation-videos/main-entry-exit.mp4",
+  "Entry/Exit To Building": "/circulation-videos/entry-exit-to-building.mp4",
+  "Ramp Access": "/circulation-videos/ramp-access.mp4",
+  "Visitors Parking": "/circulation-videos/visitors-parking.mp4",
+  "Two wheeler Parking": "/circulation-videos/two-wheeler-parking.mp4",
+  "Driveway to Drop off": "/circulation-videos/driveway-to-dropoff.mp4",
+  "Driveway to Basement": "/circulation-videos/driveway-to-basement.mp4",
+  "Pedestrian Entry": "/circulation-videos/pedestrian-entry.mp4",
+  "Fire Exit": "/circulation-videos/fire-exit.mp4",
+  "Walking Lane & Cycling Lane": "/circulation-videos/walking-cycling-lane.mp4",
 };
 
 interface MasterPlanItem {
@@ -90,6 +89,7 @@ export default function MasterplanPage() {
   const [isTerrace, setIsTerrace] = useState<boolean>(false);
   const [isLabelsVisible, setIsLabelsVisible] = useState<boolean>(false);
   const [selectedCirculation, setSelectedCirculation] = useState<string | null>(null);
+  const circulationVideoRef = useRef<HTMLVideoElement>(null);
 
   const handleLayoutSelect = (layout: string) => {
     setIsTerrace(layout === "Terrace layout");
@@ -97,8 +97,8 @@ export default function MasterplanPage() {
 
   const currentLevel = isTerrace ? "terrace" : "ground";
   const activeData: MasterPlanItem[] = isTerrace ? terracePlanLocal : sitePlanLocal;
-  // circulation markings are only defined for the ground layout
-  const circulationArrows = !isTerrace && selectedCirculation ? CIRCULATION_POINTS[selectedCirculation] ?? [] : [];
+  // circulation videos are only defined for the ground layout
+  const circulationVideo = !isTerrace && selectedCirculation ? CIRCULATION_VIDEOS[selectedCirculation] : undefined;
 
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-black">
@@ -208,42 +208,27 @@ export default function MasterplanPage() {
                     </g>
                   );
                 })}
-
-                {/* Circulation entry (lime) / exit (red) arrow pairs for the selected type */}
-                <AnimatePresence>
-                  {circulationArrows.map((point, index) => {
-                    const arrowScale = currentLevel === "ground" ? 5121 / 1200 : 5325 / 1200;
-                    const arrowX = ensureHighResCoordinate(point.x, "x", currentLevel);
-                    const arrowY = ensureHighResCoordinate(point.y, "y", currentLevel);
-                    // same local offset for both - since their rotations differ by
-                    // 180 degrees, it naturally places them on opposite world sides
-                    const pairOffset = -18 * arrowScale;
-
-                    return (
-                      <g key={`${selectedCirculation}-${index}`}>
-                        <CirculationArrow
-                          id={`${selectedCirculation}-${index}-entry`}
-                          x={arrowX}
-                          y={arrowY}
-                          direction={point.direction}
-                          tone="entry"
-                          offset={pairOffset}
-                          scale={arrowScale}
-                        />
-                        <CirculationArrow
-                          id={`${selectedCirculation}-${index}-exit`}
-                          x={arrowX}
-                          y={arrowY}
-                          direction={OPPOSITE_DIRECTION[point.direction]}
-                          tone="exit"
-                          offset={pairOffset}
-                          scale={arrowScale}
-                        />
-                      </g>
-                    );
-                  })}
-                </AnimatePresence>
               </svg>
+
+      {/* Circulation video overlay - occupies the exact same box as the masterplan image */}
+      <AnimatePresence>
+        {circulationVideo && (
+          <motion.video
+            ref={circulationVideoRef}
+            key={circulationVideo}
+            src={circulationVideo}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.9, ease: "easeInOut" }}
+            className="absolute inset-0 z-40 size-full object-cover [filter:brightness(1.15)_contrast(1.08)_saturate(1.15)]"
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
