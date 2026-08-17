@@ -209,7 +209,7 @@ export default function MasterplanPage() {
                   key={region.id}
                   points={points.map(p => `${p.x},${p.y}`).join(" ")}
                   fill={isHovered ? "rgba(239, 68, 68, 0.25)" : "rgba(255, 255, 255, 0.01)"}
-                  // stroke={isHovered ? "#EF4444" : "transparent"}
+                  stroke={isHovered ? "#EF4444" : "transparent"}
                   strokeWidth={isHovered ? 2 : 0}
                   className="cursor-pointer transition-all duration-200 pointer-events-auto"
                   onMouseEnter={() => setHoveredRegionId(region.id)}
