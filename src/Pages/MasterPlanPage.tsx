@@ -95,7 +95,6 @@ export default function MasterplanPage() {
     setSelectedCirculation(null);
   };
 
-  const currentLevel = isTerrace ? "terrace" : "ground";
   const activeData: MasterPlanItem[] = isTerrace ? terracePlanLocal : sitePlanLocal;
   const activeInteractiveRegions = isTerrace ? terraceInteractiveRegionsConfig : interactiveRegionsConfig;
   // circulation videos are only defined for the ground layout
