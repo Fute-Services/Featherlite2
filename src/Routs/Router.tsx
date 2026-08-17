@@ -47,11 +47,11 @@ const Router = () => {
           <Route path="/vr-tour" element={<VrTour />} />
           <Route path="/floor-plan" element={<FloorPlan />} />
           <Route path="/masterplan" element={<MasterplanPage />} />
+          <Route path="/unitplan/:idnew" element={<UnitPlanPage />} />
         </Route>
 
         {/* Routes WITHOUT Navbar (e.g. Floor Plan/Masterplan, or Unit Plan) */}
         <Route element={<PlainLayout />}>
-          <Route path="/unitplan/:id" element={<UnitPlanPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

@@ -1,0 +1,37 @@
+{
+    "Main Entry/Exit": [
+        { "x": 454, "y": 157, "direction": "down" },
+        { "x": 718, "y": 157, "direction": "down" },
+        { "x": 370, "y": 255, "direction": "right" },
+        { "x": 450, "y": 516, "direction": "up" },
+        { "x": 630, "y": 483, "direction": "up" }
+    ],
+    "Entry/Exit To Building": [
+        { "x": 370, "y": 200, "direction": "right" },
+        { "x": 370, "y": 311, "direction": "right" }
+    ],
+    "Ramp Access": [
+        { "x": 1050, "y": 360, "direction": "down" }
+    ],
+    "Visitors Parking": [
+        { "x": 590, "y": 130, "direction": "down" }
+    ],
+    "Two wheeler Parking": [
+        { "x": 1020, "y": 82, "direction": "down" }
+    ],
+    "Driveway to Drop off": [
+        { "x": 425, "y": 330, "direction": "down" }
+    ],
+    "Driveway to Basement": [
+        { "x": 1050, "y": 360, "direction": "down" }
+    ],
+    "Walking Lane & Cycling Lane": [
+        { "x": 200, "y": 300, "direction": "right" }
+    ],
+    "Pedestrian Entry": [
+        { "x": 390, "y": 110, "direction": "down" }
+    ],
+    "Fire Exit": [
+        { "x": 1000, "y": 180, "direction": "right" }
+    ]
+}
