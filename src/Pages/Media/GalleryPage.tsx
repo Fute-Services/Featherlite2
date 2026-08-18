@@ -104,7 +104,7 @@ export default function GalleryPage() {
         {/* PREV BUTTON */}
         <button
           ref={prevRef}
-          className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/85 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.35),inset_-1px_-1px_1px_rgba(0,0,0,0.2)] outline-none transition-all duration-300 ease-out hover:scale-[1.04] hover:bg-[rgba(231,33,0,0.24)] hover:text-white active:scale-[0.97] sm:size-9"
+          className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/85 outline-none transition-all duration-300 ease-out hover:scale-[1.04] hover:bg-[rgba(231,33,0,0.24)] hover:text-white active:scale-[0.97] sm:size-9"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
             <polyline points="15 18 9 12 15 6"></polyline>
@@ -135,7 +135,7 @@ export default function GalleryPage() {
         {/* NEXT BUTTON */}
         <button
           ref={nextRef}
-          className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/85 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.35),inset_-1px_-1px_1px_rgba(0,0,0,0.2)] outline-none transition-all duration-300 ease-out hover:scale-[1.04] hover:bg-[rgba(231,33,0,0.24)] hover:text-white active:scale-[0.97] sm:size-9"
+          className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/85 outline-none transition-all duration-300 ease-out hover:scale-[1.04] hover:bg-[rgba(231,33,0,0.24)] hover:text-white active:scale-[0.97] sm:size-9"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
             <polyline points="9 18 15 12 9 6"></polyline>
