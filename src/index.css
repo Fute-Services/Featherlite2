@@ -54,3 +54,68 @@
     filter: brightness(0) saturate(100%) invert(67%) sepia(35%) saturate(1478%) hue-rotate(15deg) brightness(98%) contrast(93%);
   }
 }
+
+
+
+
+
+
+
+@keyframes zoomBackToFront {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-zoom-back-to-front {
+  animation: zoomBackToFront 3s cubic-bezier(0.16, 1, 0.5, 1) forwards;
+  transform-origin: center center;
+}
+
+/* @keyframes blueprintUnfold {
+  0% {
+    opacity: 0;
+    transform: scale(2, 0.6);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.02, 1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+}
+
+.animate-blueprint-unfold {
+  animation: blueprintUnfold 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  transform-origin: center center;
+} */
+
+@keyframes zoomPulseSettle {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.18); /* Peak zoom-in */
+  }
+  85% {
+    transform: scale(1); /* Zoom-out rebound */
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1); /* Final resting state */
+  }
+}
+
+.animate-blueprint-unfold  {
+  animation: zoomPulseSettle 4s cubic-bezier(0.25, 1, 0.9, 1) forwards;
+  transform-origin: center center;
+}

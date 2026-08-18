@@ -7,7 +7,8 @@ import Homepage from '../Pages/Homepage'
 import FloorPlan from '../Pages/FloorPlanPage'
 import VrTour from '../Pages/VrTour'
 import Amenities from '../Pages/Amenities'
-// import Media from '../Pages/Media'
+import Media from '../Pages/Media'
+import GalleryPage from '../Pages/Media/GalleryPage'
 import NotFound from '../Pages/NotFound'
 import UnitPlanPage from '../Pages/UnitPlanPage'
 import MasterplanPage from '../Pages/MasterPlanPage'
@@ -43,7 +44,7 @@ const Router = () => {
           <Route path="/" element={<Homepage />} />
           {/* <Route path="/location" element={<Location />} /> */}
           <Route path="/amenities" element={<Amenities />} />
-          {/* <Route path="/media" element={<Media />} /> */}
+          <Route path="/media" element={<Media />} />
           <Route path="/vr-tour" element={<VrTour />} />
           <Route path="/floor-plan" element={<FloorPlan />} />
           <Route path="/masterplan" element={<MasterplanPage />} />
@@ -52,6 +53,7 @@ const Router = () => {
 
         {/* Routes WITHOUT Navbar (e.g. Floor Plan/Masterplan, or Unit Plan) */}
         <Route element={<PlainLayout />}>
+          <Route path="/media/gallery" element={<GalleryPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
