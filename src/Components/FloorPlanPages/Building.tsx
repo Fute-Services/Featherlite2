@@ -24,7 +24,7 @@ export default function Building({
 }: BuildingProps) {
     return (
         <div className="relative w-full h-full flex items-center justify-center">
-            <div className="relative w-full h-full max-w-[3964px] max-h-[2048px]">
+            <div className="relative w-full h-full animate-blueprint-unfold max-w-[3964px] max-h-[2048px]">
                 <svg
                     viewBox="0 0 3964 2048"
                     className="w-full h-full touch-none select-none"
