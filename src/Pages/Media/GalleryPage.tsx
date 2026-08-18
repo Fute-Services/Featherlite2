@@ -69,8 +69,9 @@ export default function GalleryPage() {
             stretch: 80,
             depth: 250,
             modifier: 1,
-            slideShadows: true,
+            slideShadows: false,
           }}
+          watchSlidesProgress
           onBeforeInit={(swiper) => {
             (swiper.params.navigation as any).prevEl = prevRef.current;
             (swiper.params.navigation as any).nextEl = nextRef.current;
@@ -88,6 +89,8 @@ export default function GalleryPage() {
                 <img
                   src={img.url || img.image}
                   alt={img.title}
+                  loading="eager"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
@@ -157,8 +160,16 @@ export default function GalleryPage() {
                     will-change: transform;
                     opacity: 0.1;
                     transition: opacity 0.6s ease;
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
                 }
-                .swiper-slide img { will-change: transform; }
+                .swiper-slide img {
+                    /* promote to its own GPU layer up-front instead of mid-animation,
+                       which is what actually causes a dropped-frame stutter */
+                    transform: translateZ(0);
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
+                }
                 .swiper-slide-active { opacity: 1 !important; z-index: 10; }
                 .swiper-button-disabled { opacity: 0.1 !important; pointer-events: none; }
             `,
