@@ -29,11 +29,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onLabelsToggle,
     onCirculationSelect,
 }) => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+
     // Inside your Sidebar component:
     const location = useLocation();
-    // Floor Plan already has its own floor table on the right, so the panel
-    // starts collapsed there; Masterplan starts with it open
-    const [isOpen, setIsOpen] = useState<boolean>(() => !location.pathname.includes("floor-plan"));
 
     useEffect(() => {
         if (location.pathname.includes("floor-plan")) {
@@ -80,6 +80,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const handleLayoutClick = (layout: string) => {
         setSelectedLayout(layout);
         setIsLayoutOpen(false);
+        setSelectedCirculation("Circulation");
         if (onLayoutSelect) onLayoutSelect(layout);
     };
 
@@ -192,7 +193,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         to="/floor-plan"
                         onClick={() => {
                             setActiveTab("section");
-                            setIsOpen(true);         // Opens the main side glass panel
+                            setIsOpen(false);        // Floor Plan starts with the panel collapsed
                             setIsLayoutOpen(false);
                         }}
                         className="group relative flex items-center justify-center p-1 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
@@ -220,7 +221,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     /* Glassmorphism Core */
     bg-gradient-to-b from-black/55 via-black/70 to-black/85 
     backdrop-blur-xl backdrop-saturate-150
-    border-r border-white/50
+    border-r border-neutral-500/35
     shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
     /* Subtle Inner Highlight for Glass Reflection */
     inset-shadow-sm inset-shadow-white/10
@@ -353,6 +354,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                                 key={item}
                                                 onClick={() => {
                                                     setSelectedCirculation(item);
+                                                    setIsCirculationOpen(false);
                                                     if (onCirculationSelect) onCirculationSelect(item);
                                                 }}
                                                 className={`w-full text-left px-3 py-[3.5px] text-[9px] transition-colors cursor-pointer border-b border-white/10 last:border-0 ${isSelected

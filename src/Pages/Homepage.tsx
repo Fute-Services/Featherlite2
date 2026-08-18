@@ -13,12 +13,12 @@ const headingLines = [
 
 const headingContainerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
+    visible: { transition: { staggerChildren: 0.4, delayChildren: 0.2 } },
 }
 
-const wordVariants = {
-    hidden: { opacity: 0, y: '60%', filter: 'blur(8px)' },
-    visible: { opacity: 1, y: '0%', filter: 'blur(0px)' },
+const lineVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
 }
 
 const statsContainerVariants = {
@@ -99,16 +99,13 @@ const Homepage = () => {
                     >
                         {headingLines.map((line, lineIndex) => (
                             <span key={lineIndex} className="block overflow-hidden py-1">
-                                {line.map((word) => (
-                                    <motion.span
-                                        key={word}
-                                        variants={wordVariants}
-                                        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                                        className="mr-3 inline-block last:mr-0"
-                                    >
-                                        {word}
-                                    </motion.span>
-                                ))}
+                                <motion.span
+                                    variants={lineVariants}
+                                    transition={{ duration: 2, ease: 'easeInOut' }}
+                                    className="block"
+                                >
+                                    {line.join(' ')}
+                                </motion.span>
                             </span>
                         ))}
                     </motion.h1>
