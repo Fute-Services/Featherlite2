@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { pointsData } from '../Data/UnitPlanData';
@@ -33,14 +33,21 @@ export default function UnitPlanPage() {
         units[0]?.id ?? 0
     );
     const [zoomLevel, setZoomLevel] = useState<number>(1);
+
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [isDragging, setIsDragging] = useState(false);
+
+    const dragStart = useRef({ x: 0, y: 0 });
     const [viewdata, setViewdata] = useState(true);
     const [showVRModal, setShowVRModal] = useState(false);
 
-    // 4. Reset selected unit whenever floor (idnew) changes
+    // 4. Reset selected unit and pan/zoom whenever floor (idnew) changes
     useEffect(() => {
         if (units.length > 0) {
             setSelectedId(units[0].id);
         }
+        setPosition({ x: 0, y: 0 });
+        setZoomLevel(1);
     }, [idnew]);
 
     if (!floorPoints) {
@@ -78,9 +85,40 @@ export default function UnitPlanPage() {
         navigate(`/unitplan/${prevFloorId}`);
     };
 
+    const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+        if (zoomLevel <= 1) return;
+
+        setIsDragging(true);
+
+        dragStart.current = {
+            x: e.clientX - position.x,
+            y: e.clientY - position.y,
+        };
+
+        e.currentTarget.setPointerCapture(e.pointerId);
+    };
+
+    const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+        if (!isDragging) return;
+
+        setPosition({
+            x: e.clientX - dragStart.current.x,
+            y: e.clientY - dragStart.current.y,
+        });
+    };
+
+    const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+        setIsDragging(false);
+
+        if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+            e.currentTarget.releasePointerCapture(e.pointerId);
+        }
+    };
+
     return (
         <div className="relative w-screen h-screen overflow-hidden ibm-plex-sans 
-        bg-[linear-gradient(135deg,#0B344D_0%,#062033_45%,#020B14_100%)] text-white select-none 
+        bg-[linear-gradient(135deg,#0B344D_0%,#062033_45%,#020B14_100%)] text-white 
+        select-none 
         flex flex-col justify-between p-4 md:p-6">
 
             {/* Top Header Controls */}
@@ -123,7 +161,10 @@ export default function UnitPlanPage() {
                     </button>
 
                     <button
-                        onClick={() => setZoomLevel(1)}
+                        onClick={() => {
+                            setZoomLevel(1);
+                            setPosition({ x: 0, y: 0 });
+                        }}
                         className="flex items-center justify-center w-10 h-10 bg-[#08263e]/80 hover:bg-white/10 text-slate-200 hover:text-white rounded-lg border border-white/10 transition-all duration-300"
                         title="Reset View"
                         type="button"
@@ -151,8 +192,7 @@ export default function UnitPlanPage() {
             {/* Main Floor Plan Canvas */}
             <main className="relative flex-1 w-full h-full flex items-center justify-center overflow-hidden">
                 <button
-                    // onClick={handlePrev}
-                    onClick={handleNext}
+                    onClick={handlePrev}
                     className="absolute left-[12%] z-30 p-3 bg-slate-900/70 hover:bg-slate-900/40 backdrop-blur-md border border-white/40 rounded-full transition-all duration-500 ease-in-out hover:scale-110 active:scale-95 shadow-xl"
                     type="button"
                     title="Previous Floor"
@@ -160,43 +200,70 @@ export default function UnitPlanPage() {
                     <img src={left} className="w-6 h-6 text-white" alt="Previous Floor" />
                 </button>
 
-                {/* Scalable Vector Stage */}
+                {/* Scalable Vector Stage with Entrance Animation Key */}
                 <div
-                    className="relative w-full h-full max-w-[1920px] flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] will-change-transform"
-                    style={{ transform: `scale(${zoomLevel})` }}
+                    key={`building-stage-${idnew}`}
+                    className={`relative animate-zoom-back-to-front w-full h-full ${
+                        String(floorPoints.id) === '101'
+                            ? "max-w-[1040px]"
+                            : "max-w-[1920px]"
+                    } flex items-center justify-center will-change-transform`}
                 >
-                    {/* key={idnew} forces a complete SVG refresh on floor change */}
-                    <svg
-                        key={`floor-svg-${idnew}`}
-                        viewBox={floorPoints.imagesvg}
-                        className="w-full h-full max-h-full"
-                        preserveAspectRatio="xMidYMid meet"
+                    {/* Zoom / Pan Gesture Wrapper */}
+                    <div
+                        className={`relative w-full h-full flex items-center justify-center ${
+                            zoomLevel > 1 ? "cursor-grab" : "cursor-default"
+                        } ${isDragging ? "cursor-grabbing" : ""}`}
+                        onPointerDown={handlePointerDown}
+                        onPointerMove={handlePointerMove}
+                        onPointerUp={handlePointerUp}
+                        onPointerCancel={handlePointerUp}
                     >
-                        <image
-                            href={floorPoints.image}
-                            x="0"
-                            y="0"
-                            width={floorPoints.imagew}
-                            height={floorPoints.imageh}
-                            preserveAspectRatio="xMidYMid meet"
-                            className="brightness-95 contrast-105 bg-transparent"
-                            style={{ backgroundColor: 'transparent' }}
-                        />
+                        <div
+                            className="relative w-full h-full flex items-center justify-center will-change-transform"
+                            style={{
+                                transform: `translate(${position.x}px, ${position.y}px) scale(${zoomLevel})`,
+                                transformOrigin: "center center",
+                                transition: isDragging ? "none" : "transform 500ms ease-out",
+                            }}
+                        >
+                            <svg
+                                key={`floor-svg-${idnew}`}
+                                viewBox={floorPoints.imagesvg}
+                                className="w-full h-full max-h-full"
+                                preserveAspectRatio="xMidYMid meet"
+                            >
+                                <image
+                                    href={floorPoints.image}
+                                    x="0"
+                                    y="0"
+                                    width={floorPoints.imagew}
+                                    height={floorPoints.imageh}
+                                    preserveAspectRatio="xMidYMid meet"
+                                    className="brightness-95 contrast-105 bg-transparent"
+                                    style={{ backgroundColor: 'transparent' }}
+                                />
 
-                        {viewdata && units.length > 0 && (
-                            <UnitPlanContentPage
-                                key={`unit-content-${idnew}`}
-                                setSelectedId={setSelectedId}
-                                pointsData={units}
-                                selectedId={selectedId}
-                            />
-                        )}
-                    </svg>
+                                {/* Staggered Unit Pins Group */}
+                                {viewdata && units.length > 0 && (
+                                    <g 
+                                        key={`unit-group-${idnew}`}
+                                        className="animate-unit-pins-delayed"
+                                    >
+                                        <UnitPlanContentPage
+                                            setSelectedId={setSelectedId}
+                                            pointsData={units}
+                                            selectedId={selectedId}
+                                        />
+                                    </g>
+                                )}
+                            </svg>
+                        </div>
+                    </div>
                 </div>
 
                 <button
-                    // onClick={handleNext}
-                      onClick={handlePrev}
+                    onClick={handleNext}
                     className="absolute right-[16.5%] z-30 p-3 bg-slate-900/70 hover:bg-slate-900/40 backdrop-blur-md border border-white/40 rounded-full transition-all duration-500 ease-in-out hover:scale-110 active:scale-95 shadow-xl"
                     type="button"
                     title="Next Floor"

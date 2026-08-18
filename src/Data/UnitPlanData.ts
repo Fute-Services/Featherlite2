@@ -95,7 +95,7 @@ export const pointsData: FloorPointsData[] = [
   {
         id: 1,
       
-        name: 'AHU Room',
+        name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -274,7 +274,7 @@ export const pointsData: FloorPointsData[] = [
     },
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (352 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -420,7 +420,7 @@ export const pointsData: FloorPointsData[] = [
   {
         id: 1,
       
-        name: 'AHU Room',
+        name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -453,17 +453,32 @@ export const pointsData: FloorPointsData[] = [
            labelX: 400,
         labelY: 280,
         points: [
-             {
-          "x": 1187,
-          "y": 173
+         
+    
+        {
+          "x": 1188,
+          "y": 177
         },
         {
-          "x": 1192,
-          "y": 228
+          "x": 1190,
+          "y": 213,
+          "hIn": {
+            "x": 0,
+            "y": 0
+          },
+          "hOut": {
+            "x": 0,
+            "y": 0
+          },
+          "smooth": true
         },
         {
-          "x": 775,
-          "y": 230
+          "x": 677,
+          "y": 213
+        },
+        {
+          "x": 682,
+          "y": 169
         }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/entry_gate_rk0ekp.png',
@@ -600,7 +615,7 @@ export const pointsData: FloorPointsData[] = [
 
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (352 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -760,7 +775,7 @@ export const pointsData: FloorPointsData[] = [
   {
         id: 1,
       
-        name: 'AHU Room',
+        name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -957,7 +972,7 @@ export const pointsData: FloorPointsData[] = [
     },
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (2,637 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -1115,7 +1130,7 @@ export const pointsData: FloorPointsData[] = [
   {
         id: 1,
       
-        name: 'AHU Room',
+       name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -1228,7 +1243,7 @@ export const pointsData: FloorPointsData[] = [
     },
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (352 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -1316,7 +1331,7 @@ export const pointsData: FloorPointsData[] = [
   {
         id: 1,
       
-        name: 'AHU Room',
+        name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -1513,7 +1528,7 @@ export const pointsData: FloorPointsData[] = [
   
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (352 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -1676,7 +1691,7 @@ export const pointsData: FloorPointsData[] = [
   {
         id: 1,
       
-        name: 'AHU Room',
+         name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -1880,7 +1895,7 @@ export const pointsData: FloorPointsData[] = [
    
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (352 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -2047,7 +2062,7 @@ export const pointsData: FloorPointsData[] = [
       {
         id: 1,
       
-        name: 'AHU Room',
+        name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -2235,7 +2250,7 @@ export const pointsData: FloorPointsData[] = [
    
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (352 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -2391,7 +2406,7 @@ export const pointsData: FloorPointsData[] = [
       {
         id: 1,
       
-        name: 'AHU Room',
+         name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -2576,7 +2591,7 @@ export const pointsData: FloorPointsData[] = [
    
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (352 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -2729,7 +2744,7 @@ export const pointsData: FloorPointsData[] = [
       {
         id: 1,
       
-        name: 'AHU Room',
+        name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -2922,7 +2937,7 @@ export const pointsData: FloorPointsData[] = [
    
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (352 sqrt)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -3061,7 +3076,7 @@ export const pointsData: FloorPointsData[] = [
       {
         id: 1,
       
-        name: 'AHU Room',
+        name: 'AHU Room (2,363 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -3219,7 +3234,7 @@ export const pointsData: FloorPointsData[] = [
   
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (352 sqrt)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -3357,7 +3372,7 @@ export const pointsData: FloorPointsData[] = [
       {
         id: 1,
       
-        name: 'AHU Room',
+         name: 'AHU Room (1,722 sqft)',
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
@@ -3472,7 +3487,7 @@ export const pointsData: FloorPointsData[] = [
     // },
     {
         id: 5,
-        name: 'ODU Balcony',
+        name: 'ODU Balcony (0 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
