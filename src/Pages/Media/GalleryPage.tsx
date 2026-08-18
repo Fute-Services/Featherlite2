@@ -150,10 +150,15 @@ export default function GalleryPage() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
+                /* transform is left entirely to Swiper's own inline animation (driven by
+                   the "speed" prop) - a competing CSS transition on the same property
+                   was fighting it every frame and causing the stutter. */
                 .swiper-slide {
-                    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.6s ease !important;
+                    will-change: transform;
                     opacity: 0.1;
+                    transition: opacity 0.6s ease;
                 }
+                .swiper-slide img { will-change: transform; }
                 .swiper-slide-active { opacity: 1 !important; z-index: 10; }
                 .swiper-button-disabled { opacity: 0.1 !important; pointer-events: none; }
             `,
