@@ -38,7 +38,7 @@ export default function GalleryPage() {
   return (
     <div className="w-screen h-screen overflow-hidden relative bg-black font-sans">
       {/* BACK BUTTON — top-left on mobile/tablet, bottom-left on desktop */}
-      <div className="fixed top-5 left-5 sm:top-8 sm:left-8 lg:top-auto lg:bottom-[50px] lg:left-[50px] z-50">
+      <div className="fixed top-5 left-5 sm:top-8 sm:left-8 lg:top-auto lg:bottom-10 lg:left-10 z-50">
         <Link
           to="/media"
           className="relative flex items-center justify-center w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] lg:w-[42px] lg:h-[42px] rounded-full border border-white/[0.1] bg-black/45 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-2xl backdrop-saturate-150 cursor-pointer overflow-hidden transition-all duration-300 ease-out hover:scale-105 hover:bg-[rgba(231,33,0,0.24)] active:scale-95"
