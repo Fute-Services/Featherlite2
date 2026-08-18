@@ -4,7 +4,7 @@ import { type FloorData } from '../types/Floorplan'
 
 export const FLOORS: FloorData[] = [
     {
-        idnew: 1, id: 'terrace', name: 'Terrace', label: 'Terrace', area: 'N/A',yaxis:270,
+        idnew: 101, id: 'terrace', name: 'Terrace', label: 'Terrace', area: 'N/A',yaxis:270,
         polygon: '1242,267 1242,358 2708,365 2708,274', centerY: 316,
 
     },
