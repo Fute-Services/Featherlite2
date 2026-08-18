@@ -21,17 +21,6 @@ const PANELS: MediaPanel[] = [
 
 const Media = () => (
   <div className="relative h-dvh w-full overflow-hidden bg-[#071322]">
-    {/* Diagonal line texture, top-left corner */}
-    <div
-      className="pointer-events-none absolute -left-10 -top-10 h-[420px] w-[420px] opacity-40"
-      style={{
-        backgroundImage:
-          "repeating-linear-gradient(65deg, rgba(255,255,255,0.35) 0px, rgba(255,255,255,0.35) 2px, transparent 2px, transparent 34px)",
-        maskImage: "radial-gradient(circle at 0% 0%, black 55%, transparent 80%)",
-        WebkitMaskImage: "radial-gradient(circle at 0% 0%, black 55%, transparent 80%)",
-      }}
-    />
-
     <div className="relative z-10 flex h-full w-full items-center justify-center px-4 pb-28 pt-24 sm:px-10">
       <div className="flex h-[70vh] max-h-[560px] w-full max-w-6xl overflow-hidden rounded-sm">
         {PANELS.map((panel) => {
