@@ -41,9 +41,9 @@ export default function GalleryPage() {
       <div className="fixed top-5 left-5 sm:top-8 sm:left-8 lg:top-auto lg:bottom-[50px] lg:left-[50px] z-50">
         <Link
           to="/media"
-          className="flex items-center justify-center w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] lg:w-[42px] lg:h-[42px] rounded-full bg-slate-900/70 hover:bg-slate-900/90 backdrop-blur-md border border-white/70 cursor-pointer hover:scale-105 transition-all"
+          className="flex items-center justify-center w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] lg:w-[42px] lg:h-[42px] rounded-full border border-white/10 bg-gradient-to-b from-slate-600/80 to-slate-900/90 shadow-[0_6px_14px_rgba(0,0,0,0.55),inset_1.5px_1.5px_1px_rgba(255,255,255,0.3),inset_-1.5px_-1.5px_1.5px_rgba(0,0,0,0.45)] backdrop-blur-md cursor-pointer transition-all duration-200 hover:scale-105 hover:from-slate-500/80 hover:to-slate-800/90 active:scale-95 active:shadow-[inset_1.5px_1.5px_2px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_rgba(255,255,255,0.15)]"
         >
-          <FaAngleLeft className="w-4 h-4 text-white/80" />
+          <FaAngleLeft className="w-4 h-4 text-white/80 drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]" />
         </Link>
       </div>
 
