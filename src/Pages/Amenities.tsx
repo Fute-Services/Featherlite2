@@ -5,7 +5,6 @@ import { type LucideIcon } from "lucide-react";
 import { FaAngleLeft } from "react-icons/fa6";
 
 import buildingImg from "../assets/AvailabilityPage/building.jpeg";
-import exploreImg from "../assets/AvailabilityPage/day frunt 4 (5).png";
 
 import outsideLineImg from "../assets/AvailabilityPage/lines/outside_line.svg";
 import cafeLineImg from "../assets/AvailabilityPage/lines/cafe.svg";
