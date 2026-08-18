@@ -35,7 +35,7 @@ const Media = () => (
     />
 
     <div className="relative z-10 flex h-full w-full items-center justify-center px-4 pb-28 pt-24 sm:px-10">
-      <div className="flex h-[58vh] max-h-[440px] w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
+      <div className="flex h-[66vh] max-h-[520px] w-full max-w-6xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
         {PANELS.map((panel, index) => {
           const Icon = panel.icon;
           const content = (
