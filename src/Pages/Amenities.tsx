@@ -51,6 +51,8 @@ import servingKioskImg from "../assets/amenities/popup/Serving Kiosk.jpg";
 import tableTennisImg from "../assets/amenities/popup/Table Tennis.jpeg";
 // @ts-ignore
 import evChargeImg from "../assets/amenities/popup/Ev charge.jpg";
+// @ts-ignore
+import ledScreenVideo from "../assets/amenities/popup/LED Screeng-yQ5wbJr5.mp4";
 
 
 
@@ -82,7 +84,8 @@ interface Amenity {
   delay: number;
   /** Optional polygon points to highlight an area on the building */
   polygon?: string;
-  image: string;
+  image?: string;
+  video?: string;
 }
 
 // ─── Amenity Data ─────────────────────────────────────────────────────────────
@@ -159,7 +162,7 @@ const amenities: Amenity[] = [
     labelPos: "top",
     customIcon: cuttingEdgeIconImg,
     delay: 0.3,
-    image: exploreImg,
+    video: ledScreenVideo,
   },
   {
     id: "kids-play",
@@ -426,11 +429,22 @@ const Amenities = () => {
               transition={{ duration: 0.25, ease: "easeOut" }}
               className="relative max-w-4xl max-h-[80vh] overflow-hidden rounded-3xl border border-white/20 bg-neutral-900/60 p-1 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]"
             >
-              <img
-                src={hoveredAmenityData.image}
-                alt={hoveredAmenityData.label.join(" ")}
-                className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl"
-              />
+              {hoveredAmenityData.video ? (
+                <video
+                  src={hoveredAmenityData.video}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl"
+                />
+              ) : (
+                <img
+                  src={hoveredAmenityData.image}
+                  alt={hoveredAmenityData.label.join(" ")}
+                  className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl"
+                />
+              )}
             </motion.div>
           </div>
         )}
