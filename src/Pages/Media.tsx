@@ -47,7 +47,7 @@ const Media = () => (
                   <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/20 to-black/70" />
                 </>
               ) : (
-                <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-[#0a1a2e]/90 to-black/95" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#071322] via-[#0a1c34] to-[#071322]" />
               )}
 
               {panel.title === "Certifications" && (
