@@ -48,11 +48,10 @@ export default function GalleryPage() {
       </div>
 
       {/* TITLE */}
-      <div className="absolute bottom-40 left-0 w-full z-40 flex flex-col items-center pointer-events-none px-4 text-center">
-        <h2 className="text-white text-2xl md:text-3xl font-light tracking-[0.2em] uppercase drop-shadow-[0_5px_15px_rgba(0,0,0,0.8)]">
+      <div className="absolute top-5 right-5 sm:top-8 sm:right-10 z-40 pointer-events-none rounded-2xl border border-white/[0.1] bg-black/45 px-5 py-3 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.15),inset_-1px_-1px_1px_rgba(0,0,0,0.2),0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-2xl backdrop-saturate-150">
+        <h2 className="text-white text-sm sm:text-base font-light tracking-[0.2em] uppercase whitespace-nowrap">
           {filteredImages[activeIndex]?.title || "Loading..."}
         </h2>
-        <div className="h-[2px] w-20 md:w-32 bg-white/40 mt-6" />
       </div>
 
       {/* SWIPER */}
