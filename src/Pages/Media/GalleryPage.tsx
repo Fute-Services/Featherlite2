@@ -41,9 +41,14 @@ export default function GalleryPage() {
       <div className="fixed top-5 left-5 sm:top-8 sm:left-8 lg:top-auto lg:bottom-[50px] lg:left-[50px] z-50">
         <Link
           to="/media"
-          className="flex items-center justify-center w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] lg:w-[42px] lg:h-[42px] rounded-full border border-white/10 bg-gradient-to-b from-slate-600/80 to-slate-900/90 shadow-[0_6px_14px_rgba(0,0,0,0.55),inset_1.5px_1.5px_1px_rgba(255,255,255,0.3),inset_-1.5px_-1.5px_1.5px_rgba(0,0,0,0.45)] backdrop-blur-md cursor-pointer transition-all duration-200 hover:scale-105 hover:from-slate-500/80 hover:to-slate-800/90 active:scale-95 active:shadow-[inset_1.5px_1.5px_2px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_rgba(255,255,255,0.15)]"
+          className="relative flex items-center justify-center w-[32px] h-[32px] sm:w-[38px] sm:h-[38px] lg:w-[42px] lg:h-[42px] rounded-full border border-white/[0.1] bg-black/45 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-2xl backdrop-saturate-150 cursor-pointer overflow-hidden transition-all duration-300 ease-out hover:scale-105 hover:bg-[rgba(231,33,0,0.24)] active:scale-95"
         >
-          <FaAngleLeft className="w-4 h-4 text-white/80 drop-shadow-[0_1px_1px_rgba(0,0,0,0.5)]" />
+          {/* Glass sheen highlight along the top edge */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-x-1 top-0 h-px rounded-full bg-gradient-to-r from-transparent via-white/70 to-transparent"
+          />
+          <FaAngleLeft className="w-4 h-4 text-white/85" />
         </Link>
       </div>
 
