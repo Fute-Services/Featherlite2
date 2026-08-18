@@ -1,12 +1,12 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Navigation } from "swiper/modules";
+import { EffectFade, Navigation } from "swiper/modules";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
 
 import "swiper/css";
-import "swiper/css/effect-coverflow";
+import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 
 export default function GalleryPage() {
@@ -58,20 +58,13 @@ export default function GalleryPage() {
       <div className="absolute inset-0 w-full h-full z-10">
         <Swiper
           key={viewMode + filteredImages.length}
-          effect={"coverflow"}
+          effect={"fade"}
           centeredSlides={true}
           slidesPerView={1}
           loop={filteredImages.length > 2}
-          speed={1000}
+          speed={700}
           onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 80,
-            depth: 250,
-            modifier: 1,
-            slideShadows: false,
-          }}
-          watchSlidesProgress
+          fadeEffect={{ crossFade: true }}
           onBeforeInit={(swiper) => {
             (swiper.params.navigation as any).prevEl = prevRef.current;
             (swiper.params.navigation as any).nextEl = nextRef.current;
@@ -80,7 +73,7 @@ export default function GalleryPage() {
             swiper.navigation.init();
             swiper.navigation.update();
           }}
-          modules={[EffectCoverflow, Navigation]}
+          modules={[EffectFade, Navigation]}
           className="w-full h-full"
         >
           {filteredImages.map((img: any, index: number) => (
@@ -153,24 +146,14 @@ export default function GalleryPage() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-                /* transform is left entirely to Swiper's own inline animation (driven by
-                   the "speed" prop) - a competing CSS transition on the same property
-                   was fighting it every frame and causing the stutter. */
-                .swiper-slide {
-                    will-change: transform;
-                    opacity: 0.1;
-                    transition: opacity 0.6s ease;
-                    backface-visibility: hidden;
-                    -webkit-backface-visibility: hidden;
-                }
+                /* fade effect already drives each slide's opacity via its own inline
+                   style - just promote images to their own GPU layer up-front so the
+                   crossfade doesn't stall on first paint. */
                 .swiper-slide img {
-                    /* promote to its own GPU layer up-front instead of mid-animation,
-                       which is what actually causes a dropped-frame stutter */
                     transform: translateZ(0);
                     backface-visibility: hidden;
                     -webkit-backface-visibility: hidden;
                 }
-                .swiper-slide-active { opacity: 1 !important; z-index: 10; }
                 .swiper-button-disabled { opacity: 0.1 !important; pointer-events: none; }
             `,
         }}
