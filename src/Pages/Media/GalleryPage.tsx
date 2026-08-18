@@ -123,8 +123,8 @@ export default function GalleryPage() {
               className={[
                 "rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] whitespace-nowrap transition-all duration-300 ease-out active:scale-[0.97] sm:px-6 sm:text-xs",
                 viewMode === mode
-                  ? "bg-[rgba(231,33,0,0.28)] text-white shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.45),inset_-1px_-1px_1px_rgba(0,0,0,0.25),0_4px_18px_rgba(231,33,0,0.35)]"
-                  : "bg-white/[0.08] text-white/85 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.35),inset_-1px_-1px_1px_rgba(0,0,0,0.2)] hover:bg-[rgba(231,33,0,0.24)] hover:text-white",
+                  ? "bg-[rgba(231,33,0,0.28)] text-white shadow-[0_4px_18px_rgba(231,33,0,0.35)]"
+                  : "bg-white/[0.08] text-white/85 hover:bg-[rgba(231,33,0,0.24)] hover:text-white",
               ].join(" ")}
             >
               {mode}
