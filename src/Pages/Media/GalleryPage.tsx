@@ -50,7 +50,7 @@ export default function GalleryPage() {
       {/* TITLE */}
       <div className="absolute top-5 right-5 sm:top-8 sm:right-10 z-40 pointer-events-none rounded-2xl border border-white/[0.1] bg-black/45 px-5 py-3 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.15),inset_-1px_-1px_1px_rgba(0,0,0,0.2),0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-2xl backdrop-saturate-150">
         <h2 className="text-white text-sm sm:text-base font-light tracking-[0.2em] uppercase whitespace-nowrap">
-          {filteredImages[activeIndex]?.title || "Loading..."}
+          {(filteredImages[activeIndex]?.title || "Loading...").replace(/['"]+$/, "")}
         </h2>
       </div>
 
