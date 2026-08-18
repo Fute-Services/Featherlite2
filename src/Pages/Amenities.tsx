@@ -307,7 +307,7 @@ const Amenities = () => {
             </linearGradient>
           </defs>
 
-          {amenities.map(({ id, label, cx, cy, linePts, lineSvg, lineSvgProps, labelPos, thumbnailPos, Icon, customIcon, polygon, image }) => (
+          {amenities.map(({ id, label, cx, cy, linePts, lineSvg, lineSvgProps, labelPos, Icon, customIcon, polygon }) => (
             <g
               key={id}
               onMouseEnter={() => setHoveredAmenity(id)}
