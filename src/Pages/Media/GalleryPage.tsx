@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade, Navigation } from "swiper/modules";
 import axios from "axios";
@@ -98,8 +99,14 @@ export default function GalleryPage() {
         </Swiper>
       </div>
 
-      {/* INTEGRATED CONTROLS CONTAINER - black liquid glass, matching the bottom Navbar */}
-      <div className="absolute bottom-10 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/[0.1] bg-black/45 px-2.5 py-1.5 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.15),inset_-1px_-1px_1px_rgba(0,0,0,0.2),0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-2xl backdrop-saturate-150 sm:gap-2.5 sm:px-3.5 sm:py-2">
+      {/* INTEGRATED CONTROLS CONTAINER - black liquid glass, matching the bottom Navbar.
+          Slides up from the bottom the same way the Navbar does, just after it. */}
+      <motion.div
+        initial={{ opacity: 0, x: "-50%", y: 60 }}
+        animate={{ opacity: 1, x: "-50%", y: 0 }}
+        transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
+        className="absolute bottom-10 left-1/2 z-50 flex items-center gap-2 rounded-full border border-white/[0.1] bg-black/45 px-2.5 py-1.5 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.15),inset_-1px_-1px_1px_rgba(0,0,0,0.2),0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-2xl backdrop-saturate-150 sm:gap-2.5 sm:px-3.5 sm:py-2"
+      >
         {/* Glass sheen highlight along the top edge */}
         <span
           aria-hidden
@@ -146,7 +153,7 @@ export default function GalleryPage() {
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
-      </div>
+      </motion.div>
 
       <style
         dangerouslySetInnerHTML={{
