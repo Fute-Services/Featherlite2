@@ -89,7 +89,7 @@ export default function GalleryPage() {
                   alt={img.title}
                   loading="eager"
                   decoding="async"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover [filter:brightness(1.15)_contrast(1.05)_saturate(1.1)]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
               </div>
