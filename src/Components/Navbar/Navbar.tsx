@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Home, MapPin } from 'lucide-react'
 import type { LucideProps } from 'lucide-react'
@@ -53,9 +53,13 @@ const navVariants = {
 
 const Navbar = () => {
     const { introDone } = useIntro()
+    const location = useLocation()
+    const isAmenitiesPage = location.pathname === '/amenities'
 
     return (
-        <nav className="pointer-events-none fixed inset-x-0 bottom-3 z-50 flex justify-center px-3 sm:bottom-8">
+        <nav className={`pointer-events-none fixed inset-x-0 z-50 flex justify-center px-3 ${
+            isAmenitiesPage ? 'bottom-2 sm:bottom-4' : 'bottom-3 sm:bottom-8'
+        }`}>
             {/* Main Container - Black Liquid Glass (frosted, dark translucent pill) */}
             <motion.div
                 initial="hidden"
