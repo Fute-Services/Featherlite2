@@ -35,8 +35,6 @@ export default function GalleryPage() {
     return allImages.find((img) => img.category === viewMode)?.images || [];
   }, [allImages, viewMode]);
 
-  const redGradient = "linear-gradient(153deg, #8B0B01 16.82%, #F00 141.72%)";
-
   return (
     <div className="w-screen h-screen overflow-hidden relative bg-black font-sans">
       {/* BACK BUTTON — top-left on mobile/tablet, bottom-left on desktop */}
@@ -100,97 +98,53 @@ export default function GalleryPage() {
         </Swiper>
       </div>
 
-      {/* INTEGRATED CONTROLS CONTAINER */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-50 flex items-center backdrop-blur-md bg-white/10 border border-white/20 p-2 rounded-full shadow-xl">
+      {/* INTEGRATED CONTROLS CONTAINER - black liquid glass, matching the bottom Navbar */}
+      <div className="absolute bottom-10 left-1/2 z-50 flex -translate-x-1/2 items-center gap-2 rounded-full border border-white/[0.1] bg-black/45 px-2.5 py-1.5 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.15),inset_-1px_-1px_1px_rgba(0,0,0,0.2),0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-2xl backdrop-saturate-150 sm:gap-2.5 sm:px-3.5 sm:py-2">
+        {/* Glass sheen highlight along the top edge */}
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-x-3 top-0 h-px rounded-full bg-gradient-to-r from-transparent via-white/70 to-transparent"
+        />
+
         {/* PREV BUTTON */}
         <button
           ref={prevRef}
-          className="outline-none cursor-pointer p-1 transition-all duration-200 opacity-40 hover:opacity-70 active:opacity-100 active:scale-90"
+          className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/85 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.35),inset_-1px_-1px_1px_rgba(0,0,0,0.2)] outline-none transition-all duration-300 ease-out hover:scale-[1.04] hover:bg-[rgba(231,33,0,0.24)] hover:text-white active:scale-[0.97] sm:size-9"
         >
-          <div
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center"
-            style={{ background: redGradient }}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="3"
-            >
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </button>
 
         {/* CATEGORY SWITCHERS */}
-        <div className="flex mx-2 bg-black/20 rounded-full p-1 border border-white/5">
-          <button
-            onClick={() => {
-              setViewMode("interior");
-              setActiveIndex(0);
-            }}
-            className={`px-4 sm:px-6 md:px-10 py-2 sm:py-2.5 rounded-full text-[10px] md:text-xs font-bold tracking-[0.15em] transition-all duration-500 uppercase active:scale-95 whitespace-nowrap`}
-            style={{
-              background:
-                viewMode === "interior"
-                  ? redGradient
-                  : "rgba(139, 11, 1, 0.25)",
-              color: "white",
-              opacity: viewMode === "interior" ? 1 : 0.7,
-              boxShadow:
-                viewMode === "interior"
-                  ? "0 4px 20px rgba(255,0,0,0.4)"
-                  : "none",
-            }}
-          >
-            Interior
-          </button>
-
-          <button
-            onClick={() => {
-              setViewMode("exterior");
-              setActiveIndex(0);
-            }}
-            className={`px-4 sm:px-6 md:px-10 py-2 sm:py-2.5 rounded-full text-[10px] md:text-xs font-bold tracking-[0.15em] transition-all duration-500 uppercase active:scale-95 whitespace-nowrap`}
-            style={{
-              background:
-                viewMode === "exterior"
-                  ? redGradient
-                  : "rgba(139, 11, 1, 0.25)",
-              color: "white",
-              opacity: viewMode === "exterior" ? 1 : 0.7,
-              boxShadow:
-                viewMode === "exterior"
-                  ? "0 4px 20px rgba(255,0,0,0.4)"
-                  : "none",
-            }}
-          >
-            Exterior
-          </button>
+        <div className="flex gap-1">
+          {(["interior", "exterior"] as const).map((mode) => (
+            <button
+              key={mode}
+              onClick={() => {
+                setViewMode(mode);
+                setActiveIndex(0);
+              }}
+              className={[
+                "rounded-full px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] whitespace-nowrap transition-all duration-300 ease-out active:scale-[0.97] sm:px-6 sm:text-xs",
+                viewMode === mode
+                  ? "bg-[rgba(231,33,0,0.28)] text-white shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.45),inset_-1px_-1px_1px_rgba(0,0,0,0.25),0_4px_18px_rgba(231,33,0,0.35)]"
+                  : "bg-white/[0.08] text-white/85 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.35),inset_-1px_-1px_1px_rgba(0,0,0,0.2)] hover:bg-[rgba(231,33,0,0.24)] hover:text-white",
+              ].join(" ")}
+            >
+              {mode}
+            </button>
+          ))}
         </div>
 
         {/* NEXT BUTTON */}
         <button
           ref={nextRef}
-          className="outline-none cursor-pointer p-1 transition-all duration-200 opacity-40 hover:opacity-70 active:opacity-100 active:scale-90"
+          className="flex size-8 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/85 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.35),inset_-1px_-1px_1px_rgba(0,0,0,0.2)] outline-none transition-all duration-300 ease-out hover:scale-[1.04] hover:bg-[rgba(231,33,0,0.24)] hover:text-white active:scale-[0.97] sm:size-9"
         >
-          <div
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center"
-            style={{ background: redGradient }}
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="white"
-              strokeWidth="3"
-            >
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
       </div>
 
