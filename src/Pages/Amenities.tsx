@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { type LucideIcon } from "lucide-react";
+import { FaAngleLeft } from "react-icons/fa6";
 
 import buildingImg from "../assets/AvailabilityPage/building.png";
 import GradientImg from "../assets/AvailabilityPage/Sectional View page.png";
@@ -512,27 +513,13 @@ const Amenities = () => {
       {/* ── BACK BUTTON ────────────────────────────────────────────────── */}
       <button
         onClick={() => navigate(-1)}
+        className="absolute bottom-10 left-[5%] z-50 p-2.5
+                  bg-slate-900/70 hover:bg-slate-900/90 backdrop-blur-md border 
+                  border-white/70 rounded-full transition-all duration-500 ease-in-out cursor-pointer
+                  hover:scale-110 active:scale-95 shadow-xl"
         aria-label="Go back"
-        className="absolute bottom-4 left-16 z-50 group"
       >
-        <svg
-          width="50"
-          height="50"
-          viewBox="0 0 70 70"
-          xmlns="http://www.w3.org/2000/svg"
-          className="transition-transform duration-300 group-hover:scale-105 drop-shadow-lg"
-        >
-          <circle cx="35" cy="35" r="32" fill={GOLD} />
-          <g transform="translate(25,23)">
-            <path
-              d="M17.1191 22.5V15.0098C17.1191 10.0392 13.0897 6.00977 8.11914 6.00977H2.11914M2.11914 6.00977L6.61914 10.5195M2.11914 6.00977L6.61914 1.5"
-              stroke="#513203"
-              strokeWidth="4"
-              strokeLinecap="round"
-              fill="none"
-            />
-          </g>
-        </svg>
+        <FaAngleLeft className="w-4 h-4 text-white/80" />
       </button>
     </div>
   );
