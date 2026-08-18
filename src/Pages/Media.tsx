@@ -22,8 +22,20 @@ const PANELS: MediaPanel[] = [
 
 const Media = () => (
   <div className="relative h-dvh w-full overflow-hidden bg-[#071322]">
+    {/* Ambient glow lights, left and right */}
+    <div
+      aria-hidden
+      className="pointer-events-none absolute -left-32 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full opacity-30 blur-[110px]"
+      style={{ background: "radial-gradient(circle, #D4AF37 0%, transparent 70%)" }}
+    />
+    <div
+      aria-hidden
+      className="pointer-events-none absolute -right-32 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full opacity-30 blur-[110px]"
+      style={{ background: "radial-gradient(circle, #e8321c 0%, transparent 70%)" }}
+    />
+
     <div className="relative z-10 flex h-full w-full items-center justify-center px-4 pb-28 pt-24 sm:px-10">
-      <div className="flex h-[70vh] max-h-[560px] w-full max-w-6xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
+      <div className="flex h-[58vh] max-h-[440px] w-full max-w-5xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
         {PANELS.map((panel, index) => {
           const Icon = panel.icon;
           const content = (
