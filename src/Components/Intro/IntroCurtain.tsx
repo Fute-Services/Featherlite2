@@ -3,10 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import logo from '../../assets/Logo.png'
 import { useIntro } from '../../Context/IntroContext'
 
-const LOGO_FADE_IN_DELAY = 200
-const LOGO_FADE_DURATION = 0.6
-const LOGO_HOLD = 900
-const CURTAIN_OPEN_DURATION = 0.8
+const LOGO_FADE_IN_DELAY = 150
+const LOGO_FADE_DURATION = 0.45
+const LOGO_HOLD = 450
+const CURTAIN_OPEN_DURATION = 0.6
 
 /**
  * Entrance sequence: the screen starts fully covered by a black curtain

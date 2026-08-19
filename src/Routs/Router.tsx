@@ -1,17 +1,21 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import Header from '../Components/Header/Header'
 import Navbar from '../Components/Navbar/Navbar'
 import IntroCurtain from '../Components/Intro/IntroCurtain'
 import Homepage from '../Pages/Homepage'
 // import Location from '../Pages/Location'
-import FloorPlan from '../Pages/FloorPlanPage'
-import VrTour from '../Pages/VrTour'
-import Amenities from '../Pages/Amenities'
-import Media from '../Pages/Media'
-import GalleryPage from '../Pages/Media/GalleryPage'
-import NotFound from '../Pages/NotFound'
-import UnitPlanPage from '../Pages/UnitPlanPage'
-import MasterplanPage from '../Pages/MasterPlanPage'
+
+// Everything except the homepage is code-split: each route's JS (and the
+// heavy images/video/three.js it pulls in) only downloads when visited.
+const FloorPlan = lazy(() => import('../Pages/FloorPlanPage'))
+const VrTour = lazy(() => import('../Pages/VrTour'))
+const Amenities = lazy(() => import('../Pages/Amenities'))
+const Media = lazy(() => import('../Pages/Media'))
+const GalleryPage = lazy(() => import('../Pages/Media/GalleryPage'))
+const NotFound = lazy(() => import('../Pages/NotFound'))
+const UnitPlanPage = lazy(() => import('../Pages/UnitPlanPage'))
+const MasterplanPage = lazy(() => import('../Pages/MasterPlanPage'))
 
 /** Full Layout: Includes Header + Navbar */
 const MainLayout = () => (
@@ -38,26 +42,28 @@ const Router = () => {
   return (
     <BrowserRouter>
       <IntroCurtain />
-      <Routes>
-        {/* Routes WITH Navbar */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Homepage />} />
-          {/* <Route path="/location" element={<Location />} /> */}
-          <Route path="/amenities" element={<Amenities />} />
-          <Route path="/media" element={<Media />} />
-          <Route path="/vr-tour" element={<VrTour />} />
-          <Route path="/floor-plan" element={<FloorPlan />} />
-          <Route path="/masterplan" element={<MasterplanPage />} />
-         
-        </Route>
+      <Suspense fallback={null}>
+        <Routes>
+          {/* Routes WITH Navbar */}
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<Homepage />} />
+            {/* <Route path="/location" element={<Location />} /> */}
+            <Route path="/amenities" element={<Amenities />} />
+            <Route path="/media" element={<Media />} />
+            <Route path="/vr-tour" element={<VrTour />} />
+            <Route path="/floor-plan" element={<FloorPlan />} />
+            <Route path="/masterplan" element={<MasterplanPage />} />
 
-        {/* Routes WITHOUT Navbar (e.g. Floor Plan/Masterplan, or Unit Plan) */}
-        <Route element={<PlainLayout />}>
-          <Route path="/media/gallery" element={<GalleryPage />} />
-           <Route path="/unitplan/:idnew" element={<UnitPlanPage />} />
-          <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
+          </Route>
+
+          {/* Routes WITHOUT Navbar (e.g. Floor Plan/Masterplan, or Unit Plan) */}
+          <Route element={<PlainLayout />}>
+            <Route path="/media/gallery" element={<GalleryPage />} />
+            <Route path="/unitplan/:idnew" element={<UnitPlanPage />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   )
 }

@@ -437,6 +437,7 @@ const Amenities = () => {
                 <img
                   src={hoveredAmenityData.image}
                   alt={hoveredAmenityData.label.join(" ")}
+                  decoding="async"
                   className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl"
                 />
               )}

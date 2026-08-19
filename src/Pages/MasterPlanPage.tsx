@@ -118,6 +118,8 @@ export default function MasterplanPage() {
             key={src}
             src={src}
             alt="Project Masterplan"
+            loading={active ? "eager" : "lazy"}
+            decoding="async"
             className={[
               "absolute inset-0 size-full object-cover transition-opacity duration-[900ms] ease-in-out",
               active ? "opacity-100" : "opacity-0",
@@ -252,6 +254,7 @@ export default function MasterplanPage() {
               <img
                 src={modalImage}
                 alt="Location Preview"
+                decoding="async"
                 className="max-h-[75vh] w-auto object-fit rounded-2xl shadow-2xl"
                 onError={(e) => {
                   // Fallback restaurant interior if the image doesn't exist

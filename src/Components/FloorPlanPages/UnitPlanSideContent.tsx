@@ -40,7 +40,9 @@ export default function UnitPlanSideContent({
                     // onClick={() => setShowVRModal(true)}
                     src={activePoint.detailImage}
                     alt={activePoint.name}
-                    className="w-full h-full object-cover transition-transform 
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover transition-transform
                             duration-500 hover:scale-105"
                 />
             </div>
