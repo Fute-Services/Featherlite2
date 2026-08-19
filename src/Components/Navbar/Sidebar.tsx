@@ -58,7 +58,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const [isCirculationOpen, setIsCirculationOpen] = useState<boolean>(false);
 
     // Selection state values
-    const [selectedLayout, setSelectedLayout] = useState<string>("Layout");
+    const [selectedLayout, setSelectedLayout] = useState<string>("Ground layout");
     const [selectedCirculation, setSelectedCirculation] = useState<string>("Circulation");
 
     const toggleSidebar = () => {
