@@ -137,7 +137,7 @@ export default function UnitPlanContentPage({
                                 key={`card-${point.id}`}
                                 x={(point.labelX ?? 0) - 120}
                                 y={(point.labelY ?? 0) - 50}
-                                width="250"
+                                width="270"
                                 height="190"
                                 onClick={(e) => {
                                     e.stopPropagation();
