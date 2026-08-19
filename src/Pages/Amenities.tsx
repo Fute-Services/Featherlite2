@@ -1,8 +1,6 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { type LucideIcon } from "lucide-react";
-import { FaAngleLeft } from "react-icons/fa6";
 
 import buildingImg from "../assets/AvailabilityPage/building.jpeg";
 
@@ -274,8 +272,6 @@ const getLabelProps = (pos: "top" | "left" | "right" | "bottom" = "top", cx: num
 const Amenities = () => {
   const [hoveredAmenity, setHoveredAmenity] = useState<string | null>(null);
 
-  const navigate = useNavigate();
-
   const hoveredAmenityData = amenities.find((a) => a.id === hoveredAmenity);
 
   return (
@@ -450,17 +446,6 @@ const Amenities = () => {
       </AnimatePresence>
 
 
-      {/* ── BACK BUTTON ────────────────────────────────────────────────── */}
-      <button
-        onClick={() => navigate(-1)}
-        className="absolute bottom-10 left-[5%] z-50 p-2.5
-                  bg-slate-900/70 hover:bg-slate-900/90 backdrop-blur-md border 
-                  border-white/70 rounded-full transition-all duration-500 ease-in-out cursor-pointer
-                  hover:scale-110 active:scale-95 shadow-xl"
-        aria-label="Go back"
-      >
-        <FaAngleLeft className="w-4 h-4 text-white/80" />
-      </button>
     </div>
   );
 };

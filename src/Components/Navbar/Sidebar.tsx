@@ -22,12 +22,17 @@ interface SidebarProps {
     onLayoutSelect?: (layout: string) => void;
     onLabelsToggle?: (show: boolean) => void;
     onCirculationSelect?: (circulation: string) => void;
+    // When set, the top two rail icons render as pill buttons (label + onClick) instead of navigating to /masterplan and /floor-plan
+    primaryIcon?: { label: string; onClick: () => void; active: boolean };
+    secondaryIcon?: { label: string; onClick: () => void; active: boolean };
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
     onLayoutSelect,
     onLabelsToggle,
     onCirculationSelect,
+    primaryIcon,
+    secondaryIcon,
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -166,48 +171,72 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     </button>
                 </div>
 
-                <div className="flex absolute left-[20%] top-[44%] flex-col items-center gap-8 my-auto">
-                    {/* 1. Master Plan Link Button */}
-                    <Link
-                        to="/masterplan"
-                        onClick={() => {
-                            setActiveTab("layout");
-                            setIsOpen(true);         // Opens the main side glass panel
-                            setIsLayoutOpen(false);  // Keeps the options dropdown menu closed initially
-                        }}
-                        className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
-                    >
-                        <img
-                            src={icon2}
-                            alt="Layout Option"
-                            className={`w-5 h-5 object-contain transition-transform duration-200 ${activeTab === "layout" ? "filter-gold" : "group-hover:filter-gold"
+                <div className="flex absolute left-[20%] top-[44%] flex-col items-center gap-3 my-auto">
+                    {/* 1. Master Plan Link Button (or pill action, e.g. Interior toggle) */}
+                    {primaryIcon ? (
+                        <button
+                            onClick={primaryIcon.onClick}
+                            className={`rounded-full px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] whitespace-nowrap transition-all duration-300 ease-out cursor-pointer backdrop-blur-md border active:scale-[0.97] ${primaryIcon.active
+                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/50 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                : "bg-black/30 text-white/80 border-white/25 hover:bg-black/45 hover:text-white"
                                 }`}
-                        />
-                        {isOpen && activeTab === "layout" && (
-                            <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
-                        )}
-                    </Link>
+                        >
+                            {primaryIcon.label}
+                        </button>
+                    ) : (
+                        <Link
+                            to="/masterplan"
+                            onClick={() => {
+                                setActiveTab("layout");
+                                setIsOpen(true);         // Opens the main side glass panel
+                                setIsLayoutOpen(false);  // Keeps the options dropdown menu closed initially
+                            }}
+                            className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
+                        >
+                            <img
+                                src={icon2}
+                                alt="Layout Option"
+                                className={`w-5 h-5 object-contain transition-transform duration-200 ${activeTab === "layout" ? "filter-gold" : "group-hover:filter-gold"
+                                    }`}
+                            />
+                            {isOpen && activeTab === "layout" && (
+                                <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
+                            )}
+                        </Link>
+                    )}
 
-                    {/* 2. Floor Plan Link Button */}
-                    <Link
-                        to="/floor-plan"
-                        onClick={() => {
-                            setActiveTab("section");
-                            setIsOpen(false);        // Floor Plan starts with the panel collapsed
-                            setIsLayoutOpen(false);
-                        }}
-                        className="group relative flex items-center justify-center p-1 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
-                    >
-                        <img
-                            src={selectedicon3}
-                            alt="Building Section Option"
-                            className={`w-7 h-7 object-contain transition-transform duration-200 ${activeTab === "section" ? "filter-gold" : "group-hover:filter-gold"
+                    {/* 2. Floor Plan Link Button (or pill action, e.g. Exterior toggle) */}
+                    {secondaryIcon ? (
+                        <button
+                            onClick={secondaryIcon.onClick}
+                            className={`rounded-full px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] whitespace-nowrap transition-all duration-300 ease-out cursor-pointer backdrop-blur-md border active:scale-[0.97] ${secondaryIcon.active
+                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/50 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                : "bg-black/30 text-white/80 border-white/25 hover:bg-black/45 hover:text-white"
                                 }`}
-                        />
-                        {isOpen && activeTab === "section" && (
-                            <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
-                        )}
-                    </Link>
+                        >
+                            {secondaryIcon.label}
+                        </button>
+                    ) : (
+                        <Link
+                            to="/floor-plan"
+                            onClick={() => {
+                                setActiveTab("section");
+                                setIsOpen(false);        // Floor Plan starts with the panel collapsed
+                                setIsLayoutOpen(false);
+                            }}
+                            className="group relative flex items-center justify-center p-1 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
+                        >
+                            <img
+                                src={selectedicon3}
+                                alt="Building Section Option"
+                                className={`w-7 h-7 object-contain transition-transform duration-200 ${activeTab === "section" ? "filter-gold" : "group-hover:filter-gold"
+                                    }`}
+                            />
+                            {isOpen && activeTab === "section" && (
+                                <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
+                            )}
+                        </Link>
+                    )}
                 </div>
 
                 {/* Bottom Spacer / Anchor */}
