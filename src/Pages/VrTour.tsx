@@ -1,5 +1,5 @@
-// import PageShell from '../components/PageShell/PageShell'
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import { Plus, Minus } from "lucide-react";
 
 declare global {
   interface Window {
@@ -7,68 +7,468 @@ declare global {
   }
 }
 
-const vrCategories: Record<string, { id: string; name: string }[]> = {};
+// Panoramas already ship under public/virtual tour/ (existing assets)
+const vt = (name: string) => `/virtual tour/${encodeURIComponent(name)}`;
 
+const vrCategories: Record<string, { id: string; name: string }[]> = {
+  Exterior: [
+    { id: "ext_entry_gate", name: "Entry Gate" },
+    { id: "ext_entry_perspective", name: "Entry Perspective" },
+    { id: "ext_drop_off_area", name: "Drop Off" },
+    { id: "ext_kids_play_area", name: "Kids Play Area" },
+    { id: "ext_open_seating", name: "Open Seating Area" },
+    { id: "ext_terrace_cafe_1", name: "Terrace Cafe" },
+    { id: "ext_terrace_cafe_2", name: "Terrace Cafe" },
+    { id: "ext_multipurpose_court", name: "Terrace Multipurpose Court" },
+  ],
+  Interior: [
+    { id: "int_reception_lobby", name: "Reception Lobby" },
+    { id: "int_lift_lobby", name: "Lift Lobby" },
+    { id: "int_lift_lobby_2", name: "Lift Lobby" },
+    { id: "int_gf_cafe_waiting", name: "GF Cafe & Waiting Area" },
+    { id: "int_workstation_1", name: "Workstation Area" },
+    { id: "int_workstation_2", name: "Workstation Area" },
+  ],
+};
 
 export default function Vr() {
-  const [currentScene, setCurrentScene] = useState<string>("");
+  const [currentScene, setCurrentScene] = useState<string>("ext_entry_gate");
   const viewerRef = useRef<any>(null);
+  const [shareCopied, setShareCopied] = useState(false);
 
-  const tourConfig: any = {
+  const handleSceneChange = useCallback((sceneId: string) => {
+    const viewer = viewerRef.current;
+    if (!viewer) return;
+
+    // Zoom in briefly before cutting to the next scene, so moving through
+    // a hotspot feels like stepping forward rather than a jump-cut.
+    const startHfov = viewer.getHfov();
+    const targetHfov = Math.max(startHfov - 15, 30);
+    const duration = 350;
+    const startTime = performance.now();
+
+    const animateZoom = (now: number) => {
+      const t = Math.min((now - startTime) / duration, 1);
+      viewer.setHfov(startHfov + (targetHfov - startHfov) * t);
+      if (t < 1) {
+        requestAnimationFrame(animateZoom);
+      } else {
+        viewer.loadScene(sceneId);
+        setCurrentScene(sceneId);
+      }
+    };
+    requestAnimationFrame(animateZoom);
+  }, []);
+
+  const handleShare = useCallback(async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "Virtual Tour", url: window.location.href });
+      } catch {
+        // user cancelled share sheet, nothing to do
+      }
+    } else {
+      await navigator.clipboard.writeText(window.location.href);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    }
+  }, []);
+
+  const createCustomHotspot = useCallback((hotspotDiv: HTMLElement, args: { text: string; next: string; rotation: number }) => {
+    hotspotDiv.classList.add('custom-hotspot-main');
+    hotspotDiv.innerHTML = `
+      <div class="hotspot-marker">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="white" stroke-width="2" style="transform: rotate(${args.rotation || 0}deg)">
+          <path d="M6 15l6-6 6 6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <span class="hotspot-label">${args.text}</span>
+    `;
+
+    hotspotDiv.onclick = () => {
+      handleSceneChange(args.next);
+    };
+
+    // Auto-rotate keeps repositioning this div every frame; freeze it the
+    // instant the pointer arrives so a click's mousedown/mouseup can't have
+    // the marker drift out from under the cursor mid-click.
+    hotspotDiv.addEventListener("pointerenter", () => {
+      viewerRef.current?.stopAutoRotate();
+    });
+  }, [handleSceneChange]);
+
+  const tourConfig: any = useMemo(() => ({
     default: {
-      firstScene: "",
+      firstScene: "ext_entry_gate",
       autoLoad: true,
       sceneFadeDuration: 1000,
       autoRotate: -2,
       autoRotateInactivityDelay: 5000,
     },
-    scenes: {},
-  };
+    scenes: {
+      ext_entry_gate: {
+        panorama: vt("CAM_01_Entry_Gate_Hero_View_1_1_n8epa4.jpg"),
+        yaw: 350,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: 0,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Entry Perspective", next: "ext_entry_perspective", rotation: 0 },
+          },
+        ],
+      },
+      ext_entry_perspective: {
+        panorama: vt("Cam_02_Entry_Perspective_Inside_1_1_gnb1hi.jpg"),
+        yaw: 260,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: 260,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Drop Off", next: "ext_drop_off_area", rotation: 0 },
+          },
+          {
+            pitch: -5,
+            yaw: 220,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Kids Play Area", next: "ext_kids_play_area", rotation: 270 },
+          },
+          {
+            pitch: -5,
+            yaw: 300,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Entry Gate", next: "ext_entry_gate", rotation: 90 },
+          },
+        ],
+      },
+      ext_drop_off_area: {
+        panorama: vt("Cam_11_Drop_Off_Area_opt.jpg"),
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: 35,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Open Seating Area", next: "ext_open_seating", rotation: 90 },
+          },
+          {
+            pitch: -5,
+            yaw: 0,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Reception Lobby", next: "int_reception_lobby", rotation: 0 },
+          },
+          {
+            pitch: -5,
+            yaw: -35,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Entry Perspective", next: "ext_entry_perspective", rotation: 270 },
+          },
+        ],
+      },
+      ext_kids_play_area: {
+        panorama: vt("Cam_06_Kids_Play_Area_1_1_feonwl.jpg"),
+        pitch: -15,
+
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: 0,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Entry Perspective", next: "ext_entry_perspective", rotation: 90 },
+          },
+        ],
+      },
+      ext_open_seating: {
+        panorama: vt("Cam_07_GF_Open_Seating_Area_1_1_livzbf.jpg"),
+        pitch: -15,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: 0,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Drop Off", next: "ext_drop_off_area", rotation: 180 },
+          },
+        ],
+      },
+      ext_terrace_cafe_1: {
+        panorama: vt("Cam_08_Terrace_Cafe_Area_1_1_hpgybq.jpg"),
+        pitch: -20,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: -20,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Terrace Cafe", next: "ext_terrace_cafe_2", rotation: 0 },
+          },
+          {
+            pitch: -5,
+            yaw: 20,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Lift Lobby", next: "int_lift_lobby_2", rotation: 180 },
+          },
+        ],
+      },
+      ext_terrace_cafe_2: {
+        panorama: vt("Cam_10_Terrace_Cafe_Area_02_1_1_pubwuq.jpg"),
+        pitch: -20,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: 30,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Terrace Multipurpose Court", next: "ext_multipurpose_court", rotation: 180 },
+          },
+          {
+            pitch: -5,
+            yaw: -30,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Terrace Cafe", next: "ext_terrace_cafe_1", rotation: 270 },
+          },
+        ],
+      },
+      ext_multipurpose_court: {
+        panorama: vt("Cam_09_Terrace_Multipurpose_Court_2_1_1_eeujyx.jpg"),
+        pitch: -10,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: -30,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Terrace Cafe", next: "ext_terrace_cafe_2", rotation: 270 },
+          },
+          {
+            pitch: -5,
+            yaw: 30,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Reception", next: "int_reception_lobby", rotation: 180 },
+          },
+        ],
+      },
+      int_reception_lobby: {
+        panorama: vt("Cam_03_Reception_Lobby_opt.jpg"),
+        pitch: -10,
+        yaw: -50,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: -50,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Lift Lobby", next: "int_lift_lobby", rotation: -60 },
+          },
+          {
+            pitch: -5,
+            yaw: -15,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "GF Cafe & Waiting Area", next: "int_gf_cafe_waiting", rotation: 30 },
+          },
+          {
+            pitch: -5,
+            yaw: 25,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Drop Off", next: "ext_drop_off_area", rotation: 130 },
+          },
+        ],
+      },
+      int_lift_lobby: {
+        panorama: vt("Cam_04_Lift_Lobby_opt.jpg"),
+        pitch: -25,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: -20,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Workstation Area", next: "int_workstation_2", rotation: 0 },
+          },
+          {
+            pitch: -5,
+            yaw: 20,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Reception Lobby", next: "int_reception_lobby", rotation: 90 },
+          },
+        ],
+      },
+      int_lift_lobby_2: {
+        panorama: vt("Cam_04_Lift_Lobby_opt.jpg"),
+        pitch: -25,
+        hotSpots: [
+          {
+            pitch: 0,
+            yaw: -30,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Terrace Cafe", next: "ext_terrace_cafe_1", rotation: 0 },
+          },
+          {
+            pitch: -5,
+            yaw: 40,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Workstation Area", next: "int_workstation_2", rotation: 90 },
+          },
+          {
+            pitch: -15,
+            yaw: -30,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Reception Lobby", next: "int_reception_lobby", rotation: 180 },
+          },
+        ],
+      },
+      int_gf_cafe_waiting: {
+        panorama: vt("Cam_05_GF_Cafe_Waiting_opt.jpg"),
+        pitch: -10,
+        yaw: 180,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: 180,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Reception Lobby", next: "int_reception_lobby", rotation: 180 },
+          },
+        ],
+      },
+      int_workstation_1: {
+        panorama: vt("CAM_05_Workstation_01_opt.jpg"),
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: 0,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Workstation Area", next: "int_workstation_2", rotation: 180 },
+          },
+        ],
+      },
+      int_workstation_2: {
+        panorama: vt("CAM_05_Workstation_02_opt.jpg"),
+        pitch: -15,
+        hotSpots: [
+          {
+            pitch: -5,
+            yaw: 20,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Lift Lobby", next: "int_lift_lobby_2", rotation: 90 },
+          },
+          {
+            pitch: -5,
+            yaw: -20,
+            type: "custom",
+            createTooltipFunc: (d: any, a: any) => createCustomHotspot(d, a),
+            createTooltipArgs: { text: "Workstation Area", next: "int_workstation_1", rotation: 0 },
+          },
+        ],
+      },
+    },
+  }), [createCustomHotspot]);
 
 
   useEffect(() => {
-    let timer: any;
-    if (window.pannellum && !viewerRef.current) {
-      timer = setTimeout(() => {
-        try {
-          viewerRef.current = window.pannellum.viewer("pan-container", {
-            ...tourConfig,
-            showControls: false,
-            mouseZoom: true,
-          });
+    let pollTimer: any;
+    let cancelled = false;
 
-          viewerRef.current.on("load", () => {
-            setCurrentScene(viewerRef.current.getScene());
-          });
-        } catch (err) {
-          console.error("Error initializing Pannellum:", err);
-        }
-      }, 50);
-    }
+    const initViewer = () => {
+      if (cancelled || viewerRef.current) return;
+      try {
+        viewerRef.current = window.pannellum.viewer("pan-container", {
+          ...tourConfig,
+          showControls: false,
+          mouseZoom: true,
+        });
+
+        viewerRef.current.on("load", () => {
+          setCurrentScene(viewerRef.current.getScene());
+        });
+      } catch (err) {
+        console.error("Error initializing Pannellum:", err);
+      }
+    };
+
+    const waitForPannellum = () => {
+      if (window.pannellum) {
+        initViewer();
+      } else {
+        pollTimer = setTimeout(waitForPannellum, 100);
+      }
+    };
+
+    waitForPannellum();
 
     return () => {
-      if (timer) clearTimeout(timer);
+      cancelled = true;
+      if (pollTimer) clearTimeout(pollTimer);
       if (viewerRef.current) {
         viewerRef.current.destroy();
         viewerRef.current = null;
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleZoomIn = () =>
+    viewerRef.current?.setHfov(viewerRef.current.getHfov() - 10);
+  const handleZoomOut = () =>
+    viewerRef.current?.setHfov(viewerRef.current.getHfov() + 10);
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-black font-sans">
-      {/* Back Button (Hidden/Commented as Header/Logo handles navigation) */}
-      {/* 
+      {/* Share Button */}
       <button
-        aria-label="Back"
-        className="absolute top-8 left-8 sm:top-12 sm:left-12 flex size-10 sm:size-11 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur-md shadow-lg transition-transform hover:scale-105 hover:bg-black/70 z-50 cursor-pointer"
-        onClick={() => navigate(-1)}
+        onClick={handleShare}
+        aria-label="Share"
+        className="absolute top-8 right-8 sm:top-6 sm:right-6 z-50 w-9 h-9 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white hover:bg-black/60 transition-colors shadow-lg"
       >
-        <ArrowLeft className="size-5" />
-      </button> 
-      */}
+        {shareCopied ? (
+          <span className="text-[10px] font-medium whitespace-nowrap px-1">Copied!</span>
+        ) : (
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="18" cy="5" r="3" />
+            <circle cx="6" cy="12" r="3" />
+            <circle cx="18" cy="19" r="3" />
+            <line x1="8.6" y1="10.5" x2="15.4" y2="6.5" />
+            <line x1="8.6" y1="13.5" x2="15.4" y2="17.5" />
+          </svg>
+        )}
+      </button>
+
+      {/* Zoom Controls */}
+      <div className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-1 p-1.5 rounded-full bg-gradient-to-b from-black/50 via-black/60 to-black/70 backdrop-blur-xl backdrop-saturate-150 border border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.37)]">
+        <button
+          onClick={handleZoomIn}
+          aria-label="Zoom In"
+          className="w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center rounded-full bg-[#FF0000]/85 backdrop-blur-sm border border-white/20 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_4px_12px_rgba(231,0,0,0.4)] hover:bg-[#FF0000] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+        >
+          <Plus className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+        </button>
+        <div className="w-6 h-px bg-white/15" />
+        <button
+          onClick={handleZoomOut}
+          aria-label="Zoom Out"
+          className="w-9 h-9 sm:w-11 sm:h-11 flex items-center justify-center rounded-full text-white/80 hover:bg-white/10 hover:text-white transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+        >
+          <Minus className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+        </button>
+      </div>
 
       <div id="pan-container" className="w-full h-full"></div>
 
@@ -90,51 +490,50 @@ export default function Vr() {
           .scrollbar-hide::-webkit-scrollbar { display: none; }
           .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
           .pnlm-load-box { display: none !important; }
-          
-          /* Custom arrow hotspots styling */
-          .custom-hotspot-main { 
-            display: flex !important; 
-            flex-direction: column !important; 
-            align-items: center !important; 
-            justify-content: center !important; 
-            pointer-events: auto !important; 
-          }
-          .custom-arrow-asset { 
-            width: 50px !important; 
-            height: 50px !important; 
-            min-width: 50px !important; 
-            min-height: 50px !important; 
-            cursor: pointer !important; 
-            display: block !important; 
-            transition: transform 0.3s ease !important, opacity 0.2s ease !important; 
-            opacity: 0.85;
-            user-select: none !important;
-            -webkit-user-drag: none !important;
-          }
-          .custom-arrow-asset:hover { opacity: 1; }
 
-          /* Custom Tooltip Styling (Small Pill Badge) */
-          .hotspot-label { 
-            visibility: hidden; 
-            position: absolute; 
-            bottom: 60px; 
-            background: rgba(20, 20, 20, 0.85) !important; 
-            color: white !important; 
-            padding: 6px 14px !important; 
-            border-radius: 9999px !important; 
-            white-space: nowrap !important; 
-            font-weight: 500 !important; 
-            font-size: 13px !important; 
-            border: 1px solid rgba(255,255,255,0.15) !important; 
-            pointer-events: none !important; 
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
-            font-family: system-ui, -apple-system, sans-serif !important;
-            transition: opacity 0.15s ease, visibility 0.15s ease !important;
-            opacity: 0;
+          /* Custom hotspot marker: thin-ring circle + chevron + plain label,
+             matching the reference tour. Pannellum forces a 26x26 box, a
+             sprite background, and a hover tint on every .pnlm-hotspot, and
+             centers hotspots using the div's own offsetWidth/offsetHeight;
+             override all of that and fix the box to 44x44 so the centering
+             math lines up with the circle (the label is absolutely
+             positioned below so it doesn't affect that box size). */
+          .custom-hotspot-main {
+            width: 44px !important;
+            height: 44px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            pointer-events: auto !important;
+            background: none !important;
+            background-image: none !important;
+            border-radius: 9999px !important;
           }
-          .custom-hotspot-main:hover .hotspot-label { 
-            visibility: visible; 
-            opacity: 1;
+          .custom-hotspot-main:hover { background-color: transparent !important; }
+          .custom-hotspot-main .hotspot-marker {
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            background: rgba(0, 0, 0, 0.55);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .custom-hotspot-main .hotspot-label {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 6px;
+            color: white !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            font-family: system-ui, -apple-system, sans-serif !important;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+            white-space: nowrap !important;
           }
 
           .pnlm-hotspot-base { background: none !important; }

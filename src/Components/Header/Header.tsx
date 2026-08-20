@@ -9,9 +9,14 @@ const Header = () => {
   const showThemeToggle = pathname === '/'
   // these pages dropped the bottom Navbar entirely, so give them an explicit way back
   const showBackButton = false
+  const logoOnRight = pathname === '/technicalspecifictions' || pathname === '/certifictions'
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-[1010] flex items-start justify-between px-5 py-5 sm:px-10 sm:py-7">
+    <header
+      className={`pointer-events-none fixed inset-x-0 top-0 z-[1010] flex items-start px-5 py-5 sm:px-10 sm:py-7 ${
+        logoOnRight ? 'flex-row-reverse justify-between' : 'justify-between'
+      }`}
+    >
       <Link to="/" className="pointer-events-auto">
         <img
           src={logo}

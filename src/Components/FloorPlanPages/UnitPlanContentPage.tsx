@@ -1,10 +1,11 @@
-
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 interface UnitPlanContentPageProps {
     setSelectedId:any;
     pointsData: any[];
     selectedId: string | number;
-   
+
 }
 
 export default function UnitPlanContentPage({
@@ -13,14 +14,45 @@ export default function UnitPlanContentPage({
     selectedId,
 
 }: UnitPlanContentPageProps) {
+    // Deduplicated, ordered list of hotspot cards for this floor
+    const cards = [...pointsData].filter(
+        (point, index, self) =>
+            point.id !== 101 && index === self.findIndex((p) => p.id === point.id)
+    );
+    const cardsKey = cards.map((c) => c.id).join(',');
+
+    // Reveal cards one at a time whenever the floor's card set changes.
+    // Starts after the stage's own 3s zoom/fade-in (.animate-zoom-back-to-front,
+    // see index.css) settles, otherwise the stagger is invisible underneath it.
+    const [visibleCount, setVisibleCount] = useState(0);
+    useEffect(() => {
+        setVisibleCount(0);
+        if (cardsKey === '') return;
+        const total = cardsKey.split(',').length;
+        let count = 0;
+        let ticker: ReturnType<typeof setInterval>;
+        const startDelay = setTimeout(() => {
+            ticker = setInterval(() => {
+                count += 1;
+                setVisibleCount(count);
+                if (count >= total) clearInterval(ticker);
+            }, 100);
+        }, 1800);
+        return () => {
+            clearTimeout(startDelay);
+            clearInterval(ticker);
+        };
+    }, [cardsKey]);
+
     if (!pointsData || pointsData.length === 0) return null;
 
     return (
         <>
             {/* Layer 2: Connecting Lines & Target Markers */}
             <g className="pointer-events-none bg-transparent">
-                {pointsData
-                    .filter((point) => point.id !== 101)
+                {cards
+                    // Marker for a point appears in step with its card
+                    .slice(0, visibleCount)
                     .map((point) => {
                         const isActive = point.id === selectedId;
 
@@ -32,7 +64,12 @@ export default function UnitPlanContentPage({
                         if (!startCoords) return null;
 
                         return (
-                            <g key={`marker-${point.id}`}>
+                            <motion.g
+                                key={`marker-${point.id}`}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ duration: 0.4, ease: 'easeOut' }}
+                            >
                                 {/* SVG Radial Glow Filter (Add inside <defs> or render inline) */}
                                 <defs>
                                     <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
@@ -112,7 +149,7 @@ export default function UnitPlanContentPage({
                                             : 'none',
                                     }}
                                 />
-                            </g>
+                            </motion.g>
                         );
                     })}
             </g>
@@ -120,14 +157,10 @@ export default function UnitPlanContentPage({
             {/* Layer 3: Hotspot Cards */}
             <g className="pointer-events-auto">
 
-                {[...pointsData]
-                    // 1. Exclude ID 1 and filter out duplicates
-                    .filter(
-                        (point, index, self) =>
-                            point.id !== 101 &&
-                            index === self.findIndex((p) => p.id === point.id)
-                    )
-                    // 2. Sort so selected card renders on top
+                {cards
+                    // Only the cards whose turn has come are mounted at all
+                    .slice(0, visibleCount)
+                    // Sort so the selected card renders (draws) on top
                     .sort((a, b) => (a.id === selectedId ? 1 : b.id === selectedId ? -1 : 0))
                     .map((point) => {
                         const isActive = point.id === selectedId;
@@ -143,16 +176,23 @@ export default function UnitPlanContentPage({
                                     e.stopPropagation();
                                     setSelectedId(point.id);
                                 }}
+                                onMouseEnter={() => setSelectedId(point.id)}
                                 className="overflow-visible pointer-events-auto"
                             >
-                                <div
-                                    className={`w-full py-5 px-4 rounded-xl border 
-                        transition-all duration-700 
-                        ease-[cubic-bezier(0.34,1.56,0.64,1)] 
-                        transform-gpu cursor-pointer
+                                <motion.div
+                                    initial={{ opacity: 0, y: 24, scale: 0.9 }}
+                                    animate={{ opacity: isActive ? 1 : 0.9, y: 0, scale: isActive ? 1.05 : 1 }}
+                                    transition={{
+                                        opacity: { duration: 0.25, ease: 'easeOut' },
+                                        y: { duration: 0.25, ease: 'easeOut' },
+                                        scale: { duration: 0.3, ease: [0.34, 1.56, 0.64, 1] },
+                                    }}
+                                    className={`w-full py-5 px-4 rounded-xl border
+                        transition-colors duration-500
+                        cursor-pointer
                         shadow-2xl ${isActive
-                                            ? 'bg-[#082842] border-white/60 shadow-[0_0_30px_rgba(56,189,248,0.5)] scale-105 opacity-100 z-50'
-                                            : 'bg-[#051a2d] border-white/40 hover:border-[#a17834] opacity-90 hover:opacity-100 hover:scale-[1.02] ease-in-out transition-all duration-700'
+                                            ? 'bg-[#082842] border-white/60 shadow-[0_0_30px_rgba(56,189,248,0.5)] z-50'
+                                            : 'bg-[#051a2d] border-white/40 hover:border-[#a17834] hover:opacity-100'
                                         }`}
                                 >
                                     <div className="flex items-center gap-2 mb-1">
@@ -172,7 +212,7 @@ export default function UnitPlanContentPage({
                                             {point.subtitle}
                                         </p>
                                     </div>
-                                </div>
+                                </motion.div>
                             </foreignObject>
                         );
                     })}

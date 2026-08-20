@@ -93,6 +93,7 @@ export default function MasterplanPage() {
 
   const handleLayoutSelect = (layout: string) => {
     setIsTerrace(layout === "Terrace layout");
+    setIsLabelsVisible(layout === "Ground layout" || layout === "Terrace layout");
     setSelectedCirculation(null);
   };
 
@@ -105,7 +106,6 @@ export default function MasterplanPage() {
     <div className="relative h-screen w-screen overflow-hidden bg-black">
       <Sidebar
         onLayoutSelect={handleLayoutSelect}
-        onLabelsToggle={(show) => setIsLabelsVisible(show)}
         onCirculationSelect={setSelectedCirculation}
       />
 

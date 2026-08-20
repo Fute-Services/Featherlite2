@@ -13,6 +13,8 @@ const VrTour = lazy(() => import('../Pages/VrTour'))
 const Amenities = lazy(() => import('../Pages/Amenities'))
 const Media = lazy(() => import('../Pages/Media'))
 const GalleryPage = lazy(() => import('../Pages/Media/GalleryPage'))
+const CertificationsPage = lazy(() => import('../Pages/Media/CertificationsPage'))
+const TechnicalSpecificationsPage = lazy(() => import('../Pages/Media/TechnicalSpecificationsPage'))
 const NotFound = lazy(() => import('../Pages/NotFound'))
 const UnitPlanPage = lazy(() => import('../Pages/UnitPlanPage'))
 const MasterplanPage = lazy(() => import('../Pages/MasterPlanPage'))
@@ -59,6 +61,8 @@ const Router = () => {
           {/* Routes WITHOUT Navbar (e.g. Floor Plan/Masterplan, or Unit Plan) */}
           <Route element={<PlainLayout />}>
             <Route path="/media/gallery" element={<GalleryPage />} />
+            <Route path="/certifictions" element={<CertificationsPage />} />
+            <Route path="/technicalspecifictions" element={<TechnicalSpecificationsPage />} />
             <Route path="/unitplan/:idnew" element={<UnitPlanPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>

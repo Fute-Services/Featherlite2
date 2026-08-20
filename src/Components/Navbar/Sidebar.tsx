@@ -5,8 +5,6 @@ import {
     Maximize2,
     PieChart,
     Trees,
-    Eye,
-    EyeOff,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
@@ -20,7 +18,6 @@ import { Link } from "react-router-dom";
 
 interface SidebarProps {
     onLayoutSelect?: (layout: string) => void;
-    onLabelsToggle?: (show: boolean) => void;
     onCirculationSelect?: (circulation: string) => void;
     // When set, the top two rail icons render as pill buttons (label + onClick) instead of navigating to /masterplan and /floor-plan
     primaryIcon?: { label: string; onClick: () => void; active: boolean };
@@ -29,7 +26,6 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({
     onLayoutSelect,
-    onLabelsToggle,
     onCirculationSelect,
     primaryIcon,
     secondaryIcon,
@@ -54,11 +50,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     // Dropdown states
     const [isLayoutOpen, setIsLayoutOpen] = useState<boolean>(true);
-    const [showLabels, setShowLabels] = useState<boolean>(false);
     const [isCirculationOpen, setIsCirculationOpen] = useState<boolean>(false);
 
     // Selection state values
-    const [selectedLayout, setSelectedLayout] = useState<string>("Ground layout");
+    const [selectedLayout, setSelectedLayout] = useState<string>("Layout");
     const [selectedCirculation, setSelectedCirculation] = useState<string>("Circulation");
 
     const toggleSidebar = () => {
@@ -188,8 +183,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             to="/masterplan"
                             onClick={() => {
                                 setActiveTab("layout");
-                                setIsOpen(true);         // Opens the main side glass panel
-                                setIsLayoutOpen(false);  // Keeps the options dropdown menu closed initially
+                                setIsOpen(true);        // Opens the main side glass panel
+                                setIsLayoutOpen(true);  // Shows Ground/Terrace options by default
                             }}
                             className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
                         >
@@ -300,6 +295,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         {isLayoutOpen && (
                             <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
                                 <button
+                                    onClick={() => handleLayoutClick("Layout")}
+                                    className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Layout"
+                                        ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                        : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                        }`}
+                                >
+                                    Layout
+                                </button>
+                                <button
                                     onClick={() => handleLayoutClick("Ground layout")}
                                     className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Ground layout"
                                         ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
@@ -321,29 +325,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         )}
                     </div>
 
-                    {/* 2. Labels Button */}
-                    {selectedLayout !== "Layout" && (
-                        <button
-                            onClick={() => {
-                                const newValue = !showLabels;
-                                setShowLabels(newValue);
-                                if (onLabelsToggle) onLabelsToggle(newValue);
-                            }}
-                            className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md cursor-pointer ${showLabels
-                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/50 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                : "bg-black/20 hover:bg-black/30 border-white/35 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_8px_32px_rgba(0,0,0,0.25)]"
-                                }`}
-                        >
-                            <span>Labels</span>
-                            {showLabels ? (
-                                <Eye className="w-3.5 h-3.5 text-white/70" />
-                            ) : (
-                                <EyeOff className="w-3.5 h-3.5 text-white/70" />
-                            )}
-                        </button>
-                    )}
-
-                    {/* 3. Circulation Dropdown (Visible only for Ground layout) */}
+                    {/* 2. Circulation Dropdown (Visible only for Ground layout) */}
                     {selectedLayout === "Ground layout" && (
                         <div className="relative w-full pointer-events-auto">
                             <button
