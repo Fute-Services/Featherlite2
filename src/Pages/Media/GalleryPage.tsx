@@ -5,38 +5,51 @@ import { EffectFade, Navigation } from "swiper/modules";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
+import { FALLBACK_GALLERY, normalizeGallery, type GalleryCategory } from "./galleryFallback";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 
+const GALLERY_API = "https://api.featherlitesignature.futeservices.in/api/gallery";
+
 export default function GalleryPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [viewMode, setViewMode] = useState("exterior");
-  const [allImages, setAllImages] = useState<any[]>([]);
+  const [allImages, setAllImages] = useState<GalleryCategory[]>([]);
   const [loadState, setLoadState] = useState<"loading" | "ready" | "error">("loading");
 
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchData = async () => {
       try {
-        const res = await axios.get(
-          "https://api.featherlitesignature.futeservices.in/api/gallery",
-        );
-        setAllImages(res.data || []);
+        const res = await axios.get(GALLERY_API, {
+          timeout: 8000,
+          signal: controller.signal,
+        });
+        const normalized = normalizeGallery(res.data);
+        // An API that answers with nothing useful is no better than one that is
+        // down - fall back either way so the page is never blank.
+        setAllImages(normalized.length > 0 ? normalized : FALLBACK_GALLERY);
         setLoadState("ready");
       } catch (err) {
-        console.log(err);
-        setLoadState("error");
+        if (axios.isCancel(err)) return;
+        console.warn("Gallery API unavailable, using bundled images.", err);
+        setAllImages(FALLBACK_GALLERY);
+        setLoadState("ready");
       }
     };
     fetchData();
+
+    return () => controller.abort();
   }, []);
 
   const filteredImages = useMemo(() => {
-    return allImages.find((img) => img.category === viewMode)?.images || [];
+    return allImages.find((group) => group.category === viewMode)?.images || [];
   }, [allImages, viewMode]);
 
   const showEmptyState = loadState !== "loading" && filteredImages.length === 0;
@@ -96,6 +109,7 @@ export default function GalleryPage() {
                   src={img.url || img.image}
                   alt={img.title}
                   loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
                   decoding="async"
                   className="w-full h-full object-cover"
                 />
@@ -109,13 +123,8 @@ export default function GalleryPage() {
       {showEmptyState && (
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 px-6 text-center">
           <p className="text-white/80 text-sm sm:text-base font-light tracking-wide">
-            {loadState === "error"
-              ? "Couldn't load the gallery right now — the image server is unavailable."
-              : `No ${viewMode} images yet.`}
+            {`No ${viewMode} images yet.`}
           </p>
-          {loadState === "error" && (
-            <p className="text-white/50 text-xs sm:text-sm">Please try again in a bit.</p>
-          )}
         </div>
       )}
 
