@@ -86,7 +86,6 @@ export default function MasterplanPage() {
   const [isTerrace, setIsTerrace] = useState<boolean>(false);
   const [isLabelsVisible, setIsLabelsVisible] = useState<boolean>(false);
   const [selectedCirculation, setSelectedCirculation] = useState<string | null>(null);
-  const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [hoveredPillImage, setHoveredPillImage] = useState<string | null>(null);
   const circulationVideoRef = useRef<HTMLVideoElement>(null);
