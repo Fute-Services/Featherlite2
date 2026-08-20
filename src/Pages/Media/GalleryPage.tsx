@@ -11,7 +11,7 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 
-const GALLERY_API = "https://api.featherlitesignature.futeservices.in/api/gallery";
+const GALLERY_API = "https://featherlitebackend.onrender.com/api/gallery";
 
 export default function GalleryPage() {
   const [activeIndex, setActiveIndex] = useState(0);
