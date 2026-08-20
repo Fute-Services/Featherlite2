@@ -1,22 +1,22 @@
-const fan = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/fan/card";
-const health = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/health/card";
-const women = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/women/card";
-const office = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/office/card";
-const balcony = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/balcony/card";
-const mens = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/mens/card";
-const elevator = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/elevator/card";
-const image1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/terrace/web2560";
-const image2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/tenth/web2560";
-const image3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/nineth/web2560";
-const image4 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/eighth/web2560";
-const image5 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/unit/7th-floor-2/web2560";
-const image6 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/sixth/web2560";
-const image7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/fifth/web2560";
-const image8 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/forth/web2560";
-const image9 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/third/web2560";
-const image10 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/second/web2560";
-const image11 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/firstfloor/web2560";
-const image12 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/ground/web2560";
+const fan = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/fan/public";
+const health = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/health/public";
+const women = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/women/public";
+const office = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/office/public";
+const balcony = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/balcony/public";
+const mens = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/mens/public";
+const elevator = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/elevator/public";
+const image1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/terrace/public";
+const image2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/tenth/public";
+const image3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/nineth/public";
+const image4 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/eighth/public";
+const image5 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/unit/7th-floor-2/public";
+const image6 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/sixth/public";
+const image7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/fifth/public";
+const image8 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/forth/public";
+const image9 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/third/public";
+const image10 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/second/public";
+const image11 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/firstfloor/public";
+const image12 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/ground/public";
 export interface SubPoint {
   x: number;
   y: number;
@@ -43,6 +43,7 @@ export interface FloorPointsData {
   id: number | string; // Matches route id
   name: string;
   image: string;
+    polygonpopup:string,
   imagesvg:string;
     imagew:number;
     imageh:number;
@@ -54,6 +55,7 @@ export const pointsData: FloorPointsData[] = [
     name:"Terrace",
     image:image1,
     imagesvg:"0 0 2000 1125",
+    polygonpopup:"791,193,748,373,1149,380,1132,196",
     imagew:2000,
     imageh:1125,
     units:[
@@ -87,6 +89,7 @@ export const pointsData: FloorPointsData[] = [
     id:2,
     name:"10th Floor",
     image:image2,
+      polygonpopup:"851,276,835,407,1084,403,1080,272",
      imagesvg:"0 0 2000 1125",
     imagew:2000,
     imageh:1125,
@@ -412,6 +415,7 @@ export const pointsData: FloorPointsData[] = [
     id:3,
     name:"9th Floor",
     image:image3,
+      polygonpopup:"851,324,837,440,1077,440,1071,324",
      imagesvg:"0 0 2000 1125",
     imagew:2000,
     imageh:1125,
@@ -767,6 +771,7 @@ export const pointsData: FloorPointsData[] = [
     id:4,
     name:"8th Floor",
     image:image4,
+      polygonpopup:"856,359,838,490,1077,486,1071,361",
     imagesvg:"0 0 2000 1125",
     imagew:2000,
     imageh:1125,
@@ -1121,6 +1126,7 @@ export const pointsData: FloorPointsData[] = [
     id:5,
     name:"7th Floor",
     image:image5,
+      polygonpopup:"1079,522,1072,668,1366,664,1364,520",
     imagesvg:"0 0 2546 1432",
     imagew:2546,
     imageh:1432,
@@ -1323,6 +1329,7 @@ export const pointsData: FloorPointsData[] = [
     id:6,
     name:"6th Floor",
     image:image6,
+      polygonpopup:"847,445,837,560,1071,553,1068,445",
      imagesvg:"0 0 2000 1125",
     imagew:2000,
     imageh:1125,
@@ -1683,6 +1690,7 @@ export const pointsData: FloorPointsData[] = [
     id:7,
     name:"5th Floor",
     image:image7,
+      polygonpopup:"833,479,828,597,1061,594,1057,479",
     imagesvg:"0 0 2000 1125",
     imagew:2000,
     imageh:1125,
@@ -2053,7 +2061,9 @@ export const pointsData: FloorPointsData[] = [
 {
     id:8,
     name:"4th Floor",
+
     image:image8,
+    polygonpopup:"849,520,838,636,1082,633,1071,518",
     imagesvg:"0 0 2000 1125",
     imagew:2000,
     imageh:1125,
@@ -2398,6 +2408,7 @@ export const pointsData: FloorPointsData[] = [
     id:9,
     name:"3rd Floor",
     image:image9,
+    polygonpopup:"844,560,837,677,1080,677,1079,557",
     imagesvg:"0 0 2000 1125",
     imagew:2000,
     imageh:1125,
@@ -2736,6 +2747,7 @@ export const pointsData: FloorPointsData[] = [
     id:10,
     name:"2nd Floor",
     image:image10,
+    polygonpopup:"846,594,838,712,1077,712,1070,597",
      imagesvg:"0 0 2000 1125",
     imagew:2000,
     imageh:1125,
@@ -2946,12 +2958,12 @@ export const pointsData: FloorPointsData[] = [
         labelY: 290,
         points: [
            {
-          "x": 1174,
-          "y": 383
+          "x": 1168,
+          "y": 381
         },
         {
-          "x": 1172,
-          "y": 309,
+          "x": 1168,
+          "y": 312,
           "hIn": {
             "x": 0,
             "y": 0
@@ -2961,36 +2973,15 @@ export const pointsData: FloorPointsData[] = [
             "y": 0
           },
           "smooth": true
+        },
+        {
+          "x": 1425,
+          "y": 311
         }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
     },
-     {
-        id: 5,
-        name: 'ODU Balcony',
-        subtitle: 'Outdoor unit placement area',
-        icon: balcony,
-        iconType: 'box',
-        x: 1550,
-        y: 500,
-        labelX: 1500,
-        labelY: 290,
-        points: [
-         {
-          "x": 798,
-          "y": 384
-        },
-        {
-          "x": 802,
-          "y": 309
-        },
-        {
-          "x": 1406,
-          "y": 305
-        }
-        ],
-        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
-    },
+    
     {
         id: 6,
         name: "Men's Washroom",
@@ -3068,6 +3059,7 @@ export const pointsData: FloorPointsData[] = [
     id:11,
     name:"1st Floor",
     image:image11,
+    polygonpopup:"688,509,678,604,880,601,876,506",
     imagesvg:"0 0 1600 900",
     imagew:1600,
     imageh:900,
@@ -3367,6 +3359,7 @@ export const pointsData: FloorPointsData[] = [
     imagew:2000,
     imageh:1125,
     image:image12,
+    polygonpopup:"860,668,853,790,1132,790,1124,668",
     units:[
       {
         id: 1,
