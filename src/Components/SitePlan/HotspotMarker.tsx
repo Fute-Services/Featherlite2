@@ -9,6 +9,8 @@ interface HotspotMarkerProps {
   y: number;
   scale?: number;
   isVisible: boolean;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 const HotspotMarker: React.FC<HotspotMarkerProps> = ({
@@ -16,6 +18,8 @@ const HotspotMarker: React.FC<HotspotMarkerProps> = ({
   x,
   y,
   isVisible,
+  onMouseEnter,
+  onMouseLeave,
 }) => {
   // SVG coordinates: x and y are the exact pixel centers.
   // Set a large bounding box to prevent browser clipping, centering the content inside it.
@@ -34,10 +38,14 @@ const HotspotMarker: React.FC<HotspotMarkerProps> = ({
           y={y - height / 2}
           width={width}
           height={height}
-          className="pointer-events-auto overflow-visible"
+          className="pointer-events-none overflow-visible"
         >
-          <div className="w-full h-full flex flex-col items-center justify-center relative">
-            <div className="relative bg-black/60 border border-white/20 backdrop-blur-md text-white px-5 py-2.5 text-[15px] font-medium tracking-wide whitespace-nowrap cursor-pointer hover:bg-black/80 transition-colors shadow-2xl rounded-full">
+          <div className="w-full h-full flex flex-col items-center justify-center relative pointer-events-none">
+            <div
+              onMouseEnter={onMouseEnter}
+              onMouseLeave={onMouseLeave}
+              className="relative bg-black/60 border border-white/20 backdrop-blur-md text-white px-5 py-2.5 text-[15px] font-medium tracking-wide whitespace-nowrap cursor-pointer hover:bg-black/80 transition-colors shadow-2xl rounded-full pointer-events-auto"
+            >
               {title}
             </div>
           </div>

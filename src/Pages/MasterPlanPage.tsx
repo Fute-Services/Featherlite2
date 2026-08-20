@@ -88,6 +88,7 @@ export default function MasterplanPage() {
   const [selectedCirculation, setSelectedCirculation] = useState<string | null>(null);
   const [hoveredRegionId, setHoveredRegionId] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const [hoveredPillImage, setHoveredPillImage] = useState<string | null>(null);
   const circulationVideoRef = useRef<HTMLVideoElement>(null);
 
   const handleLayoutSelect = (layout: string) => {
@@ -194,6 +195,12 @@ export default function MasterplanPage() {
                   y={boxDotY}
                   scale={scale}
                   isVisible={isLabelsVisible}
+                  onMouseEnter={() => {
+                    if (marker.image) {
+                      setHoveredPillImage(marker.image);
+                    }
+                  }}
+                  onMouseLeave={() => setHoveredPillImage(null)}
                 />
               </g>
             );
@@ -203,19 +210,15 @@ export default function MasterplanPage() {
           {activeInteractiveRegions.map((region) => {
               const points = parsePoints(region.polygon);
               if (!points) return null;
-              const isHovered = hoveredRegionId === region.id;
 
               return (
                 <polygon
                   key={region.id}
                   points={points.map(p => `${p.x},${p.y}`).join(" ")}
-                  fill={isHovered ? "rgba(239, 68, 68, 0.25)" : "rgba(255, 255, 255, 0.01)"}
-                  stroke={isHovered ? "#EF4444" : "transparent"}
-                  strokeWidth={isHovered ? 2 : 0}
-                  className="cursor-pointer transition-all duration-200 pointer-events-auto"
-                  onMouseEnter={() => setHoveredRegionId(region.id)}
-                  onMouseLeave={() => setHoveredRegionId(null)}
-                  onClick={() => setModalImage(region.image)}
+                  fill="rgba(255, 255, 255, 0.01)"
+                  stroke="transparent"
+                  strokeWidth={0}
+                  className="pointer-events-none"
                 />
               );
             })}
@@ -264,6 +267,28 @@ export default function MasterplanPage() {
             </div>
           </div>
         )}
+
+        {/* Central Hover Preview for Pills */}
+        <AnimatePresence>
+          {hoveredPillImage && (
+            <div className="absolute inset-0 bg-black/60 backdrop-blur-[3px] z-40 flex items-center justify-center p-4 pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="relative max-w-4xl max-h-[80vh] overflow-hidden rounded-3xl border border-white/20 bg-neutral-900/60 p-1 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]"
+              >
+                <img
+                  src={hoveredPillImage}
+                  alt="Preview"
+                  decoding="async"
+                  className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl"
+                />
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

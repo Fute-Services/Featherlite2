@@ -5,7 +5,8 @@
         "description": "Main entrance security and visitor registration.",
         "polygon": "1032,375,959,375",
         "x": 410,
-        "y": 145
+        "y": 145,
+        "image": "/hotspot-images/maingate.jpg"
     },
     {
         "id": "security-cabin-2",
@@ -29,7 +30,8 @@
         "description": "Main entrance security and visitor registration.",
         "polygon": "1032,441,959,441",
         "x": 410,
-        "y": 175
+        "y": 175,
+        "image": "/hotspot-images/maingate.jpg"
     },
     {
         "id": "vistors-parking",
@@ -45,7 +47,8 @@
         "description": "Main entrance security and visitor registration.",
         "polygon": "2134,316,2134,377",
         "x": 1000,
-        "y": 160
+        "y": 160,
+        "image": "/hotspot-images/basement.jpg"
     },
     {
         "id": "2-wheeler-parking-2",
@@ -61,7 +64,8 @@
         "description": "Main entrance security and visitor registration.",
         "polygon": "1967,487,1967,457",
         "x": 915,
-        "y": 175
+        "y": 175,
+        "image": "/hotspot-images/basement.jpg"
     },
     {
         "id": "interior-landscape",
@@ -77,7 +81,8 @@
         "description": "Grand drop-off point with water features.",
         "polygon": "1193,778,1193,677,1110,675",
         "x": 500,
-        "y": 265
+        "y": 265,
+        "image": "/hotspot-images/Entry_foyer.jpg"
     },
     {
         "id": "driveway-1",
@@ -85,7 +90,8 @@
         "description": "Grand drop-off point with water features.",
         "polygon": "",
         "x": 540,
-        "y": 340
+        "y": 340,
+        "image": "/hotspot-images/Entry_foyer.jpg"
     },
     {
         "id": "driveway-2",
@@ -118,5 +124,69 @@
         "polygon": "1845,517,2159,517",
         "x": 1040,
         "y": 205
+    },
+    {
+        "id": "Restaurant",
+        "title": "Restaurant",
+        "description": "restuarant",
+        "y": 230,
+        "x": 620,
+        "image": "/hotspot-images/resturant.png"
+    },
+    {
+        "id": "creche",
+        "title": "Creche",
+        "description": "Creche",
+        "y": 235,
+        "x": 880,
+        "image": "/hotspot-images/creche.png"
+    },
+    {
+        "id": "Lift lobby",
+        "title": "Lift Lobby",
+        "description": "Lift Lobby",
+        "y": 320,
+        "x": 690,
+        "image": "/hotspot-images/Lift_lobby.jpeg"
+    },
+    {
+        "id": "cafe",
+        "title": "Cafe",
+        "description": "cafe",
+        "y": 390,
+        "x": 690,
+        "image": "/hotspot-images/Cafe.jpg"
+    },
+    {
+        "id": "lobby",
+        "title": "Lobby",
+        "description": "lobby",
+        "y": 400,
+        "x": 620,
+        "image": "/hotspot-images/Lobby.jpg"
+    },
+    {
+        "id": "reception",
+        "title": "reception",
+        "description": "reception",
+        "y": 300,
+        "x": 620,
+        "image": "/hotspot-images/entrance.jpg"
+    },
+    {
+        "id": "cafe-entry",
+        "title": "cafe-entry",
+        "description": "cafe-entry",
+        "y": 460,
+        "x": 760,
+        "image": "/hotspot-images/cafe_entry.jpg"
+    },
+    {
+        "id": "cafe-seating",
+        "title": "cafe-seating",
+        "description": "cafe-seating",
+        "y": 460,
+        "x": 860,
+        "image": "/hotspot-images/Cafe_seating.jpeg"
     }
 ]
