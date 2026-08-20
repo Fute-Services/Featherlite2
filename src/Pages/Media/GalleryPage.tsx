@@ -14,6 +14,7 @@ export default function GalleryPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [viewMode, setViewMode] = useState("exterior");
   const [allImages, setAllImages] = useState<any[]>([]);
+  const [loadState, setLoadState] = useState<"loading" | "ready" | "error">("loading");
 
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -25,8 +26,10 @@ export default function GalleryPage() {
           "https://api.featherlitesignature.futeservices.in/api/gallery",
         );
         setAllImages(res.data || []);
+        setLoadState("ready");
       } catch (err) {
         console.log(err);
+        setLoadState("error");
       }
     };
     fetchData();
@@ -35,6 +38,8 @@ export default function GalleryPage() {
   const filteredImages = useMemo(() => {
     return allImages.find((img) => img.category === viewMode)?.images || [];
   }, [allImages, viewMode]);
+
+  const showEmptyState = loadState !== "loading" && filteredImages.length === 0;
 
   return (
     <div className="w-screen h-screen overflow-hidden relative bg-black font-sans">
@@ -56,7 +61,9 @@ export default function GalleryPage() {
       {/* TITLE */}
       <div className="absolute top-5 right-5 sm:top-8 sm:right-10 z-40 pointer-events-none rounded-2xl border border-white/[0.1] bg-black/45 px-5 py-3 shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.15),inset_-1px_-1px_1px_rgba(0,0,0,0.2),0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-blur-2xl backdrop-saturate-150">
         <h2 className="text-white text-sm sm:text-base font-light tracking-[0.2em] uppercase whitespace-nowrap">
-          {(filteredImages[activeIndex]?.title || "Loading...").replace(/['"]+$/, "")}
+          {loadState === "loading"
+            ? "Loading..."
+            : (filteredImages[activeIndex]?.title || "").replace(/['"]+$/, "")}
         </h2>
       </div>
 
@@ -98,6 +105,19 @@ export default function GalleryPage() {
           ))}
         </Swiper>
       </div>
+
+      {showEmptyState && (
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-2 px-6 text-center">
+          <p className="text-white/80 text-sm sm:text-base font-light tracking-wide">
+            {loadState === "error"
+              ? "Couldn't load the gallery right now — the image server is unavailable."
+              : `No ${viewMode} images yet.`}
+          </p>
+          {loadState === "error" && (
+            <p className="text-white/50 text-xs sm:text-sm">Please try again in a bit.</p>
+          )}
+        </div>
+      )}
 
       {/* INTEGRATED CONTROLS CONTAINER - black liquid glass, matching the bottom Navbar.
           Slides up from the bottom the same way the Navbar does, just after it. */}

@@ -17,17 +17,17 @@ const headingContainerVariants = {
 }
 
 const lineVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
+    hidden: { opacity: 0, y: 28 },
+    visible: { opacity: 1, y: 0 },
 }
 
 const statsContainerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.25, delayChildren: 1.3 } },
+    visible: { transition: { staggerChildren: 0.35, delayChildren: 1.4 } },
 }
 
 const statItemVariants = {
-    hidden: { opacity: 0, y: 12 },
+    hidden: { opacity: 0, y: 14 },
     visible: { opacity: 1, y: 0 },
 }
 
@@ -104,7 +104,7 @@ const Homepage = () => {
                             <span key={lineIndex} className="block overflow-hidden py-1">
                                 <motion.span
                                     variants={lineVariants}
-                                    transition={{ duration: 2, ease: 'easeInOut' }}
+                                    transition={{ duration: 1.1, ease: 'easeOut' }}
                                     className="block"
                                 >
                                     {line.join(' ')}
@@ -123,7 +123,7 @@ const Homepage = () => {
                             <motion.span
                                 key={stat}
                                 variants={statItemVariants}
-                                transition={{ duration: 0.9, ease: 'easeOut' }}
+                                transition={{ duration: 0.8, ease: 'easeOut' }}
                                 className="flex items-center gap-4 sm:gap-2"
                             >
                                 {index > 0 && <span className="h-4 w-px bg-white" />}
