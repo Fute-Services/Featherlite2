@@ -9,7 +9,7 @@ const Header = () => {
   const showThemeToggle = pathname === '/'
   // these pages dropped the bottom Navbar entirely, so give them an explicit way back
   const showBackButton = false
-  const logoOnRight = pathname === '/technicalspecifictions' || pathname === '/certifictions'
+  const logoOnRight = pathname === '/media'
 
   return (
     <header

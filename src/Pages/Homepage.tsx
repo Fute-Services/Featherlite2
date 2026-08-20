@@ -13,7 +13,7 @@ const headingLines = [
 
 const headingContainerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.4, delayChildren: 0.2 } },
+    visible: { transition: { staggerChildren: 0.7, delayChildren: 0.2 } },
 }
 
 const lineVariants = {
@@ -23,7 +23,7 @@ const lineVariants = {
 
 const statsContainerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.35, delayChildren: 1.4 } },
+    visible: { transition: { staggerChildren: 0.35, delayChildren: 2.2 } },
 }
 
 const statItemVariants = {
