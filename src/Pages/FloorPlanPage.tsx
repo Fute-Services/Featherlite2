@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import { motion } from 'framer-motion'
 
-const building = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/floorplan-building/web2560";
+import building from '../assets/floorplan/Floorplan_Building.png'
 import Building from '../Components/FloorPlanPages/Building'
 import Table from '../Components/FloorPlanPages/Table'
 
@@ -57,11 +56,7 @@ export default function FloorPlanPage() {
         navigate(`/unitplan/${id1}`);
     };
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, ease: 'easeOut' }}
-            className="relative ibm-plex-sans  h-screen w-screen
+        <div className="relative ibm-plex-sans  h-screen w-screen
          bg-slate-950 overflow-hidden select-none flex flex-col md:flex-row items-center justify-center">
             {/* <div className='absolute z-[999] left-0 top-0'> */}
             <Sidebar />
@@ -76,6 +71,6 @@ export default function FloorPlanPage() {
 
 
 
-        </motion.div>
+        </div>
     )
 }

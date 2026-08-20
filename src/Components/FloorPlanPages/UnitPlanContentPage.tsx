@@ -1,3 +1,5 @@
+import  { useMemo } from 'react';
+
 interface UnitPlanContentPageProps {
     setSelectedId: (id: string | number) => void;
     pointsData: any[];
@@ -11,11 +13,43 @@ export default function UnitPlanContentPage({
 }: UnitPlanContentPageProps) {
     if (!pointsData || pointsData.length === 0) return null;
 
-    // Filter out ID 101 and duplicates once with stable order
-    const filteredPoints = pointsData.filter(
-        (point, index, self) =>
-            point.id !== 101 && index === self.findIndex((p) => p.id === point.id)
-    );
+    // Filter out ID 101 and duplicate entries
+    const filteredPoints = useMemo(() => {
+        return pointsData.filter(
+            (point, index, self) =>
+                point.id !== 101 && index === self.findIndex((p) => p.id === point.id)
+        );
+    }, [pointsData]);
+
+    // Compute left-to-right, column-by-column, top-to-bottom sequence map
+    const animationOrderMap = useMemo(() => {
+        if (filteredPoints.length === 0) return new Map<string | number, number>();
+
+        // Find mid-point along the X-axis to split columns
+        const xValues = filteredPoints.map((p) => p.labelX ?? 0);
+        const minX = Math.min(...xValues);
+        const maxX = Math.max(...xValues);
+        const midX = (minX + maxX) / 2;
+
+        // Separate points into left and right columns
+        const leftColumn = filteredPoints.filter((p) => (p.labelX ?? 0) <= midX);
+        const rightColumn = filteredPoints.filter((p) => (p.labelX ?? 0) > midX);
+
+        // Sort each column top-to-bottom by Y coordinate
+        leftColumn.sort((a, b) => (a.labelY ?? 0) - (b.labelY ?? 0));
+        rightColumn.sort((a, b) => (a.labelY ?? 0) - (b.labelY ?? 0));
+
+        // Concatenate: Complete left column first, then right column
+        const ordered = [...leftColumn, ...rightColumn];
+
+        // Map point.id -> sequential animation index
+        const orderMap = new Map<string | number, number>();
+        ordered.forEach((point, seqIndex) => {
+            orderMap.set(point.id, seqIndex);
+        });
+
+        return orderMap;
+    }, [filteredPoints]);
 
     return (
         <>
@@ -26,7 +60,7 @@ export default function UnitPlanContentPage({
                         @keyframes singleEntrance {
                             0% {
                                 opacity: 0;
-                                transform: translateY(22px) scale(0.92);
+                                transform: translateY(24px) scale(0.94);
                             }
                             100% {
                                 opacity: 1;
@@ -34,32 +68,23 @@ export default function UnitPlanContentPage({
                             }
                         }
                         .animate-once-entrance {
-                            animation: singleEntrance 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+                            animation: singleEntrance 2s cubic-bezier(0.18, 1, 0.5, 1) both;
                         }
                     `}
                 </style>
             </defs>
 
-            {/* Layer 2: Connecting Lines & Target Markers */}
+            {/* Layer 2: Connecting Lines & Target Markers (Static) */}
             <g className="pointer-events-none bg-transparent">
-                {filteredPoints.map((point, index) => {
+                {filteredPoints.map((point) => {
                     const isActive = point.id === selectedId;
                     const pointsList = point.points || [];
                     const startCoords = pointsList[0];
 
                     if (!startCoords) return null;
 
-                    const numericId = Number(point.id);
-                    const delaySeconds = !isNaN(numericId)
-                        ? (numericId * 0.18).toFixed(2)
-                        : (index * 0.18).toFixed(2);
-
                     return (
-                        <g
-                            key={`marker-${point.id}`}
-                            className="animate-once-entrance"
-                            style={{ animationDelay: `${delaySeconds}s` }}
-                        >
+                        <g key={`marker-${point.id}`}>
                             <polyline
                                 points={pointsList.map((p: any) => `${p.x},${p.y}`).join(' ')}
                                 fill="none"
@@ -126,16 +151,14 @@ export default function UnitPlanContentPage({
                 })}
             </g>
 
-            {/* Layer 3: Hotspot Cards */}
+            {/* Layer 3: Hotspot Cards (Left Column Top-to-Bottom, then Right Column Top-to-Bottom) */}
             <g className="pointer-events-auto">
-                {filteredPoints.map((point, index) => {
+                {filteredPoints.map((point) => {
                     const isActive = point.id === selectedId;
 
-                    // Slower progressive entrance delay
-                    const numericId = Number(point.id);
-                    const delaySeconds = !isNaN(numericId)
-                        ? (numericId * 0.18).toFixed(2)
-                        : (index * 0.18).toFixed(2);
+                    // Retrieve sequence index based on position ordering
+                    const sequenceIndex = animationOrderMap.get(point.id) ?? 0;
+                    const delaySeconds = (sequenceIndex * 0.32).toFixed(2);
 
                     return (
                         <foreignObject
@@ -151,12 +174,11 @@ export default function UnitPlanContentPage({
                             className="overflow-visible pointer-events-auto"
                             style={{ zIndex: isActive ? 50 : 10 }}
                         >
-                            {/* Static Stagger Wrapper (Runs entrance once, unaffected by clicks) */}
+                            {/* Staggered entrance wrapper */}
                             <div
                                 className="animate-once-entrance w-full h-full"
                                 style={{ animationDelay: `${delaySeconds}s` }}
                             >
-                                {/* Interactive Card (Only handles active/hover styling) */}
                                 <div
                                     className={`w-full py-5 px-4 rounded-xl border 
                                     transition-all duration-500 ease-out
