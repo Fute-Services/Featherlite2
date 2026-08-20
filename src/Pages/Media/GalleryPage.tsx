@@ -95,7 +95,7 @@ export default function GalleryPage() {
                 <img
                   src={img.url || img.image}
                   alt={img.title}
-                  loading="eager"
+                  loading={index === 0 ? "eager" : "lazy"}
                   decoding="async"
                   className="w-full h-full object-cover"
                 />
