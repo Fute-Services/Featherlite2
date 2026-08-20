@@ -167,15 +167,15 @@
     },
     {
         "id": "reception",
-        "title": "reception",
-        "description": "reception",
+        "title": "Reception",
+        "description": "Reception",
         "y": 300,
         "x": 620,
         "image": "/hotspot-images/entrance.jpg"
     },
     {
         "id": "cafe-entry",
-        "title": "cafe-entry",
+        "title": "Cafe-entry",
         "description": "cafe-entry",
         "y": 460,
         "x": 760,
@@ -183,7 +183,7 @@
     },
     {
         "id": "cafe-seating",
-        "title": "cafe-seating",
+        "title": "Cafe-seating",
         "description": "cafe-seating",
         "y": 460,
         "x": 860,

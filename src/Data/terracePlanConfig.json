@@ -5,7 +5,8 @@
         "description": "Lift lobby providing access to the rooftop amenities.",
         "polygon": "1399,786,1101,791",
         "x": 485,
-        "y": 310
+        "y": 310,
+        "image": "/hotspot-images/Lift_lobby.jpeg"
     },
     {
         "id": "multipurpose-court",
@@ -13,7 +14,8 @@
         "description": "Sports court on the terrace for basketball, tennis, and more.",
         "polygon": "1426,999,1172,999,1172,1100",
         "x": 540,
-        "y": 440
+        "y": 440,
+        "image": "/hotspot-images/terrace/Multipurpose_Court.jpeg"
     },
     {
         "id": "rooftop-lunch-cafe",
@@ -21,7 +23,8 @@
         "description": "Main entry to the rooftop lunch cafe.",
         "polygon": "1580,802,1582,1157",
         "x": 760,
-        "y": 470
+        "y": 470,
+        "image": "/hotspot-images/terrace/Rooftop_lunch.jpeg"
     },
     {
         "id": "services-chillers",
@@ -37,7 +40,8 @@
         "description": "Seating area with high-top tables.",
         "polygon": "1609,564,1607,605,1788,605,1790,459",
         "x": 830,
-        "y": 175
+        "y": 175,
+        "image": "/hotspot-images/terrace/kiosk.jpg"
     },
     {
         "id": "serving-kiosks",
@@ -48,7 +52,8 @@
             "1731,539,1731,480,1596,480"
         ],
         "x": 740,
-        "y": 175
+        "y": 175,
+        "image": "/hotspot-images/terrace/kiosk.jpg"
     },
     {
         "id": "restroom-shower",
