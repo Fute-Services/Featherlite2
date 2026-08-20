@@ -37,7 +37,7 @@ const Media = () => {
   ];
 
   return (
-    <div className="relative min-h-dvh w-full overflow-y-auto bg-[#040C18] px-5 pb-36 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-40">
+    <div className="relative h-dvh w-full overflow-hidden bg-[#040C18] px-5 pb-8 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-10">
       {/* Background Glow Lights */}
       <div
         aria-hidden
