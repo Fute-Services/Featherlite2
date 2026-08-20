@@ -4,17 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
 import { ArrowRight, X } from "lucide-react";
 
-import buildingImg from "../../assets/Home/signature_sunset.jpg";
-
-import icon1 from "../../assets/Technical_Specification/1 Structure & Space Efficiency 1.png";
-import icon2 from "../../assets/Technical_Specification/2 Facade & Thermal Efficiency 1.png";
-import icon3 from "../../assets/Technical_Specification/3 Access Control & Security 1.png";
-import icon4 from "../../assets/Technical_Specification/4 Back of the House Facilities 1.png";
-import icon5 from "../../assets/Technical_Specification/5 Digital Resilience 1.png";
-import icon6 from "../../assets/Technical_Specification/6 BMS & Fire Safety 1.png";
-import icon7 from "../../assets/Technical_Specification/7 Utilities 1.png";
-import icon8 from "../../assets/Technical_Specification/8 Sustainability & Innovation 1.png";
-
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/public";
+const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/1-structure-space-efficiency-1/public";
+const icon2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/2-facade-thermal-efficiency-1/public";
+const icon3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/3-access-control-security-1/public";
+const icon4 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/4-back-of-the-house-facilities-1/public";
+const icon5 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/5-digital-resilience-1/public";
+const icon6 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/6-bms-fire-safety-1/public";
+const icon7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/7-utilities-1/public";
+const icon8 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/8-sustainability-innovation-1/public";
 const specificationsData = [
   {
     num: "01",

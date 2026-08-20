@@ -4,12 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
 import { ArrowRight, ChevronRight, X } from "lucide-react";
 
-import buildingImg from "../../assets/Home/signature_sunset.jpg";
-import leedBadge from "../../assets/Media/leed-badge.png";
-import wellBadge from "../../assets/Media/well-badge.png";
-import igbcBadge from "../../assets/Media/igbc-badge.png";
-import wiredscoreBadge from "../../assets/Media/wiredscore-badge.png";
-
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/public";
+const leedBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/leed-badge/public";
+const wellBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/well-badge/public";
+const igbcBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/igbc-badge/public";
+const wiredscoreBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/wiredscore-badge/public";
 // Custom exact gold line-art SVG icons matching the design screenshot
 const SolarPanelSunIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="#C89D54" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="size-5 shrink-0">

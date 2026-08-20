@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 
-import building from '../assets/floorplan/Floorplan_Building.png'
+const building = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/floorplan-building/public";
 import Building from '../Components/FloorPlanPages/Building'
 import Table from '../Components/FloorPlanPages/Table'
 
