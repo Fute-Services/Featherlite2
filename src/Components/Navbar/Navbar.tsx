@@ -2,10 +2,10 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Home, MapPin } from 'lucide-react'
 import type { LucideProps } from 'lucide-react'
-const floorPlanIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/floor-plan-icon/web2560";
-const vrIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/vr-icon/web2560";
-const amenitiesIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/amenities-icon/web2560";
-const galleryIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/gallery-icon/web2560";
+const floorPlanIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/floor-plan-icon/card";
+const vrIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/vr-icon/card";
+const amenitiesIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/amenities-icon/card";
+const galleryIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/gallery-icon/card";
 import { useIntro } from '../../Context/IntroContext'
 
 /**

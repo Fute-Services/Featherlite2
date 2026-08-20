@@ -5,11 +5,11 @@ import { ArrowRight, Award, FileText, Images, Play, Ruler, X, type LucideIcon } 
 import { Document, Page, pdfjs } from "react-pdf";
 import HTMLFlipBook from "react-pageflip";
 
-const brochureImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/brochure-cover/web2560";
-const galleryImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/gallery-cover/web2560";
-const certificationsImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/certifications-cover/web2560";
-const technicalImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/tech-specs-cover/web2560";
-const walkthroughImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/web2560";
+const brochureImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/brochure-cover/card";
+const galleryImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/gallery-cover/card";
+const certificationsImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/certifications-cover/card";
+const technicalImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/tech-specs-cover/card";
+const walkthroughImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/web";
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const BROCHURE_PDF = "/media/brochure.pdf";
@@ -92,6 +92,7 @@ const Media = () => {
           <img
             src={walkthroughImg}
             alt="Experience Signature Walk-through"
+            decoding="async"
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#040C18]/90 via-[#040C18]/60 to-transparent" />
@@ -128,6 +129,8 @@ const Media = () => {
                   <img
                     src={card.image}
                     alt={card.title}
+                    loading="lazy"
+                    decoding="async"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#081729] via-transparent to-black/30" />

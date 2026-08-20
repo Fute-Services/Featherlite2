@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
-const logo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/logo/web2560";
+const logo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/logo/card";
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 
 const Header = () => {

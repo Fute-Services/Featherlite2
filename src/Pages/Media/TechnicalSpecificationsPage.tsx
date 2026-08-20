@@ -4,15 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
 import { ArrowRight, X } from "lucide-react";
 
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/web2560";
-const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/1-structure-space-efficiency-1/web2560";
-const icon2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/2-facade-thermal-efficiency-1/web2560";
-const icon3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/3-access-control-security-1/web2560";
-const icon4 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/4-back-of-the-house-facilities-1/web2560";
-const icon5 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/5-digital-resilience-1/web2560";
-const icon6 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/6-bms-fire-safety-1/web2560";
-const icon7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/7-utilities-1/web2560";
-const icon8 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/8-sustainability-innovation-1/web2560";
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/card";
+const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/1-structure-space-efficiency-1/card";
+const icon2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/2-facade-thermal-efficiency-1/card";
+const icon3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/3-access-control-security-1/card";
+const icon4 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/4-back-of-the-house-facilities-1/card";
+const icon5 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/5-digital-resilience-1/card";
+const icon6 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/6-bms-fire-safety-1/card";
+const icon7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/7-utilities-1/card";
+const icon8 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/8-sustainability-innovation-1/card";
 const specificationsData = [
   {
     num: "01",
@@ -207,7 +207,7 @@ const TechnicalSpecificationsPage = () => {
 
           {/* Building photo at bottom-left seamlessly blending into background */}
           <div className="relative mt-3 hidden flex-1 overflow-hidden rounded-2xl lg:block min-h-0">
-            <img src={buildingImg} alt="Featherlite Signature" className="h-full w-full object-cover object-bottom" />
+            <img src={buildingImg} alt="Featherlite Signature" loading="lazy" decoding="async" className="h-full w-full object-cover object-bottom" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#040C18] via-transparent to-[#040C18]/40" />
           </div>
         </div>
@@ -230,7 +230,7 @@ const TechnicalSpecificationsPage = () => {
 
                 {/* Circle Icon */}
                 <div className="my-1.5 flex size-9 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#C89D54]/15 p-1.5">
-                  <img src={section.icon} alt="" className="h-5 w-5 object-contain brightness-0 invert" />
+                  <img src={section.icon} alt="" loading="lazy" decoding="async" className="h-5 w-5 object-contain brightness-0 invert" />
                 </div>
 
                 {/* Title */}

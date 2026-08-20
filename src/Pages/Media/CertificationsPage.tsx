@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
 import { ArrowRight, ChevronRight, X } from "lucide-react";
 
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/web2560";
-const leedBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/leed-badge/web2560";
-const wellBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/well-badge/web2560";
-const igbcBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/igbc-badge/web2560";
-const wiredscoreBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/wiredscore-badge/web2560";
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/card";
+const leedBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/leed-badge/card";
+const wellBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/well-badge/card";
+const igbcBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/igbc-badge/card";
+const wiredscoreBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/wiredscore-badge/card";
 // Custom exact gold line-art SVG icons matching the design screenshot
 const SolarPanelSunIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="#C89D54" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="size-5 shrink-0">
@@ -255,7 +255,7 @@ const CertificationsPage = () => {
 
           {/* Building photo at bottom-left seamlessly blending into background */}
           <div className="relative mt-3 hidden flex-1 overflow-hidden rounded-2xl lg:block min-h-0">
-            <img src={buildingImg} alt="Featherlite Signature" className="h-full w-full object-cover object-bottom" />
+            <img src={buildingImg} alt="Featherlite Signature" loading="lazy" decoding="async" className="h-full w-full object-cover object-bottom" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#040C18] via-transparent to-[#040C18]/40" />
           </div>
         </div>
@@ -276,6 +276,8 @@ const CertificationsPage = () => {
                   <img
                     src={section.badge}
                     alt={section.title}
+                    loading="lazy"
+                    decoding="async"
                     className="h-10 w-10 shrink-0 object-contain drop-shadow-md sm:h-11 sm:w-11"
                   />
                   <div>
