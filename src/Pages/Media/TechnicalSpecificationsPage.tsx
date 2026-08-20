@@ -4,15 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
 import { ArrowRight, X } from "lucide-react";
 
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/public";
-const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/1-structure-space-efficiency-1/public";
-const icon2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/2-facade-thermal-efficiency-1/public";
-const icon3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/3-access-control-security-1/public";
-const icon4 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/4-back-of-the-house-facilities-1/public";
-const icon5 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/5-digital-resilience-1/public";
-const icon6 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/6-bms-fire-safety-1/public";
-const icon7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/7-utilities-1/public";
-const icon8 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/8-sustainability-innovation-1/public";
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/web2560";
+const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/1-structure-space-efficiency-1/web2560";
+const icon2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/2-facade-thermal-efficiency-1/web2560";
+const icon3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/3-access-control-security-1/web2560";
+const icon4 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/4-back-of-the-house-facilities-1/web2560";
+const icon5 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/5-digital-resilience-1/web2560";
+const icon6 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/6-bms-fire-safety-1/web2560";
+const icon7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/7-utilities-1/web2560";
+const icon8 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/8-sustainability-innovation-1/web2560";
 const specificationsData = [
   {
     num: "01",

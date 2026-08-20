@@ -5,11 +5,11 @@ import { ArrowRight, Award, FileText, Images, Play, Ruler, X, type LucideIcon } 
 import { Document, Page, pdfjs } from "react-pdf";
 import HTMLFlipBook from "react-pageflip";
 
-const brochureImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/brochure-cover/public";
-const galleryImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/gallery-cover/public";
-const certificationsImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/certifications-cover/public";
-const technicalImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/tech-specs-cover/public";
-const walkthroughImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/public";
+const brochureImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/brochure-cover/web2560";
+const galleryImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/gallery-cover/web2560";
+const certificationsImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/certifications-cover/web2560";
+const technicalImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/tech-specs-cover/web2560";
+const walkthroughImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/web2560";
 pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const BROCHURE_PDF = "/media/brochure.pdf";

@@ -10,7 +10,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 
-const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/sidenavbar/maximize-button/public";
+const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/sidenavbar/maximize-button/web2560";
 import icon2 from "../../assets/sidenavbar/Layout button.png"; // Selected Layout Icon
 
 import selectedicon3 from "../../assets/sidenavbar/selected building.png"; // Selected Section/Building Icon

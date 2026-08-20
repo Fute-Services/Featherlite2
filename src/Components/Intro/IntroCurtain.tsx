@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-const logo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/logo/public";
+const logo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/logo/web2560";
 import { useIntro } from '../../Context/IntroContext'
 
 const LOGO_FADE_IN_DELAY = 150

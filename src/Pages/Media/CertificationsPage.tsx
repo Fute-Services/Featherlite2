@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
 import { ArrowRight, ChevronRight, X } from "lucide-react";
 
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/public";
-const leedBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/leed-badge/public";
-const wellBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/well-badge/public";
-const igbcBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/igbc-badge/public";
-const wiredscoreBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/wiredscore-badge/public";
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/web2560";
+const leedBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/leed-badge/web2560";
+const wellBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/well-badge/web2560";
+const igbcBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/igbc-badge/web2560";
+const wiredscoreBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/wiredscore-badge/web2560";
 // Custom exact gold line-art SVG icons matching the design screenshot
 const SolarPanelSunIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="#C89D54" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="size-5 shrink-0">
