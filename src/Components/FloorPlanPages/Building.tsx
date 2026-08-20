@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { type FloorData } from '../../types/Floorplan'
 
@@ -22,6 +23,17 @@ export default function Building({
     aspectRatio,
     building,
 }: BuildingProps) {
+    const [isImageHovered, setIsImageHovered] = useState(false)
+    const hoverLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+    const handleImageMouseEnter = () => {
+        if (hoverLeaveTimer.current) clearTimeout(hoverLeaveTimer.current)
+        setIsImageHovered(true)
+    }
+    const handleImageMouseLeave = () => {
+        hoverLeaveTimer.current = setTimeout(() => setIsImageHovered(false), 150)
+    }
+
     return (
         <div className="relative w-full h-full flex items-center justify-center">
             <div className="relative w-full h-full animate-blueprint-unfold max-w-[3964px] max-h-[2048px]">
@@ -53,6 +65,9 @@ export default function Building({
                         width="3964"
                         height="2048"
                         preserveAspectRatio={aspectRatio}
+                        className="cursor-pointer"
+                        onMouseEnter={handleImageMouseEnter}
+                        onMouseLeave={handleImageMouseLeave}
                     />
 
                     {/* Interactive Floor Polygon Overlays */}
@@ -168,6 +183,34 @@ export default function Building({
                     )}
                 </svg>
             </div>
+
+            {/* Hover Preview: enlarged building render */}
+            <AnimatePresence>
+                {isImageHovered && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute inset-0 bg-black/60 backdrop-blur-[3px] z-40 flex items-center justify-center p-4 pointer-events-none"
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.92, y: 12 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.92, y: 12 }}
+                            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative max-w-4xl max-h-[80vh] overflow-hidden rounded-3xl border border-white/20 bg-neutral-900/60 p-1 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]"
+                        >
+                            <img
+                                src={building}
+                                alt="Building Preview"
+                                decoding="async"
+                                className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl"
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     )
 }

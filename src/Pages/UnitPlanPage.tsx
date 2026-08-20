@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { pointsData } from '../Data/UnitPlanData';
 
-import left from '../assets/floorplan/icons/leftside.png';
-import right from '../assets/floorplan/icons/right.png';
 
 import VRModel from '../Components/FloorPlanPages/VRModel';
 import BackButton from '../Components/FloorPlanPages/BackButton';
@@ -16,7 +15,6 @@ import { ZoomIn, ZoomOut, Maximize2 } from 'lucide-react';
 
 export default function UnitPlanPage() {
     const { idnew } = useParams<{ idnew: string }>();
-    const navigate = useNavigate();
 
     // 1. Find corresponding floor data matching ID
     const floorPoints = pointsData.find(
@@ -40,6 +38,16 @@ export default function UnitPlanPage() {
     const dragStart = useRef({ x: 0, y: 0 });
     const [viewdata, setViewdata] = useState(true);
     const [showVRModal, setShowVRModal] = useState(false);
+    const [isImageHovered, setIsImageHovered] = useState(false);
+    const hoverLeaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const handleImageMouseEnter = () => {
+        if (hoverLeaveTimer.current) clearTimeout(hoverLeaveTimer.current);
+        setIsImageHovered(true);
+    };
+    const handleImageMouseLeave = () => {
+        hoverLeaveTimer.current = setTimeout(() => setIsImageHovered(false), 150);
+    };
 
     // 4. Reset selected unit and pan/zoom whenever floor (idnew) changes
     useEffect(() => {
@@ -64,26 +72,6 @@ export default function UnitPlanPage() {
     // 5. Derive active unit safely
     const activePoint =
         units.find((p) => String(p.id) === String(selectedId)) || units[0];
-
-    // 6. Navigation Handlers
-    const currentFloorIndex = pointsData.findIndex(
-        (floor) => String(floor.id) === String(idnew)
-    );
-
-    const handleNext = () => {
-        if (pointsData.length === 0 || currentFloorIndex === -1) return;
-        const nextIndex = (currentFloorIndex + 1) % pointsData.length;
-        const nextFloorId = pointsData[nextIndex].id;
-        navigate(`/unitplan/${nextFloorId}`);
-    };
-
-    const handlePrev = () => {
-        if (pointsData.length === 0 || currentFloorIndex === -1) return;
-        const prevIndex =
-            currentFloorIndex <= 0 ? pointsData.length - 1 : currentFloorIndex - 1;
-        const prevFloorId = pointsData[prevIndex].id;
-        navigate(`/unitplan/${prevFloorId}`);
-    };
 
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
         if (zoomLevel <= 1) return;
@@ -191,15 +179,6 @@ export default function UnitPlanPage() {
 
             {/* Main Floor Plan Canvas */}
             <main className="relative flex-1 w-full h-full flex items-center justify-center overflow-hidden">
-                <button
-                    onClick={handlePrev}
-                    className="absolute left-[12%] z-30 p-3 bg-slate-900/70 hover:bg-slate-900/40 backdrop-blur-md border border-white/40 rounded-full transition-all duration-500 ease-in-out hover:scale-110 active:scale-95 shadow-xl"
-                    type="button"
-                    title="Previous Floor"
-                >
-                    <img src={left} className="w-6 h-6 text-white" alt="Previous Floor" />
-                </button>
-
                 {/* Scalable Vector Stage with Entrance Animation Key */}
                 <div
                     key={`building-stage-${idnew}`}
@@ -240,8 +219,10 @@ export default function UnitPlanPage() {
                                     width={floorPoints.imagew}
                                     height={floorPoints.imageh}
                                     preserveAspectRatio="xMidYMid meet"
-                                    className="brightness-95 contrast-105 bg-transparent"
+                                    className="brightness-95 contrast-105 bg-transparent cursor-pointer"
                                     style={{ backgroundColor: 'transparent' }}
+                                    onMouseEnter={handleImageMouseEnter}
+                                    onMouseLeave={handleImageMouseLeave}
                                 />
 
                                 {/* Staggered Unit Pins Group */}
@@ -262,15 +243,6 @@ export default function UnitPlanPage() {
                     </div>
                 </div>
 
-                <button
-                    onClick={handleNext}
-                    className="absolute right-[16.5%] z-30 p-3 bg-slate-900/70 hover:bg-slate-900/40 backdrop-blur-md border border-white/40 rounded-full transition-all duration-500 ease-in-out hover:scale-110 active:scale-95 shadow-xl"
-                    type="button"
-                    title="Next Floor"
-                >
-                    <img src={right} className="w-6 h-6 text-white" alt="Next Floor" />
-                </button>
-
                 {activePoint && (
                     <UnitPlanSideContent
                         key={`side-content-${idnew}`}
@@ -287,6 +259,34 @@ export default function UnitPlanPage() {
             {showVRModal && activePoint && (
                 <VRModel setShowVRModal={setShowVRModal} activePoint={activePoint} />
             )}
+
+            {/* Hover Preview: enlarged floor image */}
+            <AnimatePresence>
+                {isImageHovered && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                        className="absolute inset-0 bg-black/60 backdrop-blur-[3px] z-40 flex items-center justify-center p-4 pointer-events-none"
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.92, y: 12 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.92, y: 12 }}
+                            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative max-w-4xl max-h-[80vh] overflow-hidden rounded-3xl border border-white/20 bg-neutral-900/60 p-1 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]"
+                        >
+                            <img
+                                src={floorPoints.image}
+                                alt={floorPoints.name ?? 'Floor Preview'}
+                                decoding="async"
+                                className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl"
+                            />
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
