@@ -99,6 +99,7 @@ export const pointsData: FloorPointsData[] = [
         id: 1,
       
         name: 'AHU Room (2,363 sqft)',
+      
         subtitle: 'Mechanical ventilation and air-handling zone',
         iconType: 'fan',
         icon: fan,
