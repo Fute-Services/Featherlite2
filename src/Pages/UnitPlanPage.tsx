@@ -1,8 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import {
+    // useNavigate,
+    useParams } from 'react-router-dom';
 
 import { pointsData } from '../Data/UnitPlanData';
-import VRModel from '../Components/FloorPlanPages/VRModel';
+
+// import left from '../assets/floorplan/icons/leftside.png';
+// import right from '../assets/floorplan/icons/right.png';
+
+const VRModel = lazy(() => import('../Components/FloorPlanPages/VRModel'));
 import BackButton from '../Components/FloorPlanPages/BackButton';
 import UnitPlanContentPage from '../Components/FloorPlanPages/UnitPlanContentPage';
 import UnitPlanSideContent from '../Components/FloorPlanPages/UnitPlanSideContent';
@@ -251,7 +257,9 @@ export default function UnitPlanPage() {
             <BackButton />
 
             {showVRModal && activePoint && (
-                <VRModel setShowVRModal={setShowVRModal} activePoint={activePoint} />
+                <Suspense fallback={null}>
+                    <VRModel setShowVRModal={setShowVRModal} activePoint={activePoint} />
+                </Suspense>
             )}
         </div>
     );
