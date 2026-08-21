@@ -384,6 +384,24 @@ export default function Vr() {
   }), [createCustomHotspot]);
 
 
+  // Pannellum is only needed on this page, so load it here instead of
+  // blocking every other route's first paint via index.html.
+  useEffect(() => {
+    if (!document.getElementById("pannellum-css")) {
+      const link = document.createElement("link");
+      link.id = "pannellum-css";
+      link.rel = "stylesheet";
+      link.href = "https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css";
+      document.head.appendChild(link);
+    }
+    if (!document.getElementById("pannellum-js")) {
+      const script = document.createElement("script");
+      script.id = "pannellum-js";
+      script.src = "https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js";
+      document.head.appendChild(script);
+    }
+  }, []);
+
   useEffect(() => {
     let pollTimer: any;
     let cancelled = false;
