@@ -2,8 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { type LucideIcon } from "lucide-react";
 
-import buildingImg from "../assets/AvailabilityPage/building.jpeg";
-
+const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/availabilitypage/building/web2560";
 import outsideLineImg from "../assets/AvailabilityPage/lines/outside_line.svg";
 import cafeLineImg from "../assets/AvailabilityPage/lines/cafe.svg";
 import tableTennisLineImg from "../assets/AvailabilityPage/lines/table tennis.svg";
@@ -27,27 +26,27 @@ import seesawIconImg from "../assets/AvailabilityPage/icons/Seesaw.svg";
 import cuttingEdgeIconImg from "../assets/AvailabilityPage/icons/3D Model.svg";
 
 // @ts-ignore
-import cafeteriaImg from "../assets/amenities/popup/Cafeteria_250226.png";
+const cafeteriaImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/cafeteria-250226/web";
 // @ts-ignore
-import kidsPlayPopupImg from "../assets/amenities/popup/Copy of Kids Play.jpg";
+const kidsPlayPopupImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/copy-of-kids-play/web";
 // @ts-ignore
-import crecheImg from "../assets/amenities/popup/Creche.jpg";
+const crecheImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/creche/web";
 // @ts-ignore
-import receptionImg from "../assets/amenities/popup/Double Height Reception.jpg";
+const receptionImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/double-height-reception/web";
 // @ts-ignore
-import multipurposeImg from "../assets/amenities/popup/Multipurpose Court.jpeg";
+const multipurposeImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/multipurpose-court/web";
 // @ts-ignore
-import outdoorSeatingImg from "../assets/amenities/popup/Outdoor Seating Zone.jpg";
+const outdoorSeatingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/outdoor-seating-zone/web";
 // @ts-ignore
-import restaurantImg from "../assets/amenities/popup/Restaurant.jpg";
+const restaurantImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/restaurant/web";
 // @ts-ignore
-import rooftopLunchImg from "../assets/amenities/popup/Rooftop Lunch cafe.jpeg";
+const rooftopLunchImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/rooftop-lunch-cafe/web";
 // @ts-ignore
-import servingKioskImg from "../assets/amenities/popup/Serving Kiosk.jpg";
+const servingKioskImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/serving-kiosk/web";
 // @ts-ignore
-import tableTennisImg from "../assets/amenities/popup/Table Tennis.jpeg";
+const tableTennisImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/table-tennis/web";
 // @ts-ignore
-import evChargeImg from "../assets/amenities/popup/Ev charge.jpg";
+const evChargeImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/amenities/popup/ev-charge/web";
 // @ts-ignore
 import ledScreenVideo from "../assets/amenities/popup/LED Screeng-yQ5wbJr5.mp4";
 

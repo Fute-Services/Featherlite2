@@ -2,10 +2,10 @@ import { NavLink, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Home, MapPin } from 'lucide-react'
 import type { LucideProps } from 'lucide-react'
-import floorPlanIcon from '../../assets/icons/floor_plan_icon.png'
-import vrIcon from '../../assets/icons/Vr_icon.png'
-import amenitiesIcon from '../../assets/icons/Amenities_icon.png'
-import galleryIcon from '../../assets/icons/Gallery icon.png'
+const floorPlanIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/floor-plan-icon/card";
+const vrIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/vr-icon/card";
+const amenitiesIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/amenities-icon/card";
+const galleryIcon = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/icons/gallery-icon/card";
 import { useIntro } from '../../Context/IntroContext'
 
 /**

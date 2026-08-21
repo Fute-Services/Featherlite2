@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import MasterplanGround from "../assets/floorplan/MasterPlan (2).jpg.jpeg";
-import MasterplanTerrace from "../assets/floorplan/Terrace Plan (2).jpg.jpeg";
+const MasterplanGround = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/masterplan-2-jpg/web2560";
+const MasterplanTerrace = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/terrace-plan-2-jpg/web2560";
 import Sidebar from "../Components/Navbar/Sidebar";
 import sitePlanLocal from "../Data/sitePlanConfig.json";
 import terracePlanLocal from "../Data/terracePlanConfig.json";

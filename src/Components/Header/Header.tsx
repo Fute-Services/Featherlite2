@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
-import logo from '../../assets/Logo.png'
+const logo = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/logo/card";
 import ThemeToggle from '../ThemeToggle/ThemeToggle'
 
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
   const showThemeToggle = pathname === '/'
   // these pages dropped the bottom Navbar entirely, so give them an explicit way back
   const showBackButton = false
-  const logoOnRight = pathname === '/technicalspecifictions' || pathname === '/certifictions'
+  const logoOnRight = pathname === '/media'
 
   return (
     <header

@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../Context/ThemeContext'
 import { useIntro } from '../Context/IntroContext'
-import heroLight from '../assets/Home/Home page Light.png'
-import heroDark from '../assets/Home/Home page dark.png'
-
+const heroLight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/home-page-light/web2560";
+const heroDark = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/home-page-dark/web2560";
 const stats = ['10 floors', '2 Acre Area', '43% Ground Area', '25% Green Cover']
 const headingLines = [
     ['Designed', 'For'],
@@ -13,7 +12,7 @@ const headingLines = [
 
 const headingContainerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.4, delayChildren: 0.2 } },
+    visible: { transition: { staggerChildren: 0.7, delayChildren: 0.2 } },
 }
 
 const lineVariants = {
@@ -23,7 +22,7 @@ const lineVariants = {
 
 const statsContainerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.35, delayChildren: 1.4 } },
+    visible: { transition: { staggerChildren: 0.35, delayChildren: 2.2 } },
 }
 
 const statItemVariants = {
