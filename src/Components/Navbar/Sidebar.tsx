@@ -294,7 +294,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                         {isLayoutOpen && (
                             <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
-                                <button
+                                {/* <button
                                     onClick={() => handleLayoutClick("Layout")}
                                     className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Layout"
                                         ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
@@ -302,7 +302,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                         }`}
                                 >
                                     Layout
-                                </button>
+                                </button> */}
                                 <button
                                     onClick={() => handleLayoutClick("Ground layout")}
                                     className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Ground layout"
