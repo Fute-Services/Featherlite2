@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../Context/ThemeContext'
 import { useIntro } from '../Context/IntroContext'
-import heroLight from '../assets/Home/Home page Light New.jpg'
-import heroDark from '../assets/Home/Home page Dark New.jpg'
+import heroLight from "../assets/Home/Home page Light.jpeg";
+import heroDark from "../assets/Home/Home page dark.jpeg";
 const stats = ['10 floors', '2 Acre Area', '43% Ground Area', '25% Green Cover']
 const headingLines = [
     ['Designed', 'For'],

@@ -52,6 +52,7 @@ const Router = () => {
             <Route path="/location" element={<Location />} />
             <Route path="/amenities" element={<Amenities />} />
             <Route path="/media" element={<Media />} />
+            <Route path="/media/gallery" element={<GalleryPage />} />
             <Route path="/certifications" element={<CertificationsPage />} />
             <Route path="/certifictions" element={<CertificationsPage />} />
             <Route path="/technical-specifications" element={<TechnicalSpecificationsPage />} />
@@ -63,7 +64,6 @@ const Router = () => {
 
           {/* Routes WITHOUT Navbar */}
           <Route element={<PlainLayout />}>
-            <Route path="/media/gallery" element={<GalleryPage />} />
             <Route path="/unitplan/:idnew" element={<UnitPlanPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
