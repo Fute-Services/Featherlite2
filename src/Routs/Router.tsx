@@ -4,7 +4,7 @@ import Header from '../Components/Header/Header'
 import Navbar from '../Components/Navbar/Navbar'
 import IntroCurtain from '../Components/Intro/IntroCurtain'
 import Homepage from '../Pages/Homepage'
-// import Location from '../Pages/Location'
+import Location from '../Pages/Location'
 
 // Everything except the homepage is code-split: each route's JS (and the
 // heavy images/video/three.js it pulls in) only downloads when visited.
@@ -49,7 +49,7 @@ const Router = () => {
           {/* Routes WITH Navbar */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Homepage />} />
-            {/* <Route path="/location" element={<Location />} /> */}
+            <Route path="/location" element={<Location />} />
             <Route path="/amenities" element={<Amenities />} />
             <Route path="/media" element={<Media />} />
             <Route path="/certifications" element={<CertificationsPage />} />
