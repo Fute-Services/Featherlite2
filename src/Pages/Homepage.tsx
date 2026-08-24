@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../Context/ThemeContext'
 import { useIntro } from '../Context/IntroContext'
-const heroLight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/home-page-light/web2560";
-const heroDark = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/home-page-dark/web2560";
+import heroLight from '../assets/Home/Home page Light New.jpg'
+import heroDark from '../assets/Home/Home page Dark New.jpg'
 const stats = ['10 floors', '2 Acre Area', '43% Ground Area', '25% Green Cover']
 const headingLines = [
     ['Designed', 'For'],
