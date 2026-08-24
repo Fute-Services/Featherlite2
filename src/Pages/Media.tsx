@@ -32,7 +32,7 @@ const Media = () => {
   ];
 
   return (
-    <div className="relative h-dvh w-full overflow-hidden bg-[#040C18] px-5 pb-8 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-10">
+    <div className="relative h-dvh w-full overflow-hidden bg-[#0D2D43] px-5 pb-8 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-10">
       {/* Background Glow Lights */}
       <div
         aria-hidden
@@ -90,7 +90,7 @@ const Media = () => {
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#040C18]/90 via-[#040C18]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0D2D43]/90 via-[#0D2D43]/60 to-transparent" />
 
           <div className="relative flex h-full flex-col justify-center px-8 sm:px-12 lg:px-14">
             <span className="mb-3 flex size-11 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:border-[#C89D54] group-hover:bg-[#C89D54] group-hover:text-black">

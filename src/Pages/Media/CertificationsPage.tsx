@@ -239,7 +239,7 @@ const CertificationsPage = () => {
   }, [activeDetail]);
 
   return (
-    <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#040C18] pb-28 pt-28 sm:pb-32 sm:pt-32">
+    <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#0D2D43] pb-28 pt-28 sm:pb-32 sm:pt-32">
       {/* Background radial glow lights */}
       <div
         aria-hidden
@@ -277,7 +277,7 @@ const CertificationsPage = () => {
           {/* Building photo at bottom-left seamlessly blending into background */}
           <div className="relative mt-3 hidden flex-1 overflow-hidden rounded-2xl lg:block min-h-0">
             <img src={buildingImg} alt="Featherlite Signature" loading="lazy" decoding="async" className="h-full w-full object-cover object-bottom" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#040C18] via-transparent to-[#040C18]/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2D43] via-transparent to-[#0D2D43]/40" />
           </div>
         </div>
 
