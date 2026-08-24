@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
 import { ArrowRight } from "lucide-react";
-
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/card";
+import buildingImg from "../../assets/Media/technical-page-building.jpg";
 const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/1-structure-space-efficiency-1/card";
 const icon2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/2-facade-thermal-efficiency-1/card";
 const icon3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/3-access-control-security-1/card";
@@ -228,7 +227,7 @@ const TechnicalSpecificationsPage = () => {
 
           {/* Building photo at bottom-left seamlessly blending into background */}
           <div className="relative mt-3 hidden flex-1 overflow-hidden rounded-2xl lg:block min-h-0">
-            <img src={buildingImg} alt="Featherlite Signature" loading="lazy" decoding="async" className="h-full w-full object-cover object-bottom" />
+            <img src={buildingImg} alt="Featherlite Signature" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#0D2D43] via-transparent to-[#0D2D43]/40" />
           </div>
         </div>
