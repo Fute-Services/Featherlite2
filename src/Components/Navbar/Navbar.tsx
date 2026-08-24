@@ -55,11 +55,16 @@ const Navbar = () => {
     const { introDone } = useIntro()
     const location = useLocation()
     const isAmenitiesPage = location.pathname === '/amenities'
+    const isfloor = location.pathname === "/floor-plan"
 
     return (
-        <nav className={`pointer-events-none fixed inset-x-0 z-50 flex justify-center px-3 ${
-            isAmenitiesPage ? 'bottom-2 sm:bottom-4' : 'bottom-3 sm:bottom-8'
-        }`}>
+        <nav className={`pointer-events-none fixed inset-x-0 z-50 flex justify-center px-3 ${isfloor
+                ? 'bottom-2 sm:bottom-1'
+                : isAmenitiesPage
+                    ? 'bottom-2 sm:bottom-4'
+                    : 'bottom-3 sm:bottom-8'
+
+            }`}>
             {/* Main Container - Black Liquid Glass (frosted, dark translucent pill) */}
             <motion.div
                 initial="hidden"

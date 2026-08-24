@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 
-import building from '../assets/floorplan/Floorplan_Building.png'
+// import building from '../assets/floorplan/Floorplan_Building.png'
+
+// import building from '../assets/floorplan/mainbuildingimage.jpeg'
+// import building from '../assets/floorplan/mainbuilding1.png'
 import Building from '../Components/FloorPlanPages/Building'
+import building from '../assets/floorplan/mainbuilding222.png'
 import Table from '../Components/FloorPlanPages/Table'
 
 import { useNavigate } from 'react-router-dom'
