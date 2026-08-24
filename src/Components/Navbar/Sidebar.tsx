@@ -16,7 +16,6 @@ import icon2 from "../../assets/sidenavbar/Layout button.png"; // Selected Layou
 
 import selectedicon3 from "../../assets/sidenavbar/selected building.png"; // Selected Section/Building Icon
 import { Link } from "react-router-dom";
-import { FaAngleLeft } from "react-icons/fa6";
 
 interface SidebarProps {
     onLayoutSelect?: (layout: string) => void;
