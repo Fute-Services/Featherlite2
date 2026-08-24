@@ -1,4 +1,13 @@
-
+    //  gallery unwant {
+    //     "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268816/Copy_of_Coffee_shop_e7mqnw.jpg",
+    //     "title": "Coffee Shop",
+    //     "_id": "69f0a1b35b064f66de329212"
+    //   },
+    //   {
+    //     "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268629/Copy_of_sitting_area_ruwrdt.jpg",
+    //     "title": "Breakout Zone",
+    //     "_id": "69f0a1b35b064f66de32921a"
+    //   },
 
 import { type FloorData } from '../types/Floorplan'
 

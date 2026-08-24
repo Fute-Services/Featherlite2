@@ -5,6 +5,7 @@ import {
     Maximize2,
     PieChart,
     Trees,
+    Image,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
@@ -22,6 +23,12 @@ interface SidebarProps {
     // When set, the top two rail icons render as pill buttons (label + onClick) instead of navigating to /masterplan and /floor-plan
     primaryIcon?: { label: string; onClick: () => void; active: boolean };
     secondaryIcon?: { label: string; onClick: () => void; active: boolean };
+    isGalleryPage?: boolean;
+    galleryMode?: "interior" | "exterior";
+    onGalleryModeChange?: (mode: "interior" | "exterior") => void;
+    galleryImages?: { title: string; [key: string]: any }[];
+    activeImageIndex?: number;
+    onImageSelect?: (index: number) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -29,8 +36,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onCirculationSelect,
     primaryIcon,
     secondaryIcon,
+    isGalleryPage = false,
+    galleryMode,
+    onGalleryModeChange,
+    galleryImages,
+    activeImageIndex,
+    onImageSelect,
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isGalleryDropdownOpen, setIsGalleryDropdownOpen] = useState<boolean>(true);
+    const [isImagesDropdownOpen, setIsImagesDropdownOpen] = useState<boolean>(false);
 
 
     // Inside your Sidebar component:
@@ -41,12 +56,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
             setActiveTab("section");
         } else if (location.pathname.includes("masterplan")) {
             setActiveTab("layout");
+        } else if (location.pathname.includes("gallery")) {
+            setActiveTab("gallery");
         }
     }, [location.pathname]);
 
 
-    // Track active navigation tab ('layout' | 'section')
-    const [activeTab, setActiveTab] = useState<"layout" | "section">("layout");
+    // Track active navigation tab ('layout' | 'section' | 'gallery')
+    const [activeTab, setActiveTab] = useState<"layout" | "section" | "gallery">(
+        isGalleryPage ? "gallery" : "layout"
+    );
 
     // Dropdown states
     const [isLayoutOpen, setIsLayoutOpen] = useState<boolean>(true);
@@ -83,6 +102,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
         setSelectedCirculation("Circulation");
         if (onLayoutSelect) onLayoutSelect(layout);
     };
+
+    const [hasSelectedCategory, setHasSelectedCategory] = useState<boolean>(false);
+
+    const displayCategory = hasSelectedCategory && galleryMode
+        ? (galleryMode === "interior" ? "Interior" : "Exterior")
+        : "Gallery";
+
+    const selectedImageTitle = hasSelectedCategory && galleryImages && activeImageIndex !== undefined && galleryImages[activeImageIndex]
+        ? galleryImages[activeImageIndex].title
+        : "Images";
 
     return (
         <aside className={`fixed top-0 left-0 w-screen h-screen flex select-none pointer-events-none transition-all duration-300 ${isOpen ? "z-[1005]" : "z-[999]"}`}>
@@ -166,71 +195,90 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     </button>
                 </div>
 
-                <div className="flex absolute left-[20%] top-[44%] flex-col items-center gap-3 my-auto">
-                    {/* 1. Master Plan Link Button (or pill action, e.g. Interior toggle) */}
-                    {primaryIcon ? (
+                <div className={`flex absolute left-[20%] flex-col items-center gap-3 my-auto ${isGalleryPage ? "top-[49%]" : "top-[44%]"}`}>
+                    {isGalleryPage ? (
                         <button
-                            onClick={primaryIcon.onClick}
-                            className={`rounded-full px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] whitespace-nowrap transition-all duration-300 ease-out cursor-pointer backdrop-blur-md border active:scale-[0.97] ${primaryIcon.active
-                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/50 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                : "bg-black/30 text-white/80 border-white/25 hover:bg-black/45 hover:text-white"
-                                }`}
-                        >
-                            {primaryIcon.label}
-                        </button>
-                    ) : (
-                        <Link
-                            to="/masterplan"
                             onClick={() => {
-                                setActiveTab("layout");
-                                setIsOpen(true);        // Opens the main side glass panel
-                                setIsLayoutOpen(true);  // Shows Ground/Terrace options by default
+                                setActiveTab("gallery");
+                                setIsOpen((prev) => !prev);
                             }}
-                            className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
+                            className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none pointer-events-auto"
                         >
-                            <img
-                                src={icon2}
-                                alt="Layout Option"
-                                className={`w-5 h-5 object-contain transition-transform duration-200 ${activeTab === "layout" ? "filter-gold" : "group-hover:filter-gold"
-                                    }`}
+                            <Image
+                                className={`w-7 h-7 text-gray-300 transition-colors duration-200 ${isOpen && activeTab === "gallery" ? "text-[#D4AF37]" : "group-hover:text-[#D4AF37]"}`}
                             />
-                            {isOpen && activeTab === "layout" && (
+                            {isOpen && activeTab === "gallery" && (
                                 <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
                             )}
-                        </Link>
-                    )}
+                        </button>
+                    ) : (
+                        <>
+                            {/* 1. Master Plan Link Button (or pill action, e.g. Interior toggle) */}
+                            {primaryIcon ? (
+                                <button
+                                    onClick={primaryIcon.onClick}
+                                    className={`rounded-full px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] whitespace-nowrap transition-all duration-300 ease-out cursor-pointer backdrop-blur-md border active:scale-[0.97] ${primaryIcon.active
+                                        ? "bg-[rgba(231,33,0,0.30)] text-white border-white/50 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                        : "bg-black/30 text-white/80 border-white/25 hover:bg-black/45 hover:text-white"
+                                        }`}
+                                >
+                                    {primaryIcon.label}
+                                </button>
+                            ) : (
+                                <Link
+                                    to="/masterplan"
+                                    onClick={() => {
+                                        setActiveTab("layout");
+                                        setIsOpen(true);        // Opens the main side glass panel
+                                        setIsLayoutOpen(true);  // Shows Ground/Terrace options by default
+                                    }}
+                                    className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
+                                >
+                                    <img
+                                        src={icon2}
+                                        alt="Layout Option"
+                                        className={`w-5 h-5 object-contain transition-transform duration-200 ${activeTab === "layout" ? "filter-gold" : "group-hover:filter-gold"
+                                            }`}
+                                    />
+                                    {isOpen && activeTab === "layout" && (
+                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
+                                    )}
+                                </Link>
+                            )}
 
-                    {/* 2. Floor Plan Link Button (or pill action, e.g. Exterior toggle) */}
-                    {secondaryIcon ? (
-                        <button
-                            onClick={secondaryIcon.onClick}
-                            className={`rounded-full px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] whitespace-nowrap transition-all duration-300 ease-out cursor-pointer backdrop-blur-md border active:scale-[0.97] ${secondaryIcon.active
-                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/50 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                : "bg-black/30 text-white/80 border-white/25 hover:bg-black/45 hover:text-white"
-                                }`}
-                        >
-                            {secondaryIcon.label}
-                        </button>
-                    ) : (
-                        <Link
-                            to="/floor-plan"
-                            onClick={() => {
-                                setActiveTab("section");
-                                setIsOpen(false);        // Floor Plan starts with the panel collapsed
-                                setIsLayoutOpen(false);
-                            }}
-                            className="group relative flex items-center justify-center p-1 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
-                        >
-                            <img
-                                src={selectedicon3}
-                                alt="Building Section Option"
-                                className={`w-7 h-7 object-contain transition-transform duration-200 ${activeTab === "section" ? "filter-gold" : "group-hover:filter-gold"
-                                    }`}
-                            />
-                            {isOpen && activeTab === "section" && (
-                                <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
+                            {/* 2. Floor Plan Link Button (or pill action, e.g. Exterior toggle) */}
+                            {secondaryIcon ? (
+                                <button
+                                    onClick={secondaryIcon.onClick}
+                                    className={`rounded-full px-3 py-1.5 text-[9px] font-bold uppercase tracking-[0.1em] whitespace-nowrap transition-all duration-300 ease-out cursor-pointer backdrop-blur-md border active:scale-[0.97] ${secondaryIcon.active
+                                        ? "bg-[rgba(231,33,0,0.30)] text-white border-white/50 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                        : "bg-black/30 text-white/80 border-white/25 hover:bg-black/45 hover:text-white"
+                                        }`}
+                                >
+                                    {secondaryIcon.label}
+                                </button>
+                            ) : (
+                                <Link
+                                    to="/floor-plan"
+                                    onClick={() => {
+                                        setActiveTab("section");
+                                        setIsOpen(false);        // Floor Plan starts with the panel collapsed
+                                        setIsLayoutOpen(false);
+                                    }}
+                                    className="group relative flex items-center justify-center p-1 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
+                                >
+                                    <img
+                                        src={selectedicon3}
+                                        alt="Building Section Option"
+                                        className={`w-7 h-7 object-contain transition-transform duration-200 ${activeTab === "section" ? "filter-gold" : "group-hover:filter-gold"
+                                            }`}
+                                    />
+                                    {isOpen && activeTab === "section" && (
+                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
+                                    )}
+                                </Link>
                             )}
-                        </Link>
+                        </>
                     )}
                 </div>
 
@@ -240,11 +288,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
             {/* 2. Expanded Glass Panel Content */}
             <div
-                className={`absolute left-0 top-0 h-full pl-[5.5%] flex flex-col
-                     justify-between py-6 px-6 text-white
-    /* Glassmorphism Core */
-    bg-gradient-to-b from-black/55 via-black/70 to-black/85 
-    backdrop-blur-xl backdrop-saturate-150
+                    className={`absolute left-0 top-0 h-full pl-[5.5%] flex flex-col
+                         justify-between py-6 px-6 text-white
+        /* Glassmorphism Core */
+        bg-gradient-to-b from-black/55 via-black/70 to-black/85 
+        backdrop-blur-xl backdrop-saturate-150
     border-r border-neutral-500/35
     shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
     /* Subtle Inner Highlight for Glass Reflection */
@@ -270,148 +318,248 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 {/* Middle Interactive Inputs */}
 
-                <div className="flex absolute top-[44%] flex-col gap-3 my-auto w-full pointer-events-auto">
+                <div className={`flex absolute flex-col gap-3 my-auto w-full pointer-events-auto ${isGalleryPage ? "top-[49.5%]" : "top-[44%]"}`}>
 
-                    {/* 1. Layout Dropdown */}
-                    <div className="relative w-full pointer-events-auto">
-                        <button
-                            onClick={() => {
-                                setActiveTab("layout");
-                                setIsLayoutOpen((prev) => !prev);
-                            }}
-                            className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${activeTab === "layout"
-                                ? "bg-black/35 border-white/50 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.37)]"
-                                : "bg-black/20 hover:bg-black/30 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
-                                }`}
-                        >
-                            <span className="truncate">{selectedLayout}</span>
-                            {isLayoutOpen ? (
-                                <ChevronUp className="w-3.5 h-3.5 text-white/70" />
-                            ) : (
-                                <ChevronDown className="w-3.5 h-3.5 text-white/70" />
-                            )}
-                        </button>
-
-                        {isLayoutOpen && (
-                            <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
+                    {isGalleryPage ? (
+                        <>
+                            {/* Gallery Category Dropdown */}
+                            <div className="relative w-full pointer-events-auto">
                                 <button
-                                    onClick={() => handleLayoutClick("Layout")}
-                                    className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Layout"
-                                        ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                        : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                    onClick={() => {
+                                        setIsGalleryDropdownOpen((prev) => !prev);
+                                        setIsImagesDropdownOpen(false);
+                                    }}
+                                    className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${isGalleryDropdownOpen
+                                        ? "bg-black/35 border-white/50 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.37)]"
+                                        : "bg-black/20 hover:bg-black/30 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
                                         }`}
                                 >
-                                    Layout
+                                    <span className="truncate">{displayCategory}</span>
+                                    {isGalleryDropdownOpen ? (
+                                        <ChevronUp className="w-3.5 h-3.5 text-white/70" />
+                                    ) : (
+                                        <ChevronDown className="w-3.5 h-3.5 text-white/70" />
+                                    )}
                                 </button>
-                                <button
-                                    onClick={() => handleLayoutClick("Ground layout")}
-                                    className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Ground layout"
-                                        ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                        : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
-                                        }`}
-                                >
-                                    Ground layout
-                                </button>
-                                <button
-                                    onClick={() => handleLayoutClick("Terrace layout")}
-                                    className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Terrace layout"
-                                        ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                        : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
-                                        }`}
-                                >
-                                    Terrace layout
-                                </button>
-                            </div>
-                        )}
-                    </div>
 
-                    {/* 2. Circulation Dropdown (Visible only for Ground layout) */}
-                    {selectedLayout === "Ground layout" && (
-                        <div className="relative w-full pointer-events-auto">
-                            <button
-                                onClick={() => {
-                                    setIsCirculationOpen((prev) => !prev);
-                                }}
-                                className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${isCirculationOpen
-                                    ? "bg-white/10 border-white/50 ring-1 ring-white/10 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_12px_rgba(0,0,0,0.3)]"
-                                    : "bg-black/20 hover:bg-black/30 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
-                                    }`}
-                            >
-                                <span className="truncate">{selectedCirculation}</span>
-                                {isCirculationOpen ? (
-                                    <ChevronUp className="w-3.5 h-3.5 text-white/70" />
-                                ) : (
-                                    <ChevronDown className="w-3.5 h-3.5 text-white/70" />
+                                {isGalleryDropdownOpen && (
+                                    <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
+                                        <button
+                                            onClick={() => {
+                                                setHasSelectedCategory(true);
+                                                if (onGalleryModeChange) onGalleryModeChange("interior");
+                                                setIsGalleryDropdownOpen(false);
+                                                setIsImagesDropdownOpen(true);
+                                            }}
+                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${hasSelectedCategory && galleryMode === "interior"
+                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                                }`}
+                                        >
+                                            Interior
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                setHasSelectedCategory(true);
+                                                if (onGalleryModeChange) onGalleryModeChange("exterior");
+                                                setIsGalleryDropdownOpen(false);
+                                                setIsImagesDropdownOpen(true);
+                                            }}
+                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${hasSelectedCategory && galleryMode === "exterior"
+                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                                }`}
+                                        >
+                                            Exterior
+                                        </button>
+                                    </div>
                                 )}
-                            </button>
+                            </div>
 
-                            {isCirculationOpen && (
-                                <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col z-30 pointer-events-auto">
-                                    {[
-                                        "Main Entry/Exit",
-                                        "Entry/Exit To Building",
-                                        "Ramp Access",
-                                        "Visitors Parking",
-                                        "Two wheeler Parking",
-                                        "Driveway to Drop off",
-                                        "Driveway to Basement",
-                                        "Walking Lane & Cycling Lane",
-                                        "Pedestrian Entry",
-                                        "Fire Exit"
-                                    ].map((item) => {
-                                        const isSelected = selectedCirculation === item;
-                                        return (
-                                            <button
-                                                key={item}
-                                                onClick={() => {
-                                                    setSelectedCirculation(item);
-                                                    setIsCirculationOpen(false);
-                                                    if (onCirculationSelect) onCirculationSelect(item);
-                                                }}
-                                                className={`w-full text-left px-3 py-[3.5px] text-[9px] transition-colors cursor-pointer border-b border-white/10 last:border-0 ${isSelected
-                                                    ? "text-white font-bold bg-white/10"
-                                                    : "text-gray-300 hover:bg-white/5 hover:text-white"
-                                                    }`}
-                                            >
-                                                {item}
-                                            </button>
-                                        );
-                                    })}
+                            {/* Images Dropdown */}
+                            {hasSelectedCategory && (
+                                <div className="relative w-full pointer-events-auto">
+                                    <button
+                                        onClick={() => {
+                                            setIsImagesDropdownOpen((prev) => !prev);
+                                            setIsGalleryDropdownOpen(false);
+                                        }}
+                                        className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${isImagesDropdownOpen
+                                            ? "bg-white/10 border-white/50 ring-1 ring-white/10 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_12px_rgba(0,0,0,0.3)]"
+                                            : "bg-black/20 hover:bg-black/30 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                            }`}
+                                    >
+                                        <span className="truncate">{selectedImageTitle.replace(/['"]+$/, "")}</span>
+                                        {isImagesDropdownOpen ? (
+                                            <ChevronUp className="w-3.5 h-3.5 text-white/70" />
+                                        ) : (
+                                            <ChevronDown className="w-3.5 h-3.5 text-white/70" />
+                                        )}
+                                    </button>
+
+                                    {isImagesDropdownOpen && galleryImages && galleryImages.length > 0 && (
+                                        <div className="absolute top-full left-0 mt-2 w-[60%] max-h-60 overflow-y-auto bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col z-30 pointer-events-auto custom-scrollbar">
+                                            {galleryImages.map((img, index) => {
+                                                const isSelected = activeImageIndex === index;
+                                                const imgTitle = img.title || `Image ${index + 1}`;
+                                                return (
+                                                    <button
+                                                        key={index}
+                                                        onClick={() => {
+                                                            if (onImageSelect) onImageSelect(index);
+                                                            setIsImagesDropdownOpen(false);
+                                                        }}
+                                                        className={`w-full text-left px-3 py-[3.5px] text-[9px] transition-colors cursor-pointer border-b border-white/10 last:border-0 ${isSelected
+                                                            ? "text-white font-bold bg-white/10"
+                                                            : "text-gray-300 hover:bg-white/5 hover:text-white"
+                                                            }`}
+                                                    >
+                                                        {imgTitle.replace(/['"]+$/, "")}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
                                 </div>
                             )}
-                        </div>
+                        </>
+                    ) : (
+                        <>
+                            {/* 1. Layout Dropdown */}
+                            <div className="relative w-full pointer-events-auto">
+                                <button
+                                    onClick={() => {
+                                        setActiveTab("layout");
+                                        setIsLayoutOpen((prev) => !prev);
+                                    }}
+                                    className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${activeTab === "layout"
+                                        ? "bg-black/35 border-white/50 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.37)]"
+                                        : "bg-black/20 hover:bg-black/30 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                        }`}
+                                >
+                                    <span className="truncate">{selectedLayout}</span>
+                                    {isLayoutOpen ? (
+                                        <ChevronUp className="w-3.5 h-3.5 text-white/70" />
+                                    ) : (
+                                        <ChevronDown className="w-3.5 h-3.5 text-white/70" />
+                                    )}
+                                </button>
+
+                                {isLayoutOpen && (
+                                    <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
+                                        <button
+                                            onClick={() => handleLayoutClick("Ground layout")}
+                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Ground layout"
+                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                                }`}
+                                        >
+                                            Ground layout
+                                        </button>
+                                        <button
+                                            onClick={() => handleLayoutClick("Terrace layout")}
+                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Terrace layout"
+                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                                }`}
+                                        >
+                                            Terrace layout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* 2. Circulation Dropdown (Visible only for Ground layout) */}
+                            {selectedLayout === "Ground layout" && (
+                                <div className="relative w-full pointer-events-auto">
+                                    <button
+                                        onClick={() => {
+                                            setIsCirculationOpen((prev) => !prev);
+                                        }}
+                                        className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${isCirculationOpen
+                                            ? "bg-white/10 border-white/50 ring-1 ring-white/10 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_12px_rgba(0,0,0,0.3)]"
+                                            : "bg-black/20 hover:bg-black/30 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                            }`}
+                                    >
+                                        <span className="truncate">{selectedCirculation}</span>
+                                        {isCirculationOpen ? (
+                                            <ChevronUp className="w-3.5 h-3.5 text-white/70" />
+                                        ) : (
+                                            <ChevronDown className="w-3.5 h-3.5 text-white/70" />
+                                        )}
+                                    </button>
+
+                                    {isCirculationOpen && (
+                                        <div className="absolute top-full left-0 mt-2 w-[60%] max-h-60 overflow-y-auto bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col z-30 pointer-events-auto custom-scrollbar">
+                                            {[
+                                                "Main Entry/Exit",
+                                                "Entry/Exit To Building",
+                                                "Ramp Access",
+                                                "Visitors Parking",
+                                                "Two wheeler Parking",
+                                                "Driveway to Drop off",
+                                                "Driveway to Basement",
+                                                "Walking Lane & Cycling Lane",
+                                                "Pedestrian Entry",
+                                                "Fire Exit"
+                                            ].map((item) => {
+                                                const isSelected = selectedCirculation === item;
+                                                return (
+                                                    <button
+                                                        key={item}
+                                                        onClick={() => {
+                                                            setSelectedCirculation(item);
+                                                            setIsCirculationOpen(false);
+                                                            if (onCirculationSelect) onCirculationSelect(item);
+                                                        }}
+                                                        className={`w-full text-left px-3 py-[3.5px] text-[9px] transition-colors cursor-pointer border-b border-white/10 last:border-0 ${isSelected
+                                                            ? "text-white font-bold bg-white/10"
+                                                            : "text-gray-300 hover:bg-white/5 hover:text-white"
+                                                            }`}
+                                                    >
+                                                        {item}
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
 
                 {/* Bottom Statistics Section */}
-                <div className={`flex flex-col absolute top-[75%] gap-4 border-t border-white/35 pt-4 shrink-0 transition-opacity duration-200 ${isCirculationOpen ? "opacity-0 pointer-events-none" : "opacity-100"
-                    }`}>
-                    <div className="flex items-center gap-3">
-                        <Maximize2 className="w-5 h-5 text-gray-300" />
-                        <div>
-                            <p className="text-sm font-medium text-white">2 Acre</p>
-                            <p className="text-[11px] text-gray-400">
-                                Massive Site Coverage Area
-                            </p>
+                {!isGalleryPage && (
+                    <div className={`flex flex-col absolute top-[75%] gap-4 border-t border-white/35 pt-4 shrink-0 transition-opacity duration-200 ${isCirculationOpen ? "opacity-0 pointer-events-none" : "opacity-100"
+                        }`}>
+                        <div className="flex items-center gap-3">
+                            <Maximize2 className="w-5 h-5 text-gray-300" />
+                            <div>
+                                <p className="text-sm font-medium text-white">2 Acre</p>
+                                <p className="text-[11px] text-gray-400">
+                                    Massive Site Coverage Area
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="flex items-center gap-3">
-                        <PieChart className="w-5 h-5 text-gray-300" />
-                        <div>
-                            <p className="text-sm font-medium text-white">43 %</p>
-                            <p className="text-[11px] text-gray-400">Free Ground Area</p>
+                        <div className="flex items-center gap-3">
+                            <PieChart className="w-5 h-5 text-gray-300" />
+                            <div>
+                                <p className="text-sm font-medium text-white">43 %</p>
+                                <p className="text-[11px] text-gray-400">Free Ground Area</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="flex items-center gap-3">
-                        <Trees className="w-5 h-5 text-gray-300" />
-                        <div>
-                            <p className="text-sm font-medium text-white">25 %</p>
-                            <p className="text-[11px] text-gray-400">Luscious Green Area</p>
+                        <div className="flex items-center gap-3">
+                            <Trees className="w-5 h-5 text-gray-300" />
+                            <div>
+                                <p className="text-sm font-medium text-white">25 %</p>
+                                <p className="text-[11px] text-gray-400">Luscious Green Area</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
             </div>
         </aside>
     );

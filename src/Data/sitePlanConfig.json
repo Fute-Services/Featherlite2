@@ -59,8 +59,8 @@
         "y": 460
     },
     {
-        "id": "creche-play-area",
-        "title": "Creche Play Area",
+        "id": "Crèche-play-area",
+        "title": "Crèche Play Area",
         "description": "Main entrance security and visitor registration.",
         "polygon": "1967,487,1967,457",
         "x": 915,
@@ -134,9 +134,9 @@
         "image": "/hotspot-images/resturant.png"
     },
     {
-        "id": "creche",
-        "title": "Creche",
-        "description": "Creche",
+        "id": "Crèche",
+        "title": "Crèche",
+        "description": "Crèche",
         "y": 235,
         "x": 880,
         "image": "/hotspot-images/creche.png"

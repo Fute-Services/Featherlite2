@@ -83,10 +83,10 @@ export default function Building({
                         )
                     })}
 
-                    {/* Red Indicator Line & Dot (Smooth Sliding Motion) */}
+                    {/* Red Indicator Line & Dot (Smooth Sliding Motion) 
                     {activeFloor && (
                         <g>
-                            {/* Red Dot on Right Edge */}
+                          
                             <motion.circle
                                 cx={TOWER_X_RIGHT}
                                 fill="#EF4444"
@@ -103,7 +103,7 @@ export default function Building({
                                 }}
                             />
 
-                            {/* Dashed Red Connecting Line */}
+                         
                             <motion.line
                                 x1={TOWER_X_RIGHT}
                                 stroke="#EF4444"
@@ -124,9 +124,9 @@ export default function Building({
                                 }}
                             />
                         </g>
-                    )}
+                    )}*/}
 
-                    {activeFloor && (
+                    {/* {activeFloor && (
                         <foreignObject
                             x={TOWER_X_RIGHT + 140}
                             y={activeFloor.yaxis ?? 100}
@@ -144,7 +144,7 @@ export default function Building({
                                         transition={{ duration: 0.2, ease: 'easeOut' }}
                                         className="inline-flex items-center"
                                     >
-                                        {/* ✨ Glassmorphism Card ✨ */}
+                                        
                                         <div className="
             bg-white/10 
             bg-gradient-to-br from-black/20 via-black/10 to-transparent 
@@ -165,7 +165,7 @@ export default function Building({
                                 </AnimatePresence>
                             </div>
                         </foreignObject>
-                    )}
+                    )} */}
                 </svg>
             </div>
         </div>

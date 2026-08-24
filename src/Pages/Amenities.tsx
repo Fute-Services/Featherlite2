@@ -173,8 +173,8 @@ const amenities: Amenity[] = [
     image: kidsPlayPopupImg,
   },
   {
-    id: "creche",
-    label: ["Creche"],
+    id: "Crèche",
+    label: ["Crèche"],
     cx: 717,
     cy: 733,
     thumbnailPos: "right",
