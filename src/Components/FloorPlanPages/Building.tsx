@@ -1,4 +1,6 @@
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion,
+    //  AnimatePresence
+     } from 'framer-motion'
 import { type FloorData } from '../../types/Floorplan'
 
 interface BuildingProps {
@@ -13,10 +15,10 @@ interface BuildingProps {
 }
 
 export default function Building({
-    activeFloor,
+    // activeFloor,
     selectedFloorId,
     handleOpenUnitPlan,
-    TOWER_X_RIGHT,
+    // TOWER_X_RIGHT,
     FLOORS,
     handleFloorSelect,
     aspectRatio,
@@ -24,9 +26,12 @@ export default function Building({
 }: BuildingProps) {
     return (
         <div className="relative w-full h-full flex items-center justify-center">
-            <div className="relative w-full h-full animate-blueprint-unfold max-w-[3964px] max-h-[2048px]">
+            <div className="relative w-full h-full animate-blueprint-unfold
+             max-w-[3000px] max-h-[2000px]  ">
                 <svg
-                    viewBox="0 0 3964 2048"
+                    // viewBox="0 0 3964 2048"
+                    // viewBox='0 0 1920 1407'
+                    viewBox='0 0 3000 2000'
                     className="w-full h-full touch-none select-none"
                     preserveAspectRatio={aspectRatio}
                 >
@@ -50,8 +55,8 @@ export default function Building({
                         href={building}
                         x="0"
                         y="0"
-                        width="3964"
-                        height="2048"
+                        width="3000"
+                        height="2000"
                         preserveAspectRatio={aspectRatio}
                     />
 
@@ -83,10 +88,10 @@ export default function Building({
                         )
                     })}
 
-                    {/* Red Indicator Line & Dot (Smooth Sliding Motion) */}
+                    {/* Red Indicator Line & Dot (Smooth Sliding Motion) 
                     {activeFloor && (
                         <g>
-                            {/* Red Dot on Right Edge */}
+                          
                             <motion.circle
                                 cx={TOWER_X_RIGHT}
                                 fill="#EF4444"
@@ -103,7 +108,7 @@ export default function Building({
                                 }}
                             />
 
-                            {/* Dashed Red Connecting Line */}
+                         
                             <motion.line
                                 x1={TOWER_X_RIGHT}
                                 stroke="#EF4444"
@@ -124,9 +129,9 @@ export default function Building({
                                 }}
                             />
                         </g>
-                    )}
+                    )}*/}
 
-                    {activeFloor && (
+                    {/* {activeFloor && (
                         <foreignObject
                             x={TOWER_X_RIGHT + 140}
                             y={activeFloor.yaxis ?? 100}
@@ -144,7 +149,7 @@ export default function Building({
                                         transition={{ duration: 0.2, ease: 'easeOut' }}
                                         className="inline-flex items-center"
                                     >
-                                        {/* ✨ Glassmorphism Card ✨ */}
+                                        
                                         <div className="
             bg-white/10 
             bg-gradient-to-br from-black/20 via-black/10 to-transparent 
@@ -165,7 +170,7 @@ export default function Building({
                                 </AnimatePresence>
                             </div>
                         </foreignObject>
-                    )}
+                    )} */}
                 </svg>
             </div>
         </div>

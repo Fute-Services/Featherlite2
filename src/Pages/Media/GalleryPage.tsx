@@ -1,63 +1,108 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo,
+  //  useEffect
+   } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectFade } from "swiper/modules";
-import axios from "axios";
-import { FALLBACK_GALLERY, normalizeGallery, type GalleryCategory } from "./galleryFallback";
+// import axios from "axios";
+// import { FALLBACK_GALLERY, normalizeGallery, type GalleryCategory } from "./galleryFallback";
 import Sidebar from "../../Components/Navbar/Sidebar";
+
+import Gallery from '../../Data/Gallery.json'
 
 import "swiper/css";
 import "swiper/css/effect-fade";
 
-const GALLERY_API = "https://featherlitebackend.onrender.com/api/gallery";
+interface GalleryImage {
+  image: string;
+  title: string;
+  _id: string;
+}
+
+interface GalleryCategory {
+  _id: string;
+  category: string;
+  images: GalleryImage[];
+}
+
+// const GALLERY_API = "https://featherlitebackend.onrender.com/api/gallery";
 
 export default function GalleryPage() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  // const [activeIndex, setActiveIndex] = useState(0);
+  // const [viewMode, setViewMode] = useState("exterior");
+  // const [allImages, setAllImages] = useState<GalleryCategory[]>([]);
+  // const [loadState, setLoadState] = useState<"loading" | "ready" | "error">("loading");
+  // const [swiperInstance, setSwiperInstance] = useState<any>(null);
+
+  // const handleImageSelect = (index: number) => {
+  //   setActiveIndex(index);
+  //   if (swiperInstance) {
+  //     swiperInstance.slideToLoop(index);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const controller = new AbortController();
+
+  //   const fetchData = async () => {
+  //     try {
+  //       const res = await axios.get(GALLERY_API, {
+  //         timeout: 8000,
+  //         signal: controller.signal,
+  //       });
+  //       const normalized = normalizeGallery(res.data);
+  //       // An API that answers with nothing useful is no better than one that is
+  //       // down - fall back either way so the page is never blank.
+  //       setAllImages(normalized.length > 0 ? normalized : FALLBACK_GALLERY);
+  //       setLoadState("ready");
+  //     } catch (err) {
+  //       if (axios.isCancel(err)) return;
+  //       console.warn("Gallery API unavailable, using bundled images.", err);
+  //       setAllImages(FALLBACK_GALLERY);
+  //       setLoadState("ready");
+  //     }
+  //   };
+  //   fetchData();
+
+  //   return () => controller.abort();
+  // }, []);
+
+  // const filteredImages = useMemo(() => {
+  //   return allImages.find((group) => group.category === viewMode)?.images || [];
+  // }, [allImages, viewMode]);
+
+  // const showEmptyState = loadState !== "loading" && filteredImages.length === 0;
+
+    const [activeIndex, setActiveIndex] = useState(0);
   const [viewMode, setViewMode] = useState("exterior");
-  const [allImages, setAllImages] = useState<GalleryCategory[]>([]);
-  const [loadState, setLoadState] = useState<"loading" | "ready" | "error">("loading");
+
+  // Use local Gallery.json data directly
+  const [allImages] = useState<GalleryCategory[]>(
+    Gallery as GalleryCategory[]
+  );
+
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
   const handleImageSelect = (index: number) => {
     setActiveIndex(index);
+
     if (swiperInstance) {
       swiperInstance.slideToLoop(index);
     }
   };
 
-  useEffect(() => {
-    const controller = new AbortController();
-
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(GALLERY_API, {
-          timeout: 8000,
-          signal: controller.signal,
-        });
-        const normalized = normalizeGallery(res.data);
-        // An API that answers with nothing useful is no better than one that is
-        // down - fall back either way so the page is never blank.
-        setAllImages(normalized.length > 0 ? normalized : FALLBACK_GALLERY);
-        setLoadState("ready");
-      } catch (err) {
-        if (axios.isCancel(err)) return;
-        console.warn("Gallery API unavailable, using bundled images.", err);
-        setAllImages(FALLBACK_GALLERY);
-        setLoadState("ready");
-      }
-    };
-    fetchData();
-
-    return () => controller.abort();
-  }, []);
-
+  // Filter images based on selected category
   const filteredImages = useMemo(() => {
-    return allImages.find((group) => group.category === viewMode)?.images || [];
+    return (
+      allImages.find((group) => group.category === viewMode)?.images || []
+    );
   }, [allImages, viewMode]);
 
-  const showEmptyState = loadState !== "loading" && filteredImages.length === 0;
+  // Empty state
+  const showEmptyState = filteredImages.length === 0;
+
 
   return (
-    <div className="w-screen h-screen overflow-hidden relative bg-black font-sans">
+    <div className="w-screen  h-screen overflow-hidden relative bg-black font-sans">
       {/* SIDEBAR FOR CATEGORY TOGGLE (Interior / Exterior) */}
       <Sidebar
         isGalleryPage={true}
