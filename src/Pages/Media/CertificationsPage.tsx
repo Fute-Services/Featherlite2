@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
-import { ArrowRight, ChevronRight, X } from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 
 const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/card";
 const leedBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/leed-badge/card";
@@ -216,6 +216,27 @@ const certificationsData = [
 const CertificationsPage = () => {
   const [activeDetail, setActiveDetail] = useState<number | null>(null);
   const activeSection = activeDetail !== null ? certificationsData[activeDetail] : null;
+  const buttonRefs = useRef<Map<number, HTMLButtonElement | null>>(new Map());
+
+  // Geometric hover check: the modal overlay covers the button once open, so
+  // mouseenter/mouseleave on the button itself becomes unreliable. Instead,
+  // track raw cursor position against the button's rect while a detail is open.
+  useEffect(() => {
+    if (activeDetail === null) return;
+    const handleMouseMove = (e: MouseEvent) => {
+      const btn = buttonRefs.current.get(activeDetail);
+      if (!btn) return;
+      const rect = btn.getBoundingClientRect();
+      const inside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+      if (!inside) setActiveDetail(null);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [activeDetail]);
 
   return (
     <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#040C18] pb-28 pt-28 sm:pb-32 sm:pt-32">
@@ -265,10 +286,10 @@ const CertificationsPage = () => {
           {certificationsData.map((section, idx) => (
             <motion.div
               key={section.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: "easeOut", delay: idx * 0.1 }}
-              className="group relative flex flex-col justify-between rounded-xl border border-white/10 bg-[#071628]/85 p-3.5 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-[#C89D54]/50 sm:p-4"
+              initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: idx * 0.7 }}
+              className="group relative flex flex-col justify-between rounded-xl border border-white/10 bg-[#071628]/85 p-3.5 shadow-xl backdrop-blur-md transition-colors duration-300 hover:border-[#C89D54]/50 sm:p-4"
             >
               <div>
                 {/* Header with emblem badge logo */}
@@ -307,8 +328,12 @@ const CertificationsPage = () => {
               {/* Bottom bar */}
               <div className="mt-1.5 flex items-center justify-between pt-1.5 border-t border-white/5">
                 <button
+                  ref={(el) => {
+                    buttonRefs.current.set(idx, el);
+                  }}
                   type="button"
                   onClick={() => setActiveDetail(idx)}
+                  onMouseEnter={() => setActiveDetail(idx)}
                   className="flex items-center gap-1.5 text-[10px] font-medium text-[#C89D54] transition-colors hover:text-white"
                 >
                   View details
@@ -338,16 +363,7 @@ const CertificationsPage = () => {
               onClick={(e) => e.stopPropagation()}
               className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628] p-6 shadow-2xl sm:p-8"
             >
-              <button
-                type="button"
-                onClick={() => setActiveDetail(null)}
-                aria-label="Close"
-                className="absolute right-4 top-4 rounded-full bg-[#FF0000] p-1.5 text-white shadow-lg transition-colors hover:bg-red-700"
-              >
-                <X className="size-4" />
-              </button>
-
-              <div className="flex items-center gap-4 pr-8">
+              <div className="flex items-center gap-4">
                 <img src={activeSection.badge} alt={activeSection.title} className="h-14 w-14 shrink-0 object-contain" />
                 <div>
                   <h2 className="font-serif text-2xl text-white">{activeSection.title}</h2>

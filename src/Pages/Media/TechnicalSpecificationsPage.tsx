@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
-import { ArrowRight, X } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/card";
 const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/1-structure-space-efficiency-1/card";
@@ -168,6 +168,27 @@ const specificationsData = [
 const TechnicalSpecificationsPage = () => {
   const [activeDetail, setActiveDetail] = useState<number | null>(null);
   const activeSection = activeDetail !== null ? specificationsData[activeDetail] : null;
+  const buttonRefs = useRef<Map<number, HTMLButtonElement | null>>(new Map());
+
+  // Geometric hover check: the modal overlay covers the button once open, so
+  // mouseenter/mouseleave on the button itself becomes unreliable. Instead,
+  // track raw cursor position against the button's rect while a detail is open.
+  useEffect(() => {
+    if (activeDetail === null) return;
+    const handleMouseMove = (e: MouseEvent) => {
+      const btn = buttonRefs.current.get(activeDetail);
+      if (!btn) return;
+      const rect = btn.getBoundingClientRect();
+      const inside =
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom;
+      if (!inside) setActiveDetail(null);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [activeDetail]);
 
   return (
     <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#040C18] pb-24 pt-28 sm:pb-28 sm:pt-32">
@@ -217,10 +238,10 @@ const TechnicalSpecificationsPage = () => {
           {specificationsData.map((section, idx) => (
             <motion.div
               key={section.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: idx * 0.04 }}
-              className="group relative flex flex-col justify-between rounded-xl border border-white/10 bg-[#071628]/85 p-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-[#C89D54]/50"
+              initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: idx * 0.7 }}
+              className="group relative flex flex-col justify-between rounded-xl border border-white/10 bg-[#071628]/85 p-3 shadow-xl backdrop-blur-md transition-colors duration-300 hover:border-[#C89D54]/50"
             >
               <div>
                 {/* Top index number */}
@@ -254,8 +275,12 @@ const TechnicalSpecificationsPage = () => {
               {/* View Details Link */}
               <div className="mt-1.5 flex items-center justify-between pt-1 border-t border-white/5">
                 <button
+                  ref={(el) => {
+                    buttonRefs.current.set(idx, el);
+                  }}
                   type="button"
                   onClick={() => setActiveDetail(idx)}
+                  onMouseEnter={() => setActiveDetail(idx)}
                   className="flex items-center gap-1 text-[10px] font-medium text-[#C89D54] transition-colors hover:text-white"
                 >
                   View details
@@ -285,16 +310,7 @@ const TechnicalSpecificationsPage = () => {
               onClick={(e) => e.stopPropagation()}
               className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628] p-6 shadow-2xl sm:p-8"
             >
-              <button
-                type="button"
-                onClick={() => setActiveDetail(null)}
-                aria-label="Close"
-                className="absolute right-4 top-4 rounded-full bg-[#FF0000] p-1.5 text-white shadow-lg transition-colors hover:bg-red-700"
-              >
-                <X className="size-4" />
-              </button>
-
-              <div className="flex items-center gap-4 pr-8">
+              <div className="flex items-center gap-4">
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-[#C89D54]/40 bg-[#C89D54]/10 p-2">
                   <img src={activeSection.icon} alt="" className="h-6 w-6 object-contain brightness-0 invert" />
                 </div>

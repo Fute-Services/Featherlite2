@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { type LucideIcon } from "lucide-react";
 
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/availabilitypage/building/web2560";
+import buildingImg from "../assets/AvailabilityPage/building-new.jpg";
 import outsideLineImg from "../assets/AvailabilityPage/lines/outside_line.svg";
 import cafeLineImg from "../assets/AvailabilityPage/lines/cafe.svg";
 import tableTennisLineImg from "../assets/AvailabilityPage/lines/table tennis.svg";

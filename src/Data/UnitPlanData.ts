@@ -1,23 +1,23 @@
-import fan from '../assets/floorplan/icons/fan.png'
-import health from '../assets/floorplan/icons/health.png'
-import women from '../assets/floorplan/icons/women.png'
-import office from '../assets/floorplan/icons/office.png'
-import balcony from '../assets/floorplan/icons/balcony.png'
-import mens from '../assets/floorplan/icons/mens.png'
-import elevator from '../assets/floorplan/icons/elevator.png'
-import image1 from '../assets/floorplan/ISO/terrace.png'
-import image2 from '../assets/floorplan/ISO/tenth.png'
-import image3 from '../assets/floorplan/ISO/nineth.png';
-import image4 from '../assets/floorplan/ISO/eighth.png';
-import image5 from '../assets/floorplan/unit/7th floor 2.png';
-import image6 from '../assets/floorplan/ISO/sixth.png';
-import image7 from '../assets/floorplan/ISO/fifth.png';
+const fan = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/fan/card";
+const health = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/health/card";
+const women = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/women/card";
+const office = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/office/card";
+const balcony = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/balcony/card";
+const mens = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/mens/card";
+const elevator = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/elevator/card";
+const image1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/terrace/web2560";
+const image2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/tenth/web2560";
+const image3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/nineth/web2560";
+const image4 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/eighth/web2560";
+const image5 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/unit/7th-floor-2/web2560";
+const image6 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/sixth/web2560";
+const image7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/fifth/web2560";
 
-import image8 from '../assets/floorplan/ISO/forth.png';
-import image9 from '../assets/floorplan/ISO/third.png';
-import image10 from '../assets/floorplan/ISO/second.png';
-import image11 from '../assets/floorplan/ISO/firstfloor.png';
-import image12 from '../assets/floorplan/ISO/ground.png'
+const image8 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/forth/web2560";
+const image9 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/third/web2560";
+const image10 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/second/web2560";
+const image11 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/firstfloor/web2560";
+const image12 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/ground/web2560";
 export interface SubPoint {
   x: number;
   y: number;

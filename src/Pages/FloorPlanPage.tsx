@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 
-import building from '../assets/floorplan/Floorplan_Building.png'
+const building = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/floorplan-building/web2560";
 import Building from '../Components/FloorPlanPages/Building'
 import Table from '../Components/FloorPlanPages/Table'
 
