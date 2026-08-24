@@ -318,7 +318,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 {/* Middle Interactive Inputs */}
 
-                <div className="flex absolute top-[44%] flex-col gap-3 my-auto w-full pointer-events-auto">
+                <div className={`flex absolute flex-col gap-3 my-auto w-full pointer-events-auto ${isGalleryPage ? "top-[49.5%]" : "top-[44%]"}`}>
 
                     {isGalleryPage ? (
                         <>
