@@ -11,8 +11,6 @@ export default function UnitPlanContentPage({
     pointsData = [],
     selectedId,
 }: UnitPlanContentPageProps) {
-    if (!pointsData || pointsData.length === 0) return null;
-
     // Filter out ID 101 and duplicate entries
     const filteredPoints = useMemo(() => {
         return pointsData.filter(
@@ -50,6 +48,8 @@ export default function UnitPlanContentPage({
 
         return orderMap;
     }, [filteredPoints]);
+
+    if (!pointsData || pointsData.length === 0) return null;
 
     return (
         <>

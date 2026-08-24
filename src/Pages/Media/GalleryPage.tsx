@@ -102,7 +102,7 @@ export default function GalleryPage() {
 
 
   return (
-    <div className="w-screen p-[10%] h-screen overflow-hidden relative bg-black font-sans">
+    <div className="w-screen  h-screen overflow-hidden relative bg-black font-sans">
       {/* SIDEBAR FOR CATEGORY TOGGLE (Interior / Exterior) */}
       <Sidebar
         isGalleryPage={true}

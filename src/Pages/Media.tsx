@@ -2,19 +2,19 @@ import { lazy, Suspense, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Award, FileText, Images, Play, Ruler, X, type LucideIcon } from "lucide-react";
+import brochureImg from "../assets/Media/brochure_cover_navy.jpg";
+import galleryImg from "../assets/Media/gallery_cover.jpg";
+import certificationsImg from "../assets/Media/certifications_cover.jpg";
+import technicalImg from "../assets/Media/technical_cover.jpg";
+import walkthroughImg from "../assets/Media/walkthrough_hero.jpg";
 
 const BrochureModal = lazy(() => import("./Media/BrochureModal"));
-
-const brochureImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/brochure-cover/card";
-const galleryImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/gallery-cover/card";
-const certificationsImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/certifications-cover/card";
-const technicalImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/tech-specs-cover/card";
-const walkthroughImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/signature-sunset/web";
 
 interface MediaCard {
   title: string;
   description: string;
   image: string;
+  imagePosition?: string;
   to?: string;
   onClick?: () => void;
   icon: LucideIcon;
@@ -27,12 +27,12 @@ const Media = () => {
   const CARDS: MediaCard[] = [
     { title: "BROCHURE", description: "Download our detailed project brochure.", image: brochureImg, onClick: () => setIsBrochureOpen(true), icon: FileText },
     { title: "GALLERY", description: "A collection of images that capture the essence.", image: galleryImg, to: "/media/gallery", icon: Images },
-    { title: "CERTIFICATIONS", description: "Our commitment to quality and excellence.", image: certificationsImg, to: "/certifications", icon: Award },
-    { title: "TECHNICAL SPECIFICATIONS", description: "Technical details and specifications at a glance.", image: technicalImg, to: "/technical-specifications", icon: Ruler },
+    { title: "CERTIFICATIONS", description: "Our commitment to quality and excellence.", image: certificationsImg, imagePosition: "object-top", to: "/certifications", icon: Award },
+    { title: "TECHNICAL SPECIFICATIONS", description: "Technical details and specifications at a glance.", image: technicalImg, imagePosition: "object-top", to: "/technical-specifications", icon: Ruler },
   ];
 
   return (
-    <div className="relative h-dvh w-full overflow-hidden bg-[#040C18] px-5 pb-8 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-10">
+    <div className="relative h-dvh w-full overflow-hidden bg-[#0D2D43] px-5 pb-8 pt-24 sm:px-8 sm:pt-28 lg:px-12 lg:pb-10">
       {/* Background Glow Lights */}
       <div
         aria-hidden
@@ -90,7 +90,7 @@ const Media = () => {
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#040C18]/90 via-[#040C18]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0D2D43]/90 via-[#0D2D43]/60 to-transparent" />
 
           <div className="relative flex h-full flex-col justify-center px-8 sm:px-12 lg:px-14">
             <span className="mb-3 flex size-11 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:border-[#C89D54] group-hover:bg-[#C89D54] group-hover:text-black">
@@ -126,7 +126,7 @@ const Media = () => {
                     alt={card.title}
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${card.imagePosition ?? ""}`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#081729] via-transparent to-black/30" />
                 </div>
