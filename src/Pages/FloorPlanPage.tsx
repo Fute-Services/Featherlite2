@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 // import building from '../assets/floorplan/mainbuildingimage.jpeg'
 // import building from '../assets/floorplan/mainbuilding1.png'
 import Building from '../Components/FloorPlanPages/Building'
-import building from '../assets/floorplan/buildingimage.png'
+import building from '../assets/floorplan/buildingimage.jpg'
 import Table from '../Components/FloorPlanPages/Table'
 
 import { useNavigate } from 'react-router-dom'
