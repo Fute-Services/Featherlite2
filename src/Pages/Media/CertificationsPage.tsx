@@ -220,18 +220,7 @@ const CertificationsPage = () => {
   useEffect(() => {
     if (activeDetail === null) return;
     const handleMouseMove = (e: MouseEvent) => {
-      const cardEl = document.querySelector(`.certification-card-${activeDetail}`);
       const modalEl = document.querySelector(".certification-modal-content");
-
-      if (!cardEl) return;
-
-      const cardRect = cardEl.getBoundingClientRect();
-      const insideCard =
-        e.clientX >= cardRect.left &&
-        e.clientX <= cardRect.right &&
-        e.clientY >= cardRect.top &&
-        e.clientY <= cardRect.bottom;
-
       let insideModal = false;
       if (modalEl) {
         const modalRect = modalEl.getBoundingClientRect();
@@ -242,7 +231,29 @@ const CertificationsPage = () => {
           e.clientY <= modalRect.bottom;
       }
 
-      if (!insideCard && !insideModal) {
+      let insideAnyCardIdx: number | null = null;
+      const padding = 2;
+      for (let i = 0; i < certificationsData.length; i++) {
+        const cardEl = document.querySelector(`.certification-card-${i}`);
+        if (cardEl) {
+          const cardRect = cardEl.getBoundingClientRect();
+          if (
+            e.clientX >= cardRect.left - padding &&
+            e.clientX <= cardRect.right + padding &&
+            e.clientY >= cardRect.top - padding &&
+            e.clientY <= cardRect.bottom + padding
+          ) {
+            insideAnyCardIdx = i;
+            break;
+          }
+        }
+      }
+
+      if (insideAnyCardIdx !== null) {
+        if (insideAnyCardIdx !== activeDetail) {
+          setActiveDetail(insideAnyCardIdx);
+        }
+      } else if (!insideModal) {
         setActiveDetail(null);
       }
     };
@@ -305,7 +316,11 @@ const CertificationsPage = () => {
               initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: idx * 0.7 }}
-              className={`group relative flex flex-col justify-between rounded-xl border border-white/10 bg-[#071628]/85 p-3.5 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-[#C89D54]/50 hover:scale-[1.02] hover:-translate-y-0.5 cursor-pointer sm:p-4 certification-card-${idx}`}
+              className={`group relative flex flex-col justify-between rounded-xl border bg-[#071628]/85 p-3.5 shadow-xl backdrop-blur-md transition-all duration-300 cursor-pointer sm:p-4 certification-card-${idx} ${
+                activeDetail === idx
+                  ? "border-[#C89D54]/50 scale-[1.02] -translate-y-0.5"
+                  : "border-white/10 scale-100 translate-y-0 hover:border-[#C89D54]/50 hover:scale-[1.02] hover:-translate-y-0.5"
+              }`}
             >
               <div>
                 {/* Header with emblem badge logo */}
