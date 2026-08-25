@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import {
     // useNavigate,
-    useParams } from 'react-router-dom';
+    useParams
+} from 'react-router-dom';
 
 import { pointsData } from '../Data/UnitPlanData';
 
@@ -99,9 +100,34 @@ export default function UnitPlanPage() {
                     : 'opacity-100 translate-y-0'
                     }`}
             >
-                <h1 className="text-3xl md:text-4xl font-semibold text-white tracking-wide whitespace-nowrap">
+                {/* <h1 className="text-3xl md:text-4xl font-semibold tracking-wide whitespace-nowrap
+  bg-gradient-to-r from-[#B7B694] via-[#D4AF37] to-[#F5E6A8]
+  bg-clip-text text-transparent drop-shadow-lg">
+                    {floorPoints.name}
+                </h1> */}
+                {/* <h1 className="text-3xl md:text-4xl font-semibold tracking-wide whitespace-nowrap
+  bg-gradient-to-l from-[#FFF1B8] via-[#E0C15A] to-[#FFF1B8]
+  bg-clip-text text-transparent">
+  {floorPoints.name}
+</h1> */}
+
+                <h1 className="text-3xl md:text-4xl font-semibold tracking-wide whitespace-nowrap
+  bg-gradient-to-l from-[#E6D7BA] via-[#B8A37E] to-[#E6D7BA]
+  bg-clip-text text-transparent">
                     {floorPoints.name}
                 </h1>
+
+                        {/* <h1 className="text-3xl md:text-4xl font-semibold tracking-wide whitespace-nowrap
+  bg-gradient-to-l from-[#E8DCBF] via-[#A89269] to-[#E8DCBF]
+  bg-clip-text text-transparent">
+                    {floorPoints.name}
+                </h1> */}
+
+                {/* <h1 className="text-3xl md:text-4xl font-semibold tracking-wide whitespace-nowrap
+  bg-gradient-to-l from-[#FFF6E3] via-[#D1BD96] to-[#FFF6E3]
+  bg-clip-text text-transparent">
+  {floorPoints.name}
+</h1> */}
 
                 {String(floorPoints.id) !== '2' && (
                     <>
@@ -192,7 +218,7 @@ export default function UnitPlanPage() {
                     </div>
                 </div>
 
-                {!popupInfo.isOpen && activePoint && (
+                {/* {!popupInfo.isOpen && activePoint && (
                     <UnitPlanSideContent
                         key={`side-content-${idnew}`}
                         activePoint={activePoint}
@@ -200,7 +226,7 @@ export default function UnitPlanPage() {
                         viewdata={viewdata}
                         setViewdata={setViewdata}
                     />
-                )}
+                )} */}
             </main>
 
 
@@ -236,7 +262,7 @@ export default function UnitPlanPage() {
                             {/* Visual Unit Plan Overlay */}
                             <UnitPlanPopupOverlay
                                 pointsData={units}
-                                // selectedId={null}
+                            // selectedId={null}
                             />
 
                             {/* EXACT POLYGON HITBOX: Closes immediately when leaving the polygon boundary */}

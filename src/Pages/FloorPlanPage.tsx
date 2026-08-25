@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 // import building from '../assets/floorplan/mainbuildingimage.jpeg'
 // import building from '../assets/floorplan/mainbuilding1.png'
 import Building from '../Components/FloorPlanPages/Building'
-import building from '../assets/floorplan/mainbuilding222.png'
+import building from '../assets/floorplan/buildingimage.png'
 import Table from '../Components/FloorPlanPages/Table'
 
 import { useNavigate } from 'react-router-dom'
@@ -61,7 +61,8 @@ export default function FloorPlanPage() {
     };
     return (
         <div className="relative ibm-plex-sans  h-screen w-screen
-         bg-slate-950 overflow-hidden select-none flex flex-col md:flex-row items-center justify-center">
+         bg-slate-950 overflow-hidden select-none flex flex-col md:flex-row 
+         items-center justify-center">
             {/* <div className='absolute z-[999] left-0 top-0'> */}
             <Sidebar />
             {/* </div> */}

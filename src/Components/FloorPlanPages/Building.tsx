@@ -27,11 +27,11 @@ export default function Building({
     return (
         <div className="relative w-full h-full flex items-center justify-center">
             <div className="relative w-full h-full animate-blueprint-unfold
-             max-w-[3000px] max-h-[2000px]  ">
+             max-w-[3964px] max-h-[2048px]  ">
                 <svg
-                    // viewBox="0 0 3964 2048"
+                    viewBox="0 0 3964 2048"
                     // viewBox='0 0 1920 1407'
-                    viewBox='0 0 3000 2000'
+                    // viewBox='0 0 3000 2000'
                     className="w-full h-full touch-none select-none"
                     preserveAspectRatio={aspectRatio}
                 >
@@ -55,8 +55,8 @@ export default function Building({
                         href={building}
                         x="0"
                         y="0"
-                        width="3000"
-                        height="2000"
+                        width="3964"
+                        height="2048"
                         preserveAspectRatio={aspectRatio}
                     />
 
