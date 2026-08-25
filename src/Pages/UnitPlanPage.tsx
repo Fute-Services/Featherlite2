@@ -12,7 +12,6 @@ import { pointsData } from '../Data/UnitPlanData';
 const VRModel = lazy(() => import('../Components/FloorPlanPages/VRModel'));
 import BackButton from '../Components/FloorPlanPages/BackButton';
 import UnitPlanContentPage from '../Components/FloorPlanPages/UnitPlanContentPage';
-import UnitPlanSideContent from '../Components/FloorPlanPages/UnitPlanSideContent';
 import UnitPlanPopupOverlay from '../Components/FloorPlanPages/UnitPlanPopupOverlay';
 
 export default function UnitPlanPage() {
@@ -34,7 +33,7 @@ export default function UnitPlanPage() {
     const [isDragging, setIsDragging] = useState(false);
 
     const dragStart = useRef({ x: 0, y: 0 });
-    const [viewdata, setViewdata] = useState(true);
+    const [viewdata] = useState(true);
     const [showVRModal, setShowVRModal] = useState(false);
 
     const [popupInfo, setPopupInfo] = useState<{

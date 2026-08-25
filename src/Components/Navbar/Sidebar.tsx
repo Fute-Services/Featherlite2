@@ -68,7 +68,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     );
 
     // Dropdown states
-    const [isLayoutOpen, setIsLayoutOpen] = useState<boolean>(true);
+    const [, setIsLayoutOpen] = useState<boolean>(true);
     const [isCirculationOpen, setIsCirculationOpen] = useState<boolean>(false);
 
     // Selection state values
