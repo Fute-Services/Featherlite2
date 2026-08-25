@@ -205,10 +205,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none pointer-events-auto"
                         >
                             <Image
-                                className={`w-7 h-7 text-gray-300 transition-colors duration-200 ${isOpen && activeTab === "gallery" ? "text-[#D4AF37]" : "group-hover:text-[#D4AF37]"}`}
+                                className={`w-7 h-7 text-gray-300 transition-colors duration-200 ${isOpen && activeTab === "gallery" ? "text-[#e6c57e]" : "group-hover:text-[#e6c57e]"}`}
                             />
                             {isOpen && activeTab === "gallery" && (
-                                <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
+                                <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#e6c57e]" />
                             )}
                         </button>
                     ) : (
@@ -241,7 +241,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                             }`}
                                     />
                                     {isOpen && activeTab === "layout" && (
-                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
+                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#e6c57e]" />
                                     )}
                                 </Link>
                             )}
@@ -274,7 +274,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                             }`}
                                     />
                                     {isOpen && activeTab === "section" && (
-                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#D4AF37]" />
+                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#e6c57e]" />
                                     )}
                                 </Link>
                             )}
@@ -425,48 +425,26 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         </>
                     ) : (
                         <>
-                            {/* 1. Layout Dropdown */}
-                            <div className="relative w-full pointer-events-auto">
+                            {/* 1. Layout Buttons directly */}
+                            <div className="flex flex-col gap-2 w-[60%] pointer-events-auto">
                                 <button
-                                    onClick={() => {
-                                        setActiveTab("layout");
-                                        setIsLayoutOpen((prev) => !prev);
-                                    }}
-                                    className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${activeTab === "layout"
-                                        ? "bg-black/35 border-white/50 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.37)]"
-                                        : "bg-black/20 hover:bg-black/30 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                    onClick={() => handleLayoutClick("Ground layout")}
+                                    className={`w-full text-left px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md cursor-pointer ${selectedLayout === "Ground layout"
+                                        ? "bg-[rgba(231,33,0,0.30)] border-white/50 text-white shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                        : "bg-black/20 hover:bg-black/30 border-white/35 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
                                         }`}
                                 >
-                                    <span className="truncate">{selectedLayout}</span>
-                                    {isLayoutOpen ? (
-                                        <ChevronUp className="w-3.5 h-3.5 text-white/70" />
-                                    ) : (
-                                        <ChevronDown className="w-3.5 h-3.5 text-white/70" />
-                                    )}
+                                    Ground layout
                                 </button>
-
-                                {isLayoutOpen && (
-                                    <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
-                                        <button
-                                            onClick={() => handleLayoutClick("Ground layout")}
-                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Ground layout"
-                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
-                                                }`}
-                                        >
-                                            Ground layout
-                                        </button>
-                                        <button
-                                            onClick={() => handleLayoutClick("Terrace layout")}
-                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Terrace layout"
-                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
-                                                }`}
-                                        >
-                                            Terrace layout
-                                        </button>
-                                    </div>
-                                )}
+                                <button
+                                    onClick={() => handleLayoutClick("Terrace layout")}
+                                    className={`w-full text-left px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md cursor-pointer ${selectedLayout === "Terrace layout"
+                                        ? "bg-[rgba(231,33,0,0.30)] border-white/50 text-white shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                        : "bg-black/20 hover:bg-black/30 border-white/35 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                        }`}
+                                >
+                                    Terrace layout
+                                </button>
                             </div>
 
                             {/* 2. Circulation Dropdown (Visible only for Ground layout) */}
@@ -509,7 +487,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                                         key={item}
                                                         onClick={() => {
                                                             setSelectedCirculation(item);
-                                                            setIsCirculationOpen(false);
                                                             if (onCirculationSelect) onCirculationSelect(item);
                                                         }}
                                                         className={`w-full text-left px-3 py-[3.5px] text-[9px] transition-colors cursor-pointer border-b border-white/10 last:border-0 ${isSelected

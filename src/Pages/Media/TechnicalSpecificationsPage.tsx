@@ -166,28 +166,43 @@ const specificationsData = [
 
 const TechnicalSpecificationsPage = () => {
   const [activeDetail, setActiveDetail] = useState<number | null>(null);
-  const activeSection = activeDetail !== null ? specificationsData[activeDetail] : null;
-  const buttonRefs = useRef<Map<number, HTMLButtonElement | null>>(new Map());
 
-  // Geometric hover check: the modal overlay covers the button once open, so
-  // mouseenter/mouseleave on the button itself becomes unreliable. Instead,
-  // track raw cursor position against the button's rect while a detail is open.
+  // Geometric hover check using querySelector so the modal can be rendered at the root level (relative to viewport)
+  // to avoid CSS transform clipping, while still detecting hover leaves correctly.
   useEffect(() => {
     if (activeDetail === null) return;
     const handleMouseMove = (e: MouseEvent) => {
-      const btn = buttonRefs.current.get(activeDetail);
-      if (!btn) return;
-      const rect = btn.getBoundingClientRect();
-      const inside =
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
-      if (!inside) setActiveDetail(null);
+      const cardEl = document.querySelector(`.technical-card-${activeDetail}`);
+      const modalEl = document.querySelector(".technical-modal-content");
+
+      if (!cardEl) return;
+
+      const cardRect = cardEl.getBoundingClientRect();
+      const insideCard =
+        e.clientX >= cardRect.left &&
+        e.clientX <= cardRect.right &&
+        e.clientY >= cardRect.top &&
+        e.clientY <= cardRect.bottom;
+
+      let insideModal = false;
+      if (modalEl) {
+        const modalRect = modalEl.getBoundingClientRect();
+        insideModal =
+          e.clientX >= modalRect.left &&
+          e.clientX <= modalRect.right &&
+          e.clientY >= modalRect.top &&
+          e.clientY <= modalRect.bottom;
+      }
+
+      if (!insideCard && !insideModal) {
+        setActiveDetail(null);
+      }
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [activeDetail]);
+
+  const activeSection = activeDetail !== null ? specificationsData[activeDetail] : null;
 
   return (
     <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#0D2D43] pb-24 pt-28 sm:pb-28 sm:pt-32">
@@ -237,10 +252,12 @@ const TechnicalSpecificationsPage = () => {
           {specificationsData.map((section, idx) => (
             <motion.div
               key={section.title}
+              onMouseEnter={() => setActiveDetail(idx)}
+              onClick={() => setActiveDetail(idx)}
               initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: idx * 0.7 }}
-              className="group relative flex flex-col justify-between rounded-xl border border-white/10 bg-[#071628]/85 p-3 shadow-xl backdrop-blur-md transition-colors duration-300 hover:border-[#C89D54]/50"
+              className={`group relative flex flex-col justify-between rounded-xl border border-white/10 bg-[#071628]/85 p-3 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-[#C89D54]/50 hover:scale-[1.02] hover:-translate-y-0.5 cursor-pointer technical-card-${idx}`}
             >
               <div>
                 {/* Top index number */}
@@ -270,23 +287,6 @@ const TechnicalSpecificationsPage = () => {
                   ))}
                 </ul>
               </div>
-
-              {/* View Details Link */}
-              <div className="mt-1.5 flex items-center justify-between pt-1 border-t border-white/5">
-                <button
-                  ref={(el) => {
-                    buttonRefs.current.set(idx, el);
-                  }}
-                  type="button"
-                  onClick={() => setActiveDetail(idx)}
-                  onMouseEnter={() => setActiveDetail(idx)}
-                  className="flex items-center gap-1 text-[10px] font-medium text-[#C89D54] transition-colors hover:text-white"
-                >
-                  View details
-                  <ArrowRight size={11} />
-                </button>
-                <ArrowRight size={12} className="text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#C89D54]" />
-              </div>
             </motion.div>
           ))}
         </div>
@@ -299,15 +299,18 @@ const TechnicalSpecificationsPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/85 p-4 backdrop-blur-md"
-            onClick={() => setActiveDetail(null)}
+            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/20 p-4 backdrop-blur-md cursor-default"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveDetail(null);
+            }}
           >
             <motion.div
               initial={{ opacity: 0, y: 16, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.97 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628] p-6 shadow-2xl sm:p-8"
+              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628] p-6 shadow-2xl sm:p-8 technical-modal-content"
             >
               <div className="flex items-center gap-4">
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-[#C89D54]/40 bg-[#C89D54]/10 p-2">

@@ -214,28 +214,43 @@ const certificationsData = [
 
 const CertificationsPage = () => {
   const [activeDetail, setActiveDetail] = useState<number | null>(null);
-  const activeSection = activeDetail !== null ? certificationsData[activeDetail] : null;
-  const buttonRefs = useRef<Map<number, HTMLButtonElement | null>>(new Map());
 
-  // Geometric hover check: the modal overlay covers the button once open, so
-  // mouseenter/mouseleave on the button itself becomes unreliable. Instead,
-  // track raw cursor position against the button's rect while a detail is open.
+  // Geometric hover check using querySelector so the modal can be rendered at the root level (relative to viewport)
+  // to avoid CSS transform clipping, while still detecting hover leaves correctly.
   useEffect(() => {
     if (activeDetail === null) return;
     const handleMouseMove = (e: MouseEvent) => {
-      const btn = buttonRefs.current.get(activeDetail);
-      if (!btn) return;
-      const rect = btn.getBoundingClientRect();
-      const inside =
-        e.clientX >= rect.left &&
-        e.clientX <= rect.right &&
-        e.clientY >= rect.top &&
-        e.clientY <= rect.bottom;
-      if (!inside) setActiveDetail(null);
+      const cardEl = document.querySelector(`.certification-card-${activeDetail}`);
+      const modalEl = document.querySelector(".certification-modal-content");
+
+      if (!cardEl) return;
+
+      const cardRect = cardEl.getBoundingClientRect();
+      const insideCard =
+        e.clientX >= cardRect.left &&
+        e.clientX <= cardRect.right &&
+        e.clientY >= cardRect.top &&
+        e.clientY <= cardRect.bottom;
+
+      let insideModal = false;
+      if (modalEl) {
+        const modalRect = modalEl.getBoundingClientRect();
+        insideModal =
+          e.clientX >= modalRect.left &&
+          e.clientX <= modalRect.right &&
+          e.clientY >= modalRect.top &&
+          e.clientY <= modalRect.bottom;
+      }
+
+      if (!insideCard && !insideModal) {
+        setActiveDetail(null);
+      }
     };
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [activeDetail]);
+
+  const activeSection = activeDetail !== null ? certificationsData[activeDetail] : null;
 
   return (
     <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#0D2D43] pb-28 pt-28 sm:pb-32 sm:pt-32">
@@ -285,10 +300,12 @@ const CertificationsPage = () => {
           {certificationsData.map((section, idx) => (
             <motion.div
               key={section.title}
+              onMouseEnter={() => setActiveDetail(idx)}
+              onClick={() => setActiveDetail(idx)}
               initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: idx * 0.7 }}
-              className="group relative flex flex-col justify-between rounded-xl border border-white/10 bg-[#071628]/85 p-3.5 shadow-xl backdrop-blur-md transition-colors duration-300 hover:border-[#C89D54]/50 sm:p-4"
+              className={`group relative flex flex-col justify-between rounded-xl border border-white/10 bg-[#071628]/85 p-3.5 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-[#C89D54]/50 hover:scale-[1.02] hover:-translate-y-0.5 cursor-pointer sm:p-4 certification-card-${idx}`}
             >
               <div>
                 {/* Header with emblem badge logo */}
@@ -323,44 +340,30 @@ const CertificationsPage = () => {
                   })}
                 </ul>
               </div>
-
-              {/* Bottom bar */}
-              <div className="mt-1.5 flex items-center justify-between pt-1.5 border-t border-white/5">
-                <button
-                  ref={(el) => {
-                    buttonRefs.current.set(idx, el);
-                  }}
-                  type="button"
-                  onClick={() => setActiveDetail(idx)}
-                  onMouseEnter={() => setActiveDetail(idx)}
-                  className="flex items-center gap-1.5 text-[10px] font-medium text-[#C89D54] transition-colors hover:text-white"
-                >
-                  View details
-                  <ArrowRight size={11} />
-                </button>
-                <ChevronRight size={13} className="text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[#C89D54]" />
-              </div>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Detail modal for expanded items */}
+      {/* Detail modal for expanded items (rendered at root for viewport-relative fixed centering) */}
       <AnimatePresence>
         {activeSection && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/85 p-4 backdrop-blur-md"
-            onClick={() => setActiveDetail(null)}
+            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/20 p-4 backdrop-blur-md cursor-default"
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveDetail(null);
+            }}
           >
             <motion.div
               initial={{ opacity: 0, y: 16, scale: 0.97 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.97 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628] p-6 shadow-2xl sm:p-8"
+              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628] p-6 shadow-2xl sm:p-8 certification-modal-content"
             >
               <div className="flex items-center gap-4">
                 <img src={activeSection.badge} alt={activeSection.title} className="h-14 w-14 shrink-0 object-contain" />

@@ -158,7 +158,7 @@ export default function MasterplanPage() {
 
             return (
               <g key={`group-${marker.id || index}-${index}`}>
-                {isLabelsVisible && (
+                {isLabelsVisible && !selectedCirculation && (
                   <>
                     {/* Render each connecting line if polygon exists */}
                     {hasLines && lines.map((linePoints, lIndex) => {
@@ -193,7 +193,7 @@ export default function MasterplanPage() {
                   x={boxDotX}
                   y={boxDotY}
                   scale={scale}
-                  isVisible={isLabelsVisible}
+                  isVisible={isLabelsVisible && !selectedCirculation}
                   onMouseEnter={() => {
                     if (marker.image) {
                       setHoveredPillImage(marker.image);
@@ -207,20 +207,20 @@ export default function MasterplanPage() {
 
           {/* 2. New Separate Feature: Interactive Map Regions */}
           {activeInteractiveRegions.map((region) => {
-              const points = parsePoints(region.polygon);
-              if (!points) return null;
+            const points = parsePoints(region.polygon);
+            if (!points) return null;
 
-              return (
-                <polygon
-                  key={region.id}
-                  points={points.map(p => `${p.x},${p.y}`).join(" ")}
-                  fill="rgba(255, 255, 255, 0.01)"
-                  stroke="transparent"
-                  strokeWidth={0}
-                  className="pointer-events-none"
-                />
-              );
-            })}
+            return (
+              <polygon
+                key={region.id}
+                points={points.map(p => `${p.x},${p.y}`).join(" ")}
+                fill="rgba(255, 255, 255, 0.01)"
+                stroke="transparent"
+                strokeWidth={0}
+                className="pointer-events-none"
+              />
+            );
+          })}
         </svg>
 
         {/* Circulation video overlay */}
