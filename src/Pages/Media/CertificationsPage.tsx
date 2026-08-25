@@ -315,11 +315,10 @@ const CertificationsPage = () => {
               initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: idx * 0.7 }}
-              className={`group relative flex flex-col justify-between rounded-xl border bg-[#071628]/85 p-3.5 shadow-xl backdrop-blur-md transition-all duration-300 cursor-pointer sm:p-4 certification-card-${idx} ${
-                activeDetail === idx
-                  ? "border-[#C89D54]/50 scale-[1.02] -translate-y-0.5"
-                  : "border-white/10 scale-100 translate-y-0 hover:border-[#C89D54]/50 hover:scale-[1.02] hover:-translate-y-0.5"
-              }`}
+              className={`group relative flex flex-col justify-between rounded-xl border bg-[#071628]/85 p-3.5 shadow-xl backdrop-blur-md transition-colors duration-300 cursor-pointer sm:p-4 certification-card-${idx} ${activeDetail === idx
+                ? "border-[#C89D54]/50"
+                : "border-white/10 hover:border-[#C89D54]/50"
+                }`}
             >
               <div>
                 {/* Header with emblem badge logo */}
