@@ -267,9 +267,9 @@ const TechnicalSpecificationsPage = () => {
               initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: idx * 0.7 }}
-              className={`group relative flex flex-col justify-between rounded-xl border bg-[#071628]/85 p-3 shadow-xl backdrop-blur-md transition-colors duration-300 cursor-pointer technical-card-${idx} ${activeDetail === idx
-                ? "border-[#C89D54]/50"
-                : "border-white/10 hover:border-[#C89D54]/50"
+              className={`group relative flex flex-col justify-between rounded-xl border bg-[#071628]/30 p-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all duration-300 cursor-pointer technical-card-${idx} ${activeDetail === idx
+                ? "border-[#C89D54]/50 bg-[#071628]/50"
+                : "border-white/10 hover:border-[#C89D54]/50 hover:bg-[#071628]/50"
                 }`}
             >
               <div>
@@ -323,7 +323,7 @@ const TechnicalSpecificationsPage = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 16, scale: 0.97 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628] p-6 shadow-2xl sm:p-8 technical-modal-content"
+              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628]/70 p-6 shadow-2xl backdrop-blur-xl sm:p-8 technical-modal-content"
             >
               <div className="flex items-center gap-4">
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-[#C89D54]/40 bg-[#C89D54]/10 p-2">
