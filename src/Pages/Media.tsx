@@ -114,13 +114,13 @@ const Media = () => {
       </div>
 
       {/* 4 Bottom Cards Grid */}
-      <div className="relative z-10 mx-auto mt-8 grid w-full max-w-[1700px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="relative z-10 mx-auto mt-8 grid w-full max-w-[1850px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {CARDS.map((card, idx) => {
           const Icon = card.icon;
           const content = (
             <div className="flex h-full flex-col justify-between">
               <div>
-                <div className="relative h-[110px] w-full overflow-hidden">
+                <div className="relative h-[135px] w-full overflow-hidden">
                   <img
                     src={card.image}
                     alt={card.title}
@@ -131,7 +131,7 @@ const Media = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#081729]/30 via-transparent to-black/30" />
                 </div>
 
-                <span className="absolute left-4 top-[110px] flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#071424]/40 text-[#C89D54] backdrop-blur-md shadow-md">
+                <span className="absolute left-4 top-[135px] flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#071424]/40 text-[#C89D54] backdrop-blur-md shadow-md">
                   <Icon size={15} strokeWidth={1.5} />
                 </span>
 
