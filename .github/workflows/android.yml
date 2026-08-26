@@ -1,0 +1,151 @@
+name: Android APK
+
+# The APK bundles the whole walkthrough (~550 MB), so this is not run on every
+# push: trigger it by hand, or tag a release.
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: Build variant
+        type: choice
+        options: [release, debug]
+        default: release
+      refresh_assets:
+        description: Re-download the mirrored offline assets instead of using the cache
+        type: boolean
+        default: false
+  push:
+    tags: ['v*']
+
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Free up runner disk
+        # web/public plus the mirrored assets plus the packaged copy of both add
+        # up to several GB, and the default image is mostly full of toolchains
+        # this build never touches.
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android/sdk/ndk \
+                      /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY" || true
+          df -h /
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            web/package-lock.json
+            app/package-lock.json
+
+      - name: Set up JDK 21
+        # Capacitor 7 compiles against Java 21; anything older fails with
+        # "invalid source release: 21".
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+
+      - name: Install dependencies
+        run: |
+          npm ci --prefix web
+          npm ci --prefix app
+
+      - name: Restore mirrored offline assets
+        id: offline-cache
+        uses: actions/cache@v4
+        with:
+          path: app/offline
+          # every mirrored URL comes out of the web sources, so they decide
+          # whether the mirror is still current
+          key: offline-${{ hashFiles('web/src/**/*.ts', 'web/src/**/*.tsx', 'web/src/**/*.css', 'web/index.html', 'app/scripts/fetch-offline-assets.mjs', 'app/scripts/mirror-location-tour.mjs') }}
+          restore-keys: offline-
+
+      - name: Mirror remote assets for offline use
+        working-directory: app
+        run: |
+          if [ "${{ inputs.refresh_assets }}" = "true" ]; then
+            npm run offline:fetch -- --force
+            npm run offline:location -- --force
+          else
+            npm run offline:fetch
+            npm run offline:location
+          fi
+
+      - name: Decode signing keystore
+        id: signing
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "No ANDROID_KEYSTORE_BASE64 secret - falling back to a debug build."
+            echo "signed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          mkdir -p app/keystore
+          echo "$KEYSTORE_BASE64" | base64 -d > app/keystore/featherlite-release.jks
+          cat > app/keystore/keystore.properties <<EOF
+          storeFile=../keystore/featherlite-release.jks
+          storePassword=$KEYSTORE_PASSWORD
+          keyAlias=${KEY_ALIAS:-featherlite}
+          keyPassword=${KEY_PASSWORD:-$KEYSTORE_PASSWORD}
+          EOF
+          echo "signed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Pick the variant
+        id: variant
+        run: |
+          WANTED="${{ inputs.variant || 'release' }}"
+          # an unsigned release APK cannot be installed, so without a keystore
+          # the useful thing to hand back is a debug build
+          if [ "$WANTED" = "release" ] && [ "${{ steps.signing.outputs.signed }}" != "true" ]; then
+            WANTED=debug
+          fi
+          echo "name=$WANTED" >> "$GITHUB_OUTPUT"
+          echo "Building $WANTED"
+
+      - name: Build APK
+        working-directory: app
+        env:
+          GRADLE_OPTS: -Dorg.gradle.jvmargs=-Xmx5g
+        run: |
+          if [ "${{ steps.variant.outputs.name }}" = "debug" ]; then
+            npm run apk:debug
+          else
+            npm run apk
+          fi
+
+      - name: Report size
+        run: |
+          ls -lh app/dist/
+          df -h /
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FeatherliteSignature-${{ steps.variant.outputs.name }}-${{ github.sha }}
+          path: app/dist/*.apk
+          retention-days: 30
+          compression-level: 0 # the APK is already compressed
+
+      - name: Attach to the release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/dist/*.apk

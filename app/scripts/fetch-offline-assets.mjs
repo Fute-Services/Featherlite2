@@ -99,7 +99,17 @@ async function collectUrls() {
       }
     }
   }
-  return { urls: [...urls].sort(), bases }
+  // Two kinds of match are never assets: the base constants themselves
+  // (`const CF = "https://.../featherlite"`, only ever concatenated) and
+  // fragments of an unresolved template such as `pdfjs-dist@${pdfjs.version}`.
+  const baseValues = new Set(bases.values())
+  const assets = [...urls].filter((u) => {
+    if (baseValues.has(u)) return false
+    if (u.includes('${') || u.includes('%7B')) return false
+    return new URL(u).pathname.replace(/^\/+|\/+$/g, '').length > 0
+  })
+
+  return { urls: assets.sort(), bases }
 }
 
 /* ------------------------------------------------------------------ */

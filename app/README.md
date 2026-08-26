@@ -36,6 +36,41 @@ The APK is over the Play Store's 200 MB limit by design (offline was the
 requirement), so it is distributed by sideloading. The device needs roughly
 1.2 GB free to install.
 
+## Building on GitHub Actions
+
+`.github/workflows/android.yml` builds the same APK on CI. It is deliberately
+not run on every push - the artifact is ~550 MB - so trigger it one of two ways:
+
+- **Actions -> Android APK -> Run workflow** (pick `release` or `debug`)
+- **push a `v*` tag**, which also attaches the APK to the GitHub release
+
+The APK lands as a workflow artifact, kept for 30 days.
+
+### Signing on CI
+
+Without secrets the workflow falls back to a **debug** build, because an
+unsigned release APK cannot be installed. To get signed release builds, add
+these repository secrets (Settings -> Secrets and variables -> Actions):
+
+| Secret | Value |
+| --- | --- |
+| `ANDROID_KEYSTORE_BASE64` | `base64 -w0 app/keystore/featherlite-release.jks` |
+| `ANDROID_KEYSTORE_PASSWORD` | `storePassword` from `app/keystore/keystore.properties` |
+| `ANDROID_KEY_ALIAS` | `featherlite` (optional, this is the default) |
+| `ANDROID_KEY_PASSWORD` | same as the store password (optional) |
+
+On Windows PowerShell:
+
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("app/keystore/featherlite-release.jks")) | Set-Clipboard
+```
+
+Use the **same** keystore CI uses locally, or tablets will refuse the update.
+
+The mirrored assets are cached between runs, keyed on the web sources - a run
+that changes no remote URL skips the ~250 MB download. Tick **refresh_assets**
+to force a fresh mirror.
+
 ## How "offline" is achieved
 
 The website pulls images from Cloudflare Images and Cloudinary, fonts from
