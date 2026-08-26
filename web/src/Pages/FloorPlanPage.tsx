@@ -37,6 +37,9 @@ export default function FloorPlanPage() {
 
 
     const itemRefs = useRef<Map<string, HTMLButtonElement | null>>(new Map())
+    // mirrors selectedFloorId so repeated hover events over the same floor are
+    // dropped without waiting for a re-render
+    const selectedRef = useRef<string>('')
 
     // Function to smoothly scroll the side menu item into view
     const scrollToFloor = (id: string) => {
@@ -49,11 +52,19 @@ export default function FloorPlanPage() {
         }
     }
 
-    // Master handler for selecting a floor and scrolling to it
-    const handleFloorSelect = (id: string) => {
-        //    navigate(`/unitplan/${id}`);
+    /**
+     * Master handler for selecting a floor.
+     *
+     * `scroll` is false when the hover came from the floor list itself:
+     * scrolling the list under the pointer moves a different row beneath the
+     * cursor, which fires another hover, which scrolls again - the list used to
+     * judder on its own until the pointer left it.
+     */
+    const handleFloorSelect = (id: string, scroll = true) => {
+        if (selectedRef.current === id) return
+        selectedRef.current = id
         setSelectedFloorId(id)
-        scrollToFloor(id)
+        if (scroll) scrollToFloor(id)
     }
 
     const handleOpenUnitPlan = (id1: string) => {
