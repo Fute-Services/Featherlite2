@@ -82,7 +82,7 @@ const Media = () => {
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
           type="button"
           onClick={() => setIsWalkthroughOpen(true)}
-          className="group relative block h-[210px] w-full flex-1 cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-[#071526] p-0 text-left shadow-2xl transition-all duration-300 hover:border-[#C89D54]/50 sm:h-[230px] lg:h-[250px] lg:max-w-none"
+          className="group relative block h-[210px] w-full flex-1 cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-[#071526]/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl p-0 text-left transition-all duration-300 hover:border-[#C89D54]/50 sm:h-[230px] lg:h-[250px] lg:max-w-none"
         >
           <img
             src={walkthroughImg}
@@ -128,10 +128,10 @@ const Media = () => {
                     decoding="async"
                     className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${card.imagePosition ?? ""}`}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#081729] via-transparent to-black/30" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#081729]/30 via-transparent to-black/30" />
                 </div>
 
-                <span className="absolute left-4 top-[110px] flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#071424] text-[#C89D54] shadow-md">
+                <span className="absolute left-4 top-[110px] flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#071424]/40 text-[#C89D54] backdrop-blur-md shadow-md">
                   <Icon size={15} strokeWidth={1.5} />
                 </span>
 
@@ -152,7 +152,7 @@ const Media = () => {
           );
 
           const cardStyles =
-            "group relative flex flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-[#081729] shadow-lg transition-all duration-300 hover:border-[#C89D54]/50 hover:-translate-y-1";
+            "group relative flex flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-[#081729]/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all duration-300 hover:border-[#C89D54]/50 hover:bg-[#081729]/50 hover:-translate-y-1";
 
           return (
             <motion.div
