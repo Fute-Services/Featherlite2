@@ -7,7 +7,7 @@ app adds is offline packaging and native behaviour.
 
 - **Package:** `com.futeservices.featherlitesignature`
 - **Target:** Android tablets, landscape, full-screen (no status or nav bar)
-- **Size:** ~590 MB - the whole walkthrough is inside the APK
+- **Size:** ~550 MB - the whole walkthrough is inside the APK
 - **Network:** not required, apart from the two embeds listed below
 
 ## Build
@@ -15,9 +15,9 @@ app adds is offline packaging and native behaviour.
 ```bash
 npm install
 npm run offline:fetch                     # mirror CDN assets, fonts, pdf.js worker
-node scripts/mirror-location-tour.mjs     # mirror the Pano2VR tour behind /location
-npm run apk                               # signed release -> dist/
-npm run apk:debug                         # debug build, for a quick install
+npm run offline:location                  # mirror the Pano2VR tour behind /location
+npm run apk:debug                         # -> dist/, no passwords needed
+npm run apk                               # release, needs a keystore (see Signing)
 ```
 
 Requirements: Node 20+, Android SDK (platform 35, build-tools 35), and **JDK 21**
@@ -29,7 +29,7 @@ nothing to configure.
 Install on a device:
 
 ```bash
-adb install -r dist/FeatherliteSignature-v1.0.0-release.apk
+adb install -r dist/FeatherliteSignature-v1.0.0-debug.apk
 ```
 
 The APK is over the Play Store's 200 MB limit by design (offline was the
@@ -41,35 +41,53 @@ requirement), so it is distributed by sideloading. The device needs roughly
 `.github/workflows/android.yml` builds the same APK on CI. It is deliberately
 not run on every push - the artifact is ~550 MB - so trigger it one of two ways:
 
-- **Actions -> Android APK -> Run workflow** (pick `release` or `debug`)
+- **Actions -> Android APK -> Run workflow** (defaults to `debug`, which needs no secrets)
 - **push a `v*` tag**, which also attaches the APK to the GitHub release
 
 The APK lands as a workflow artifact, kept for 30 days.
 
-### Signing on CI
+The mirrored assets are cached between runs, keyed on the web sources - a run
+that changes no remote URL skips the ~250 MB download. Tick **refresh_assets**
+to force a fresh mirror.
 
-Without secrets the workflow falls back to a **debug** build, because an
-unsigned release APK cannot be installed. To get signed release builds, add
-these repository secrets (Settings -> Secrets and variables -> Actions):
+## Signing - nothing to configure
+
+The default `debug` build needs **no passwords and no secrets**. It is signed
+with `keystore/debug.keystore`, which is committed on purpose: it holds the
+standard Android debug credentials (`android` / `androiddebugkey`), which are
+public knowledge, so it is not a secret. The point is that every build - your
+laptop, a colleague's, any CI run - signs with the *same* key. Android refuses
+to install a build over one signed with a different key, and a locally
+generated debug key differs on every machine.
+
+A debug-signed APK installs and runs exactly like a release one. What it cannot
+do is go on the Play Store, and it is marked debuggable.
+
+### If you ever want a release build
+
+This repository is **public**, so a release key must never be committed -
+anyone holding it could ship an "update" to the installed app. Keep
+`keystore/featherlite-release.jks` and `keystore/keystore.properties` off the
+repo (both are gitignored) and back them up somewhere safe. `npm run apk`
+picks them up locally.
+
+For a signed release on CI, add these repository secrets
+(Settings -> Secrets and variables -> Actions) and choose `release` when you
+run the workflow:
 
 | Secret | Value |
 | --- | --- |
-| `ANDROID_KEYSTORE_BASE64` | `base64 -w0 app/keystore/featherlite-release.jks` |
-| `ANDROID_KEYSTORE_PASSWORD` | `storePassword` from `app/keystore/keystore.properties` |
+| `ANDROID_KEYSTORE_BASE64` | the keystore, base64-encoded |
+| `ANDROID_KEYSTORE_PASSWORD` | `storePassword` from `keystore.properties` |
 | `ANDROID_KEY_ALIAS` | `featherlite` (optional, this is the default) |
 | `ANDROID_KEY_PASSWORD` | same as the store password (optional) |
-
-On Windows PowerShell:
 
 ```powershell
 [Convert]::ToBase64String([IO.File]::ReadAllBytes("app/keystore/featherlite-release.jks")) | Set-Clipboard
 ```
 
-Use the **same** keystore CI uses locally, or tablets will refuse the update.
-
-The mirrored assets are cached between runs, keyed on the web sources - a run
-that changes no remote URL skips the ~250 MB download. Tick **refresh_assets**
-to force a fresh mirror.
+Switching an installed app between the debug key and a release key means
+uninstalling it on the tablet first.
 
 ## How "offline" is achieved
 
@@ -117,14 +135,6 @@ Pixel Tablet emulator (2560x1600) with Wi-Fi and mobile data off.
 screen awake during a walkthrough, and turns off asset compression for media
 (`noCompress` in `app/build.gradle`) so 570 MB of already-compressed images do
 not get re-compressed into the APK.
-
-## Signing
-
-`npm run apk` signs with `keystore/featherlite-release.jks`, configured in
-`keystore/keystore.properties`. **Both files are gitignored and exist only on
-the machine that built the app - back them up.** Android refuses to update an
-installed app that is signed with a different key, so losing the keystore means
-every tablet has to uninstall and reinstall.
 
 ## Icons
 

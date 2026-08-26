@@ -6,10 +6,12 @@ on:
   workflow_dispatch:
     inputs:
       variant:
+        # debug needs no secrets and is signed with the committed debug key, so
+        # every build installs over the previous one
         description: Build variant
         type: choice
-        options: [release, debug]
-        default: release
+        options: [debug, release]
+        default: debug
       refresh_assets:
         description: Re-download the mirrored offline assets instead of using the cache
         type: boolean
@@ -95,7 +97,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           if [ -z "$KEYSTORE_BASE64" ]; then
-            echo "No ANDROID_KEYSTORE_BASE64 secret - falling back to a debug build."
+            echo "No ANDROID_KEYSTORE_BASE64 secret - debug signing will be used."
             echo "signed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -112,7 +114,7 @@ jobs:
       - name: Pick the variant
         id: variant
         run: |
-          WANTED="${{ inputs.variant || 'release' }}"
+          WANTED="${{ inputs.variant || 'debug' }}"
           # an unsigned release APK cannot be installed, so without a keystore
           # the useful thing to hand back is a debug build
           if [ "$WANTED" = "release" ] && [ "${{ steps.signing.outputs.signed }}" != "true" ]; then
