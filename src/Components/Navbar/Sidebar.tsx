@@ -205,10 +205,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none pointer-events-auto"
                         >
                             <Image
-                                className={`w-7 h-7 text-gray-300 transition-colors duration-200 ${isOpen && activeTab === "gallery" ? "text-[#e6c57e]" : "group-hover:text-[#e6c57e]"}`}
+                                className={`w-7 h-7 text-gray-300 transition-colors duration-200 ${isOpen && activeTab === "gallery" ? "text-[#E6D7BA]" : "group-hover:text-[#E6D7BA]"}`}
                             />
                             {isOpen && activeTab === "gallery" && (
-                                <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#e6c57e]" />
+                                <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#E6D7BA]" />
                             )}
                         </button>
                     ) : (
@@ -241,7 +241,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                             }`}
                                     />
                                     {isOpen && activeTab === "layout" && (
-                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#e6c57e]" />
+                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#E6D7BA]" />
                                     )}
                                 </Link>
                             )}
@@ -274,7 +274,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                             }`}
                                     />
                                     {isOpen && activeTab === "section" && (
-                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#e6c57e]" />
+                                        <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#E6D7BA]" />
                                     )}
                                 </Link>
                             )}

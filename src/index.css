@@ -46,12 +46,12 @@
 }
 
 @utility filter-gold {
-  filter: brightness(0) saturate(100%) invert(82%) sepia(21%) saturate(1212%) hue-rotate(344deg) brightness(96%) contrast(93%);
+  filter: brightness(0) saturate(100%) invert(80%) sepia(47%) saturate(112%) hue-rotate(1deg) brightness(95%) contrast(105%);
 }
 
 @utility filter-gold-hover {
   &:hover {
-    filter: brightness(0) saturate(100%) invert(82%) sepia(21%) saturate(1212%) hue-rotate(344deg) brightness(96%) contrast(93%);
+    filter: brightness(0) saturate(100%) invert(80%) sepia(47%) saturate(112%) hue-rotate(1deg) brightness(95%) contrast(105%);
   }
 }
 
