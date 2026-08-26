@@ -28,13 +28,17 @@ const CIRCULATION_VIDEOS: Record<string, string> = {
  *
  * Capping the height alone made the wide shots (maingate and the foyers are
  * 2.35:1) render far wider than the 1.9:1 ones like the restaurant, so they
- * read as oversized next to it. The width cap is what actually evens them out.
+ * read as oversized next to it. The width cap is what evens them out - and on a
+ * tablet it is the cap that binds, so it is set to just about all the room left
+ * beside the open sidebar (66vw against ~68-77vw of free width, the couple of
+ * points of slack being the frame border) rather than anything smaller.
+ *
  * Both are *max* constraints, so a photo is only ever scaled down - none of
  * these is upscaled past its natural size, which is what would make it look
  * soft.
  */
 const PREVIEW_IMAGE_CLASS =
-  "max-h-[58vh] w-auto max-w-[min(60vw,1000px)] object-contain rounded-2xl shadow-2xl";
+  "max-h-[80vh] w-auto max-w-[min(66vw,1250px)] object-contain rounded-2xl shadow-2xl";
 
 interface MasterPlanItem {
   id: string;
@@ -112,11 +116,11 @@ export default function MasterplanPage() {
    *  screen. */
   const previewInset = {
     // the glass panel is a fixed w-72 (288px); the collapsed rail is ~6% wide
-    paddingLeft: isSidebarOpen ? "clamp(320px, 24vw, 356px)" : "clamp(80px, 8vw, 118px)",
+    paddingLeft: isSidebarOpen ? "clamp(304px, 22vw, 336px)" : "clamp(80px, 8vw, 112px)",
     paddingRight: "24px",
-    paddingTop: "24px",
+    paddingTop: "16px",
     // clears the floating bottom nav, which sits above these overlays
-    paddingBottom: "104px",
+    paddingBottom: "88px",
     transition: "padding-left 300ms ease-in-out",
   } as const;
 
