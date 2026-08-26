@@ -409,14 +409,21 @@ export default function Vr() {
     const initViewer = () => {
       if (cancelled || viewerRef.current) return;
       try {
-        viewerRef.current = window.pannellum.viewer("pan-container", {
+        // Held locally as well as in the ref: a panorama that finishes decoding
+        // after the page is left still fires "load", and by then the ref has
+        // been cleared - reading it there threw an uncaught TypeError out of
+        // Pannellum's event dispatch every time the tour was navigated away
+        // from.
+        const viewer = window.pannellum.viewer("pan-container", {
           ...tourConfig,
           showControls: false,
           mouseZoom: true,
         });
+        viewerRef.current = viewer;
 
-        viewerRef.current.on("load", () => {
-          setCurrentScene(viewerRef.current.getScene());
+        viewer.on("load", () => {
+          if (cancelled) return;
+          setCurrentScene(viewer.getScene());
         });
       } catch (err) {
         console.error("Error initializing Pannellum:", err);
@@ -437,7 +444,12 @@ export default function Vr() {
       cancelled = true;
       if (pollTimer) clearTimeout(pollTimer);
       if (viewerRef.current) {
-        viewerRef.current.destroy();
+        try {
+          viewerRef.current.destroy();
+        } catch {
+          // tearing down mid-load can trip over Pannellum's own internals;
+          // the container is going away regardless
+        }
         viewerRef.current = null;
       }
     };
