@@ -3,6 +3,7 @@ import {
     ChevronDown,
     ChevronUp,
     Maximize2,
+    Minimize2,
     PieChart,
     Trees,
     Image,
@@ -68,11 +69,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
     );
 
     // Dropdown states
-    const [, setIsLayoutOpen] = useState<boolean>(true);
+    const [isLayoutOpen, setIsLayoutOpen] = useState<boolean>(true);
     const [isCirculationOpen, setIsCirculationOpen] = useState<boolean>(false);
 
     // Selection state values
-    const [selectedLayout, setSelectedLayout] = useState<string>("Layout");
+    const [selectedLayout, setSelectedLayout] = useState<string>("Ground layout");
     const [selectedCirculation, setSelectedCirculation] = useState<string>("Circulation");
 
     const toggleSidebar = () => {
@@ -105,9 +106,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     const [hasSelectedCategory, setHasSelectedCategory] = useState<boolean>(false);
 
-    const displayCategory = hasSelectedCategory && galleryMode
-        ? (galleryMode === "interior" ? "Interior" : "Exterior")
-        : "Gallery";
+    const displayCategory = galleryMode === "interior" ? "Interior" : "Exterior";
 
     const selectedImageTitle = hasSelectedCategory && galleryImages && activeImageIndex !== undefined && galleryImages[activeImageIndex]
         ? galleryImages[activeImageIndex].title
@@ -187,11 +186,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <div className="flex absolute left-0 justify-center">
                     <button
                         onClick={toggleSidebar}
-                        aria-label="Toggle Sidebar"
+                        aria-label={isOpen ? "Close Sidebar" : "Open Sidebar"}
                         className="p-0 rounded-lg hover:bg-white/10 transition-colors
                          cursor-pointer outline-none"
                     >
-                        <img src={icon1} alt="Toggle" className="w-8 h-8 object-contain" />
+                        {isOpen ? (
+                            <Minimize2 className="w-8 h-8 p-2 text-white object-contain" />
+                        ) : (
+                            <img src={icon1} alt="Open Sidebar" className="w-8 h-8 object-contain" />
+                        )}
                     </button>
                 </div>
 
@@ -228,9 +231,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                 <Link
                                     to="/masterplan"
                                     onClick={() => {
-                                        setActiveTab("layout");
-                                        setIsOpen(true);        // Opens the main side glass panel
-                                        setIsLayoutOpen(true);  // Shows Ground/Terrace options by default
+                                        if (activeTab === "layout") {
+                                            setIsOpen((prev) => !prev); // Already here: toggle the panel open/closed
+                                        } else {
+                                            setActiveTab("layout");
+                                            setIsOpen(true);        // Opens the main side glass panel
+                                            setIsLayoutOpen(true);  // Shows Ground/Terrace options by default
+                                        }
                                     }}
                                     className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none"
                                 >
@@ -291,8 +298,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     className={`absolute left-0 top-0 h-full pl-[5.5%] flex flex-col
                          justify-between py-6 px-6 text-white
         /* Glassmorphism Core */
-        bg-gradient-to-b from-black/55 via-black/70 to-black/85 
-        backdrop-blur-xl backdrop-saturate-150
+        ${isGalleryPage ? "bg-black/10 backdrop-saturate-150" : "bg-gradient-to-b from-black/55 via-black/70 to-black/85 backdrop-blur-xl backdrop-saturate-150"}
     border-r border-neutral-500/35
     shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
     /* Subtle Inner Highlight for Glass Reflection */
@@ -331,7 +337,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                     }}
                                     className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${isGalleryDropdownOpen
                                         ? "bg-black/35 border-white/50 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.37)]"
-                                        : "bg-black/20 hover:bg-black/30 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                        : "bg-black/30 hover:bg-black/40 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
                                         }`}
                                 >
                                     <span className="truncate">{displayCategory}</span>
@@ -386,7 +392,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                         }}
                                         className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${isImagesDropdownOpen
                                             ? "bg-white/10 border-white/50 ring-1 ring-white/10 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_12px_rgba(0,0,0,0.3)]"
-                                            : "bg-black/20 hover:bg-black/30 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                            : "bg-black/30 hover:bg-black/40 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
                                             }`}
                                     >
                                         <span className="truncate">{selectedImageTitle.replace(/['"]+$/, "")}</span>
@@ -425,26 +431,45 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         </>
                     ) : (
                         <>
-                            {/* 1. Layout Buttons directly */}
-                            <div className="flex flex-col gap-2 w-[60%] pointer-events-auto">
+                            {/* 1. Layout Dropdown */}
+                            <div className="relative w-full pointer-events-auto">
                                 <button
-                                    onClick={() => handleLayoutClick("Ground layout")}
-                                    className={`w-full text-left px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md cursor-pointer ${selectedLayout === "Ground layout"
-                                        ? "bg-[rgba(231,33,0,0.30)] border-white/50 text-white shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                        : "bg-black/20 hover:bg-black/30 border-white/35 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                    onClick={() => setIsLayoutOpen((prev) => !prev)}
+                                    className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${isLayoutOpen
+                                        ? "bg-black/35 border-white/50 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.37)]"
+                                        : "bg-black/30 hover:bg-black/40 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
                                         }`}
                                 >
-                                    Ground layout
+                                    <span className="truncate">{selectedLayout}</span>
+                                    {isLayoutOpen ? (
+                                        <ChevronUp className="w-3.5 h-3.5 text-white/70" />
+                                    ) : (
+                                        <ChevronDown className="w-3.5 h-3.5 text-white/70" />
+                                    )}
                                 </button>
-                                <button
-                                    onClick={() => handleLayoutClick("Terrace layout")}
-                                    className={`w-full text-left px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md cursor-pointer ${selectedLayout === "Terrace layout"
-                                        ? "bg-[rgba(231,33,0,0.30)] border-white/50 text-white shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                        : "bg-black/20 hover:bg-black/30 border-white/35 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
-                                        }`}
-                                >
-                                    Terrace layout
-                                </button>
+
+                                {isLayoutOpen && (
+                                    <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
+                                        <button
+                                            onClick={() => handleLayoutClick("Ground layout")}
+                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Ground layout"
+                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                                }`}
+                                        >
+                                            Ground layout
+                                        </button>
+                                        <button
+                                            onClick={() => handleLayoutClick("Terrace layout")}
+                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Terrace layout"
+                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
+                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                                }`}
+                                        >
+                                            Terrace layout
+                                        </button>
+                                    </div>
+                                )}
                             </div>
 
                             {/* 2. Circulation Dropdown (Visible only for Ground layout) */}

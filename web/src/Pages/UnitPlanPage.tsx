@@ -90,7 +90,7 @@ export default function UnitPlanPage() {
     };
 
     return (
-        <div className="relative w-screen h-screen overflow-hidden ibm-plex-sans bg-[linear-gradient(135deg,#0B344D_0%,#062033_45%,#020B14_100%)] text-white select-none flex flex-col justify-between p-4 md:p-6">
+        <div className="relative w-screen h-screen overflow-hidden ibm-plex-sans bg-[linear-gradient(135deg,#0B344D_0%,#062033_45%,#020B14_100%)] text-white select-none flex flex-col justify-between p-4 pb-24 md:p-6 md:pb-28">
 
             {/* Top Header */}
             <header
