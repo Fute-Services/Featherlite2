@@ -1,0 +1,26 @@
+{
+  "name": "featherlite-signature-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Featherlite Signature - offline Android app (Capacitor shell around the web build)",
+  "scripts": {
+    "offline:fetch": "node scripts/fetch-offline-assets.mjs",
+    "build:web": "vite build --config vite.app.config.ts",
+    "sync": "npm run build:web && cap sync android",
+    "apk:debug": "npm run sync && node scripts/build-apk.mjs debug",
+    "apk": "npm run sync && node scripts/build-apk.mjs release",
+    "open": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.4.4",
+    "@capacitor/app": "^7.1.0",
+    "@capacitor/core": "^7.4.4",
+    "@capacitor/status-bar": "^7.0.4"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^7.4.4",
+    "sharp": "^0.35.3"
+  }
+}
