@@ -21,6 +21,9 @@ concurrency:
   group: android-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: write # lets softprops/action-gh-release create the release for a v* tag
+
 jobs:
   build:
     runs-on: ubuntu-latest
