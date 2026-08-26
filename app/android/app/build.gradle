@@ -31,6 +31,17 @@ android {
         noCompress += ['jpg', 'jpeg', 'png', 'webp', 'avif', 'gif', 'mp4', 'pdf', 'woff', 'woff2', 'svg']
     }
     signingConfigs {
+        debug {
+            // A keystore checked in on purpose. It carries the standard Android
+            // debug credentials, which are public knowledge, so it is not a
+            // secret - it exists so every build (any laptop, any CI run) signs
+            // with the SAME key. Without it each machine invents its own debug
+            // key and Android refuses to install one build over another.
+            storeFile rootProject.file("../keystore/debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
         release {
             if (keystoreProperties.containsKey('storeFile')) {
                 storeFile rootProject.file(keystoreProperties['storeFile'])

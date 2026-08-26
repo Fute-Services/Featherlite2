@@ -6,10 +6,12 @@ on:
   workflow_dispatch:
     inputs:
       variant:
+        # debug needs no secrets and is signed with the committed debug key, so
+        # every build installs over the previous one
         description: Build variant
         type: choice
-        options: [release, debug]
-        default: release
+        options: [debug, release]
+        default: debug
       refresh_assets:
         description: Re-download the mirrored offline assets instead of using the cache
         type: boolean
@@ -39,11 +41,11 @@ jobs:
                       /opt/ghc /usr/local/share/boost "$AGENT_TOOLSDIRECTORY" || true
           df -h /
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 1
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -54,12 +56,12 @@ jobs:
       - name: Set up JDK 21
         # Capacitor 7 compiles against Java 21; anything older fails with
         # "invalid source release: 21".
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: 21
 
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
         with:
           packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
 
@@ -70,7 +72,7 @@ jobs:
 
       - name: Restore mirrored offline assets
         id: offline-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: app/offline
           # every mirrored URL comes out of the web sources, so they decide
@@ -98,7 +100,7 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           if [ -z "$KEYSTORE_BASE64" ]; then
-            echo "No ANDROID_KEYSTORE_BASE64 secret - falling back to a debug build."
+            echo "No ANDROID_KEYSTORE_BASE64 secret - debug signing will be used."
             echo "signed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -115,7 +117,7 @@ jobs:
       - name: Pick the variant
         id: variant
         run: |
-          WANTED="${{ inputs.variant || 'release' }}"
+          WANTED="${{ inputs.variant || 'debug' }}"
           # an unsigned release APK cannot be installed, so without a keystore
           # the useful thing to hand back is a debug build
           if [ "$WANTED" = "release" ] && [ "${{ steps.signing.outputs.signed }}" != "true" ]; then
@@ -140,7 +142,7 @@ jobs:
           ls -lh app/dist/
           df -h /
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: FeatherliteSignature-${{ steps.variant.outputs.name }}-${{ github.sha }}
           path: app/dist/*.apk

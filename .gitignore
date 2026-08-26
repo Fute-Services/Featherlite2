@@ -36,9 +36,11 @@ app/android/app/src/main/assets/capacitor.config.json
 app/android/app/src/main/assets/capacitor.plugins.json
 app/resources/
 
-# Signing material - losing these means never being able to update an
-# installed app, and leaking them lets anyone publish as you. Back them up
-# somewhere safe outside the repo.
-app/keystore/
+# Signing material. This repo is public, so a release key must never be
+# committed - leaking one lets anyone ship an "update" to the installed app.
+# The debug keystore is the exception: it holds the standard, publicly known
+# Android debug credentials and is committed on purpose so every build signs
+# with the same key.
+app/keystore/*
+!app/keystore/debug.keystore
 *.jks
-*.keystore
