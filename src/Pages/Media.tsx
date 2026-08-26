@@ -144,10 +144,6 @@ const Media = () => {
                   </p>
                 </div>
               </div>
-
-              <div className="px-4 pb-3 pt-1">
-                <ArrowRight size={15} className="text-[#C89D54] transition-transform duration-300 group-hover:translate-x-1.5" />
-              </div>
             </div>
           );
 
