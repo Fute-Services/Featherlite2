@@ -16,7 +16,7 @@ import { FLOORS } from '../Data/FloorPlanData'
 const TOWER_X_RIGHT = 2708
 
 export default function FloorPlanPage() {
-    const [selectedFloorId, setSelectedFloorId] = useState<string>('')
+    const [selectedFloorId, setSelectedFloorId] = useState<string>('ground')
     const [aspectRatio, setAspectRatio] = useState<string>('xMidYMid meet')
     const navigate = useNavigate();
 

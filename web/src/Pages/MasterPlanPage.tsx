@@ -84,7 +84,7 @@ const ensureHighResMultipleLines = (polygonVal?: string | string[]) => {
 
 export default function MasterplanPage() {
   const [isTerrace, setIsTerrace] = useState<boolean>(false);
-  const [isLabelsVisible, setIsLabelsVisible] = useState<boolean>(false);
+  const [isLabelsVisible, setIsLabelsVisible] = useState<boolean>(true);
   const [selectedCirculation, setSelectedCirculation] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [hoveredPillImage, setHoveredPillImage] = useState<string | null>(null);

@@ -160,6 +160,23 @@ export default function GalleryPage() {
         </div>
       )}
 
+      {/* Active image name, sitting just above the fixed bottom navbar */}
+      {!showEmptyState && filteredImages[activeIndex] && (
+        <div className="absolute inset-x-0 bottom-24 sm:bottom-28 z-30 flex justify-center pointer-events-none px-4">
+          <span
+            key={activeIndex}
+            className="relative overflow-hidden rounded-xl border border-white/[0.1] bg-black/10 px-6 py-2.5 text-xs sm:text-sm font-medium uppercase tracking-[0.2em] text-[#E6D7BA] shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.15),inset_-1px_-1px_1px_rgba(0,0,0,0.2),0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-saturate-150"
+          >
+            {/* Liquid glass sheen along the top edge */}
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-x-3 top-0 h-px rounded-full bg-gradient-to-r from-transparent via-white/70 to-transparent"
+            />
+            {filteredImages[activeIndex].title}
+          </span>
+        </div>
+      )}
+
       {/* (Bottom navigation controls removed per user request) */}
 
       <style

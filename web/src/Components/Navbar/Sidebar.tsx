@@ -45,7 +45,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onImageSelect,
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [isGalleryDropdownOpen, setIsGalleryDropdownOpen] = useState<boolean>(true);
+    const [isGalleryDropdownOpen, setIsGalleryDropdownOpen] = useState<boolean>(false);
     const [isImagesDropdownOpen, setIsImagesDropdownOpen] = useState<boolean>(false);
 
 
@@ -69,7 +69,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     );
 
     // Dropdown states
-    const [isLayoutOpen, setIsLayoutOpen] = useState<boolean>(true);
+    const [isLayoutOpen, setIsLayoutOpen] = useState<boolean>(false);
     const [isCirculationOpen, setIsCirculationOpen] = useState<boolean>(false);
 
     // Selection state values
@@ -350,34 +350,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                                 {isGalleryDropdownOpen && (
                                     <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
-                                        <button
-                                            onClick={() => {
-                                                setHasSelectedCategory(true);
-                                                if (onGalleryModeChange) onGalleryModeChange("interior");
-                                                setIsGalleryDropdownOpen(false);
-                                                setIsImagesDropdownOpen(true);
-                                            }}
-                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${hasSelectedCategory && galleryMode === "interior"
-                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
-                                                }`}
-                                        >
-                                            Interior
-                                        </button>
-                                        <button
-                                            onClick={() => {
-                                                setHasSelectedCategory(true);
-                                                if (onGalleryModeChange) onGalleryModeChange("exterior");
-                                                setIsGalleryDropdownOpen(false);
-                                                setIsImagesDropdownOpen(true);
-                                            }}
-                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${hasSelectedCategory && galleryMode === "exterior"
-                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
-                                                }`}
-                                        >
-                                            Exterior
-                                        </button>
+                                        {galleryMode !== "interior" && (
+                                            <button
+                                                onClick={() => {
+                                                    setHasSelectedCategory(true);
+                                                    if (onGalleryModeChange) onGalleryModeChange("interior");
+                                                    setIsGalleryDropdownOpen(false);
+                                                    setIsImagesDropdownOpen(true);
+                                                }}
+                                                className="w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                            >
+                                                Interior
+                                            </button>
+                                        )}
+                                        {galleryMode !== "exterior" && (
+                                            <button
+                                                onClick={() => {
+                                                    setHasSelectedCategory(true);
+                                                    if (onGalleryModeChange) onGalleryModeChange("exterior");
+                                                    setIsGalleryDropdownOpen(false);
+                                                    setIsImagesDropdownOpen(true);
+                                                }}
+                                                className="w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                            >
+                                                Exterior
+                                            </button>
+                                        )}
                                     </div>
                                 )}
                             </div>
@@ -413,7 +411,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                                         key={index}
                                                         onClick={() => {
                                                             if (onImageSelect) onImageSelect(index);
-                                                            setIsImagesDropdownOpen(false);
                                                         }}
                                                         className={`w-full text-left px-3 py-[3.5px] text-[9px] transition-colors cursor-pointer border-b border-white/10 last:border-0 ${isSelected
                                                             ? "text-white font-bold bg-white/10"
@@ -450,24 +447,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                                 {isLayoutOpen && (
                                     <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
-                                        <button
-                                            onClick={() => handleLayoutClick("Ground layout")}
-                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Ground layout"
-                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
-                                                }`}
-                                        >
-                                            Ground layout
-                                        </button>
-                                        <button
-                                            onClick={() => handleLayoutClick("Terrace layout")}
-                                            className={`w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent ${selectedLayout === "Terrace layout"
-                                                ? "bg-[rgba(231,33,0,0.30)] text-white border-white/45 shadow-[0_4px_12px_rgba(231,33,0,0.3)]"
-                                                : "text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
-                                                }`}
-                                        >
-                                            Terrace layout
-                                        </button>
+                                        {selectedLayout !== "Ground layout" && (
+                                            <button
+                                                onClick={() => handleLayoutClick("Ground layout")}
+                                                className="w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                            >
+                                                Ground layout
+                                            </button>
+                                        )}
+                                        {selectedLayout !== "Terrace layout" && (
+                                            <button
+                                                onClick={() => handleLayoutClick("Terrace layout")}
+                                                className="w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                            >
+                                                Terrace layout
+                                            </button>
+                                        )}
                                     </div>
                                 )}
                             </div>
