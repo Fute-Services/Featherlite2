@@ -7,7 +7,7 @@ interface TableProps {
   FLOORS: FloorData[]
   selectedFloorId: string
    handleOpenUnitPlan: (id: string) => void;
-  handleFloorSelect: (id: string) => void
+  handleFloorSelect: (id: string, scroll?: boolean) => void
   itemRefs: RefObject<Map<string, HTMLButtonElement | null>>
 }
 
@@ -53,7 +53,7 @@ export default function Table({
                       }
                     }}
                     onClick={() => handleOpenUnitPlan(`${floor.idnew}`)}
-                    onMouseEnter={() => handleFloorSelect(floor.id)}
+                    onMouseEnter={() => handleFloorSelect(floor.id, false)}
                     className={`relative z-10 w-full grid items-center py-2 rounded-full text-xs cursor-pointer outline-none transition-colors duration-150 ${
                       isTerrace ? 'grid-cols-1 text-center px-2' : 'grid-cols-2 px-3'
                     }`}
@@ -62,17 +62,17 @@ export default function Table({
                     {isSelected && (
                       <motion.div
                         layoutId="activeTableHighlight"
-                        className="absolute inset-0 bg-[rgba(231,33,0,0.28)] border 
-                        border-red-400/40 
+                        className="absolute inset-0 bg-[rgba(231,33,0,0.34)] border
+                        border-red-400/40
                         rounded-full shadow-lg"
-                        style={{
-                          backdropFilter: 'blur(8px)',
-                          WebkitBackdropFilter: 'blur(8px)',
-                        }}
+                        // no backdrop-filter here on purpose: re-blurring the
+                        // backdrop on every frame of the slide is what made the
+                        // highlight stutter as you moved down the list
+                        style={{ willChange: 'transform' }}
                         transition={{
                           type: 'spring',
-                          stiffness: 420,
-                          damping: 34,
+                          stiffness: 520,
+                          damping: 38,
                         }}
                       />
                     )}

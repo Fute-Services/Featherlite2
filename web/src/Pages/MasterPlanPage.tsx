@@ -1,5 +1,6 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import AutoVideo, { prefetchVideo } from "../Components/Media/AutoVideo";
 const MasterplanGround = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/masterplan-2-jpg/web2560";
 const MasterplanTerrace = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/terrace-plan-2-jpg/web2560";
 import Sidebar from "../Components/Navbar/Sidebar";
@@ -21,6 +22,23 @@ const CIRCULATION_VIDEOS: Record<string, string> = {
   "Fire Exit": "/circulation-videos/fire-exit.mp4",
   "Walking Lane & Cycling Lane": "/circulation-videos/walking-cycling-lane.mp4",
 };
+
+/**
+ * Preview photo sizing, shared by the hover preview and the lightbox.
+ *
+ * Capping the height alone made the wide shots (maingate and the foyers are
+ * 2.35:1) render far wider than the 1.9:1 ones like the restaurant, so they
+ * read as oversized next to it. The width cap is what evens them out - and on a
+ * tablet it is the cap that binds, so it is set to just about all the room left
+ * beside the open sidebar (66vw against ~68-77vw of free width, the couple of
+ * points of slack being the frame border) rather than anything smaller.
+ *
+ * Both are *max* constraints, so a photo is only ever scaled down - none of
+ * these is upscaled past its natural size, which is what would make it look
+ * soft.
+ */
+const PREVIEW_IMAGE_CLASS =
+  "max-h-[80vh] w-auto max-w-[min(66vw,1250px)] object-contain rounded-2xl shadow-2xl";
 
 interface MasterPlanItem {
   id: string;
@@ -88,7 +106,23 @@ export default function MasterplanPage() {
   const [selectedCirculation, setSelectedCirculation] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [hoveredPillImage, setHoveredPillImage] = useState<string | null>(null);
-  const circulationVideoRef = useRef<HTMLVideoElement>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+
+  /** Keeps the image previews inside the free area to the right of the rail.
+   *  The overlays are full-bleed (the dim backdrop should cover everything),
+   *  but their *content* is centred in what is left after this padding, so the
+   *  photo is never half-hidden under the glass panel - which is exactly what
+   *  it looked like on a tablet, where the panel eats a bigger share of the
+   *  screen. */
+  const previewInset = {
+    // the glass panel is a fixed w-72 (288px); the collapsed rail is ~6% wide
+    paddingLeft: isSidebarOpen ? "clamp(304px, 22vw, 336px)" : "clamp(80px, 8vw, 112px)",
+    paddingRight: "24px",
+    paddingTop: "16px",
+    // clears the floating bottom nav, which sits above these overlays
+    paddingBottom: "88px",
+    transition: "padding-left 300ms ease-in-out",
+  } as const;
 
   const handleLayoutSelect = (layout: string) => {
     setIsTerrace(layout === "Terrace layout");
@@ -106,6 +140,8 @@ export default function MasterplanPage() {
       <Sidebar
         onLayoutSelect={handleLayoutSelect}
         onCirculationSelect={setSelectedCirculation}
+        onCirculationPrefetch={(item) => prefetchVideo(CIRCULATION_VIDEOS[item])}
+        onOpenChange={setIsSidebarOpen}
       />
 
       <div className="relative h-full w-full">
@@ -226,38 +262,38 @@ export default function MasterplanPage() {
         {/* Circulation video overlay */}
         <AnimatePresence mode="wait">
           {circulationVideo && (
-            <motion.video
-              ref={circulationVideoRef}
+            <motion.div
               key={circulationVideo}
-              src={circulationVideo}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="absolute inset-0 z-40 size-full object-cover [filter:brightness(1.15)_contrast(1.08)_saturate(1.15)] pointer-events-auto"
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="absolute inset-0 z-40 pointer-events-auto"
+            >
+              <AutoVideo
+                src={circulationVideo}
+                className="absolute inset-0 size-full object-cover [filter:brightness(1.15)_contrast(1.08)_saturate(1.15)]"
+              />
+            </motion.div>
           )}
         </AnimatePresence>
 
         {/* Lightbox / Modal for Image Preview */}
         {modalImage && (
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-[3px] z-40 flex items-center justify-center p-4 cursor-pointer"
+            className="absolute inset-0 bg-black/60 backdrop-blur-[3px] z-40 flex items-center justify-center cursor-pointer"
+            style={previewInset}
             onClick={() => setModalImage(null)}
           >
             <div
-              className="relative max-w-4xl max-h-[80vh] overflow-hidden rounded-3xl border border-white/20 bg-neutral-900/60 p-1 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)] cursor-default"
+              className="relative max-h-full w-auto max-w-full overflow-hidden rounded-3xl border border-white/20 bg-neutral-900/60 p-1 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)] cursor-default"
               onClick={(e) => e.stopPropagation()}
             >
               <img
                 src={modalImage}
                 alt="Location Preview"
                 decoding="async"
-                className="max-h-[75vh] w-auto object-fit rounded-2xl shadow-2xl"
+                className={PREVIEW_IMAGE_CLASS}
                 onError={(e) => {
                   // Fallback restaurant interior if the image doesn't exist
                   e.currentTarget.src = "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000";
@@ -270,19 +306,22 @@ export default function MasterplanPage() {
         {/* Central Hover Preview for Pills */}
         <AnimatePresence>
           {hoveredPillImage && (
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-[3px] z-40 flex items-center justify-center p-4 pointer-events-none">
+            <div
+              className="absolute inset-0 bg-black/60 backdrop-blur-[3px] z-40 flex items-center justify-center pointer-events-none"
+              style={previewInset}
+            >
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.25, ease: "easeOut" }}
-                className="relative max-w-4xl max-h-[80vh] overflow-hidden rounded-3xl border border-white/20 bg-neutral-900/60 p-1 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]"
+                className="relative max-h-full w-auto max-w-full overflow-hidden rounded-3xl border border-white/20 bg-neutral-900/60 p-1 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]"
               >
                 <img
                   src={hoveredPillImage}
                   alt="Preview"
                   decoding="async"
-                  className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl"
+                  className={PREVIEW_IMAGE_CLASS}
                 />
               </motion.div>
             </div>

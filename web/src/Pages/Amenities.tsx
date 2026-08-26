@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { type LucideIcon } from "lucide-react";
+import AutoVideo, { prefetchVideo } from "../Components/Media/AutoVideo";
 
 import buildingImg from "../assets/AvailabilityPage/building-new.jpg";
 import outsideLineImg from "../assets/AvailabilityPage/lines/outside_line.svg";
@@ -273,6 +274,13 @@ const Amenities = () => {
 
   const hoveredAmenityData = amenities.find((a) => a.id === hoveredAmenity);
 
+  // warm the LED-screen clip while the page is idle so the hover preview opens
+  // playing instead of buffering
+  useEffect(() => {
+    const id = window.setTimeout(() => prefetchVideo(ledScreenVideo), 800);
+    return () => window.clearTimeout(id);
+  }, []);
+
   return (
     <div className="relative w-full h-screen overflow-hidden bg-gray-900 font-sans">
 
@@ -424,12 +432,8 @@ const Amenities = () => {
               className="relative max-w-4xl max-h-[80vh] overflow-hidden rounded-3xl border border-white/20 bg-neutral-900/60 p-1 shadow-[0_25px_70px_-15px_rgba(0,0,0,0.85)]"
             >
               {hoveredAmenityData.video ? (
-                <video
+                <AutoVideo
                   src={hoveredAmenityData.video}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
                   className="max-h-[75vh] w-auto object-contain rounded-2xl shadow-2xl"
                 />
               ) : (

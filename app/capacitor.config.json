@@ -9,7 +9,7 @@
     "backgroundColor": "#000000",
     "allowMixedContent": true,
     "webContentsDebuggingEnabled": false,
-    "loggingBehavior": "none"
+    "loggingBehavior": "debug"
   },
   "plugins": {
     "StatusBar": {

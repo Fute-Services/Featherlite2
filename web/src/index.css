@@ -73,8 +73,10 @@
 }
 
 .animate-zoom-back-to-front {
-  animation: zoomBackToFront 3s cubic-bezier(0.16, 1, 0.5, 1) forwards;
+  animation: zoomBackToFront 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   transform-origin: center center;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
 }
 
 /* @keyframes blueprintUnfold {
@@ -97,27 +99,33 @@
   transform-origin: center center;
 } */
 
+/* The floor-plan building settles in with one clean push-in. The old version
+   ran for 4s and overshot to scale(1.18), which re-rasterised a 4000px-wide
+   SVG every frame - on a tablet that read as a stutter, not an animation.
+   One direction, ~1.1s, and the compositor hints keep it on the GPU. */
 @keyframes zoomPulseSettle {
   0% {
     opacity: 0;
-    transform: scale(0.9);
-  }
-  60% {
-    opacity: 1;
-    transform: scale(1.18); /* Peak zoom-in */
-  }
-  85% {
-    transform: scale(1); /* Zoom-out rebound */
+    transform: scale(1.06) translateZ(0);
   }
   100% {
     opacity: 1;
-    transform: scale(1); /* Final resting state */
+    transform: scale(1) translateZ(0);
   }
 }
 
-.animate-blueprint-unfold  {
-  animation: zoomPulseSettle 4s cubic-bezier(0.25, 1, 0.9, 1) forwards;
+.animate-blueprint-unfold {
+  animation: zoomPulseSettle 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   transform-origin: center center;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blueprint-unfold,
+  .animate-zoom-back-to-front {
+    animation-duration: 0.01ms;
+  }
 }
 
 /* Sleek Dark Custom Scrollbar for Dropdowns */
@@ -143,4 +151,31 @@
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.02);
+}
+/* ── Video: never show the browser's own chrome ───────────────────────────
+   Android WebView / Chrome paints a large circular overlay play button (and
+   iOS a "start playback" button) on top of any <video> it thinks the user has
+   to start by hand. Every video in this app is a decorative, muted, looping
+   background clip, so that button is always wrong. Hiding the shadow-DOM
+   control parts kills it on WebKit/Blink; `pointer-events: none` stops taps
+   from pausing the clip. */
+video::-webkit-media-controls,
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-panel,
+video::-webkit-media-controls-panel-container,
+video::-webkit-media-controls-overlay-play-button,
+video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+video::-internal-media-controls-overlay-cast-button {
+  display: none !important;
+}
+
+video {
+  pointer-events: none;
 }

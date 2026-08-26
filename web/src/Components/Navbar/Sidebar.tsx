@@ -21,6 +21,11 @@ import { Link } from "react-router-dom";
 interface SidebarProps {
     onLayoutSelect?: (layout: string) => void;
     onCirculationSelect?: (circulation: string) => void;
+    /** called when a circulation item is about to be picked, so its clip can be warmed */
+    onCirculationPrefetch?: (circulation: string) => void;
+    /** fires whenever the glass panel opens/closes, so the page can keep its
+     *  overlays clear of the rail instead of centring them underneath it */
+    onOpenChange?: (open: boolean) => void;
     // When set, the top two rail icons render as pill buttons (label + onClick) instead of navigating to /masterplan and /floor-plan
     primaryIcon?: { label: string; onClick: () => void; active: boolean };
     secondaryIcon?: { label: string; onClick: () => void; active: boolean };
@@ -35,6 +40,8 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({
     onLayoutSelect,
     onCirculationSelect,
+    onCirculationPrefetch,
+    onOpenChange,
     primaryIcon,
     secondaryIcon,
     isGalleryPage = false,
@@ -45,6 +52,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onImageSelect,
 }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    useEffect(() => {
+        onOpenChange?.(isOpen);
+        // onOpenChange is expected to be a stable inline setter from the page
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isOpen]);
     const [isGalleryDropdownOpen, setIsGalleryDropdownOpen] = useState<boolean>(false);
     const [isImagesDropdownOpen, setIsImagesDropdownOpen] = useState<boolean>(false);
 
@@ -505,6 +518,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                                 return (
                                                     <button
                                                         key={item}
+                                                        onPointerEnter={() => onCirculationPrefetch?.(item)}
+                                                        onFocus={() => onCirculationPrefetch?.(item)}
                                                         onClick={() => {
                                                             setSelectedCirculation(item);
                                                             if (onCirculationSelect) onCirculationSelect(item);
