@@ -88,9 +88,9 @@ const Media = () => {
             src={walkthroughImg}
             alt="Experience Signature Walk-through"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="absolute inset-0 h-full w-full rounded-2xl object-cover transition-transform duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0D2D43]/90 via-[#0D2D43]/60 to-transparent" />
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#0D2D43]/90 via-[#0D2D43]/60 to-transparent" />
 
           <div className="relative flex h-full flex-col justify-center px-8 sm:px-12 lg:px-14">
             <span className="mb-3 flex size-11 items-center justify-center rounded-full border border-white/40 bg-white/10 text-white backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:border-[#C89D54] group-hover:bg-[#C89D54] group-hover:text-black">
@@ -120,7 +120,10 @@ const Media = () => {
           const content = (
             <div className="flex h-full flex-col justify-between">
               <div>
-                <div className="relative h-[110px] w-full overflow-hidden">
+                {/* rounded to match the card: a backdrop-filter parent does not
+                    clip its children to its own corner radius, so the photo has
+                    to round itself or it squares off the card's top corners */}
+                <div className="relative h-[110px] w-full overflow-hidden rounded-t-xl">
                   <img
                     src={card.image}
                     alt={card.title}

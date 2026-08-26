@@ -6,10 +6,12 @@
   "description": "Featherlite Signature - offline Android app (Capacitor shell around the web build)",
   "scripts": {
     "offline:fetch": "node scripts/fetch-offline-assets.mjs",
-    "build:web": "vite build --config vite.app.config.ts",
-    "sync": "npm run build:web && cap sync android",
-    "apk:debug": "npm run sync && node scripts/build-apk.mjs debug",
+    "offline:location": "node scripts/mirror-location-tour.mjs",
+    "icons": "node scripts/make-icons.mjs && capacitor-assets generate --android --iconBackgroundColor #000000 --iconBackgroundColorDark #000000 --splashBackgroundColor #000000 --splashBackgroundColorDark #000000",
+    "build:web": "node scripts/build-web.mjs",
+    "sync": "npm run build:web && cap copy android && cap update android",
     "apk": "npm run sync && node scripts/build-apk.mjs release",
+    "apk:debug": "npm run sync && node scripts/build-apk.mjs debug",
     "open": "cap open android"
   },
   "dependencies": {
