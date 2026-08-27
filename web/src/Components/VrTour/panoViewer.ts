@@ -105,6 +105,14 @@ function pinIconSvg(label: string): string {
   const l = label.toLowerCase()
   const stroke = 'fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'
 
+  if (/drop.?off|parking|valet/.test(l)) {
+    return `<svg viewBox="0 0 24 24" width="18" height="18" ${stroke}>
+      <path d="M5 16V9.5l1.6-4A2 2 0 0 1 8.5 4.5h7a2 2 0 0 1 1.9 1.4L19 9.5V16"/>
+      <path d="M5 16h14M6.5 16v2M17.5 16v2"/>
+      <circle cx="8" cy="13" r="1" fill="white" stroke="none"/>
+      <circle cx="16" cy="13" r="1" fill="white" stroke="none"/>
+    </svg>`
+  }
   if (/kids|play/.test(l)) {
     return `<svg viewBox="0 0 24 24" width="18" height="18" fill="white">
       <path d="M12 3.5l2.4 5 5.6.5-4.3 3.8 1.3 5.5L12 15.5 6.9 18.3l1.4-5.5-4.3-3.8 5.6-.5Z"/>
