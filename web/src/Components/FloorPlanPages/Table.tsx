@@ -21,7 +21,7 @@ export default function Table({
   return (
     <div className="absolute bottom-4 left-4 right-6 md:bottom-auto md:top-1/2 
     md:-translate-y-1/2 md:right-8 md:left-auto md:w-58 z-20">
-      <div className="bg-black/30 backdrop-blur-xs rounded-2xl md:rounded-3xl p-4 text-white border border-white/10">
+      <div className="bg-black/25 backdrop-blur-xl backdrop-saturate-150 rounded-2xl md:rounded-3xl p-4 text-white border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.37)]">
         {/* Table Header */}
         <div className="grid grid-cols-2 text-sm font-semibold text-white pb-3 border-b border-white/10 px-3">
           <span className="text-left">Floor</span>

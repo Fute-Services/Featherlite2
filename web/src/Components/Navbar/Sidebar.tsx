@@ -311,7 +311,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     className={`absolute left-0 top-0 h-full pl-[5.5%] flex flex-col
                          justify-between py-6 px-6 text-white
         /* Glassmorphism Core */
-        ${isGalleryPage ? "bg-black/10 backdrop-saturate-150" : "bg-gradient-to-b from-black/55 via-black/70 to-black/85 backdrop-blur-xl backdrop-saturate-150"}
+        bg-black/10 backdrop-saturate-150
     border-r border-neutral-500/35
     shadow-[0_8px_32px_0_rgba(0,0,0,0.37)]
     /* Subtle Inner Highlight for Glass Reflection */
