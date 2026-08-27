@@ -1,32 +1,38 @@
-# React + TypeScript + Vite
+# Featherlite Signature
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Two deliverables from one codebase:
 
-Currently, two official plugins are available:
+| Folder | What it is |
+| --- | --- |
+| [`web/`](web) | The website - React 19 + Vite + Tailwind. This is the single source of truth for every screen, style and animation. |
+| [`app/`](app) | The Android app. A Capacitor shell that packages the **same** web build, with every remote asset mirrored so it runs with no network at all. |
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+`app/` never contains a copy of the UI. It builds `web/` and rewires the asset
+URLs at build time, which is why the app is pixel-identical to the site and why
+a change to the site reaches the app by rebuilding, not by porting.
 
-## React Compiler
+## Working on the website
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+cd web
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # -> web/dist
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+**Deploying:** the project now lives in `web/`, so a host pointed at the repo
+root needs its build directory updated - on Vercel that is
+Settings -> General -> Root Directory -> `web`.
+
+## Building the Android app
+
+```bash
+cd app
+npm install
+npm run offline:fetch                     # mirror remote assets (once)
+node scripts/mirror-location-tour.mjs     # mirror the Location VR tour (once)
+npm run apk                               # -> app/dist/FeatherliteSignature-v1.0.0-release.apk
+```
+
+Full details, including the two features that still need a network, are in
+[`app/README.md`](app/README.md).

@@ -1,0 +1,170 @@
+
+
+
+[
+  {
+    "_id": "69f0a1b35b064f66de32920f",
+    "category": "interior",
+    "images": [
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268810/Copy_of_Double_Height_Reception_bd978h.jpg",
+        "title": "Double Height Reception",
+        "_id": "69f0a1b35b064f66de329210"
+      },
+
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777273833/Cafeteria_250226_1_d0y4gm.png",
+        "title": "Cafeteria",
+        "_id": "69f0a1b35b064f66de329213"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268755/Copy_of_Fine_Dining_oqivxp.jpg",
+        "title": "Restaurant",
+        "_id": "69f0a1b35b064f66de329214"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268753/Copy_of_games_room_tjfsyc.jpg",
+        "title": "Tenant Recreational Space",
+        "_id": "69f0a1b35b064f66de329215"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268752/Copy_of_Interior_Creche_NEW_vcb921.jpg",
+        "title": "Crèche",
+        "_id": "69f0a1b35b064f66de329216"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268822/Copy_of_Cabin_w4mc6d.jpg",
+        "title": "Executive Cabin",
+        "_id": "69f0a1b35b064f66de329217"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268825/Copy_of_000__kuucgq.jpg",
+        "title": "Workstation",
+        "_id": "69f0a1b35b064f66de329218"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268815/Copy_of_conference_room_eqq8yz.jpg",
+        "title": "Conference Room",
+        "_id": "69f0a1b35b064f66de329219"
+      },
+    
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268630/Copy_of_Office_01_hq4nkh.jpg",
+        "title": "Workstation",
+        "_id": "69f0a1b35b064f66de32921b"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268577/Entry_Lobby_3_szxpmk.jpg",
+        "title": "Collaboration Space",
+        "_id": "69f0a1b35b064f66de32921c"
+      },
+      {
+        "image": "\nhttps://res.cloudinary.com/db0f2ofgf/image/upload/v1777268154/Lobby_A_250226_1_isifpm.png",
+        "title": "Reception",
+        "_id": "69f0a1b35b064f66de32921d"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268155/Lobby_B_250226_1_tppyix.png",
+        "title": "Collaboration Space",
+        "_id": "69f0a1b35b064f66de32921e"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268417/Lift_Lobby_250226_1_1_1_1_ljbiep.png",
+        "title": "Destination Control System Lift Lobby",
+        "_id": "69f0a1b35b064f66de32921f"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268576/Lift_lobby_e06fae.jpg",
+        "title": "Tenant Lift Lobby",
+        "_id": "69f0a1b35b064f66de329220"
+      }
+    ],
+    "createdAt": "2026-04-28T12:01:55.873Z",
+    "updatedAt": "2026-04-28T12:01:55.873Z",
+    "__v": 0
+  },
+  {
+    "_id": "69f0a2755b064f66de32926f",
+    "category": "exterior",
+    "images": [
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777274747/Copy_of_Featherlite_Signature_Aerial_Shot_01_day_1_1_qpnqpk.jpg",
+        "title": "Overview",
+        "_id": "69f0a2755b064f66de329270"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268759/Copy_of_Featherlite_Signature_Aerial_Shot_02_day_1_xsqctx.jpg",
+        "title": "Aerial View",
+        "_id": "69f0a2755b064f66de329271"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268811/Copy_of_day_full_frunt_pmpfak.jpg",
+        "title": "Elevation Shot",
+        "_id": "69f0a2755b064f66de329272"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268748/Copy_of_Night_Areal_sudin_1_1_irrmxu.jpg",
+        "title": "Terrace View",
+        "_id": "69f0a2755b064f66de329273"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268813/Copy_of_dat_grunt_gate_ldgmha.jpg",
+        "title": "Main Entry",
+        "_id": "69f0a2755b064f66de329274"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268813/Copy_of_day_frunt_h828qc.jpg",
+        "title": "Elevation View",
+        "_id": "69f0a2755b064f66de329275"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268825/Copy_of_02_jpg_gsyacn.jpg",
+        "title": "Drop Off Overview",
+        "_id": "69f0a2755b064f66de329276"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777269034/Copy_of_Kids_Play_1_dyo6xh.jpg",
+        "title": "Kid's Play Area",
+        "_id": "69f0a2755b064f66de329277"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268826/Copy_of_00__1_ro6als.jpg",
+        "title": "Seating Area",
+        "_id": "69f0a2755b064f66de329278"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268821/Copy_of_Cafe_Seating_mgrxbt.jpg",
+        "title": "Outdoor Seating Area",
+        "_id": "69f0a2755b064f66de329279"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268820/Copy_of_Came_00_Basement_HQ_tza8c7.jpg",
+        "title": "Parking Area",
+        "_id": "69f0a2755b064f66de32927a"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268817/Copy_of_Came_006_Basement__EV_Charge_Fitherlight_ocouzr.jpg",
+        "title": "Eon Parking",
+        "_id": "69f0a2755b064f66de32927b"
+      },
+      {
+        "_id": "6a8bed8c3dd4217f02dc9cb8",
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268756/Copy_of_Featherlite_Terrace_Shot_Day_crabns.jpg",
+        "title": "Terrace View"
+      },
+      {
+        "_id": "6a8bed8c3dd4217f02dc9cb9",
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777280750/Copy_of_Multipurpose_Court_uhfedx.jpg",
+        "title": "Multipurpose Court"
+      },
+      {
+        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777274219/Copy_of_back_view_HQ_1_2_cwgjmb.jpg",
+        "title": "Rear Side View",
+        "_id": "69f0a2755b064f66de32927c"
+      }
+    ],
+    "createdAt": "2026-04-28T12:05:09.791Z",
+    "updatedAt": "2026-04-28T12:05:09.791Z",
+    "__v": 0
+  }
+]

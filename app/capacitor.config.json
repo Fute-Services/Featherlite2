@@ -1,0 +1,20 @@
+{
+  "appId": "com.futeservices.featherlitesignature",
+  "appName": "Featherlite Signature",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#000000",
+    "allowMixedContent": true,
+    "webContentsDebuggingEnabled": false,
+    "loggingBehavior": "debug"
+  },
+  "plugins": {
+    "StatusBar": {
+      "overlaysWebView": true,
+      "style": "DARK"
+    }
+  }
+}
