@@ -89,7 +89,7 @@ const CLICK_MAX_MS = 400
 const HOVER_LABEL_GAP_PX = 14
 
 /** Stick length between a ring's halo edge and the badge floating above it. */
-const PIN_STICK_PX = 28
+const PIN_STICK_PX = 12
 
 /* ------------------------------------------------------------------ */
 
@@ -105,7 +105,7 @@ function pinIconSvg(label: string): string {
   const l = label.toLowerCase()
   const stroke = 'fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'
 
-  if (/drop.?off|parking|valet/.test(l)) {
+  if (/drop.?off|parking|valet|arrival/.test(l)) {
     return `<svg viewBox="0 0 24 24" width="18" height="18" ${stroke}>
       <path d="M5 16V9.5l1.6-4A2 2 0 0 1 8.5 4.5h7a2 2 0 0 1 1.9 1.4L19 9.5V16"/>
       <path d="M5 16h14M6.5 16v2M17.5 16v2"/>

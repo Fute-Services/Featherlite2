@@ -54,7 +54,7 @@ export const vrCategories: Record<string, { id: string; name: string }[]> = {
   Exterior: [
     { id: 'ext_entry_gate', name: 'Entry Gate' },
     { id: 'ext_entry_perspective', name: 'Entry Perspective' },
-    { id: 'ext_drop_off_area', name: 'Drop Off' },
+    { id: 'ext_drop_off_area', name: 'Arrival Plaza' },
     { id: 'ext_kids_play_area', name: 'Kids Play Area' },
     { id: 'ext_open_seating', name: 'Open Seating Area' },
     { id: 'ext_terrace_cafe_1', name: 'Terrace Cafe' },
@@ -83,7 +83,7 @@ export const scenes: Record<string, TourScene> = {
     panorama: vt('Cam_02_Entry_Perspective_Inside_1_1_gnb1hi.jpg'),
     yaw: 260,
     hotspots: [
-      { yaw: 260, pitch: -5, label: 'Drop Off', next: 'ext_drop_off_area' },
+      { yaw: 260, pitch: -5, label: 'Arrival Plaza', next: 'ext_drop_off_area' },
       { yaw: 220, pitch: -12, label: 'Kids Play Area', next: 'ext_kids_play_area' },
       { yaw: 300, pitch: -20, label: 'Entry Gate', next: 'ext_entry_gate' },
     ],
@@ -100,14 +100,14 @@ export const scenes: Record<string, TourScene> = {
     panorama: vt('Cam_06_Kids_Play_Area_1_1_feonwl.jpg'),
     pitch: -15,
     hotspots: [
-      { yaw: 0, pitch: -8, label: 'Entry Perspective', next: 'ext_entry_perspective' },
+      { yaw: 0, pitch: -30, label: 'Entry Perspective', next: 'ext_entry_perspective' },
     ],
   },
   ext_open_seating: {
     panorama: vt('Cam_07_GF_Open_Seating_Area_1_1_livzbf.jpg'),
     pitch: -15,
     hotspots: [
-      { yaw: 0, pitch: -8, label: 'Drop Off', next: 'ext_drop_off_area' },
+      { yaw: 0, pitch: -8, label: 'Arrival Plaza', next: 'ext_drop_off_area' },
     ],
   },
   ext_terrace_cafe_1: {
@@ -141,7 +141,7 @@ export const scenes: Record<string, TourScene> = {
     hotspots: [
       { yaw: -50, pitch: -22, label: 'Lift Lobby', next: 'int_lift_lobby' },
       { yaw: -15, pitch: -26, label: 'GF Cafe & Waiting Area', next: 'int_gf_cafe_waiting' },
-      { yaw: 25, pitch: -30, label: 'Drop Off', next: 'ext_drop_off_area' },
+      { yaw: 25, pitch: -30, label: 'Arrival Plaza', next: 'ext_drop_off_area' },
     ],
   },
   int_lift_lobby: {
