@@ -9,8 +9,6 @@ export default function UnitPlanPopupOverlay({
     pointsData = [],
     selectedId,
 }: UnitPlanPopupOverlayProps) {
-    if (!pointsData || pointsData.length === 0) return null;
-
     // Filter out ID 101 and duplicate entries
     const filteredPoints = useMemo(() => {
         return pointsData.filter(

@@ -58,8 +58,7 @@ const Homepage = () => {
                     key={src}
                     src={src}
                     alt="Featherlite Signature building"
-                    // @ts-expect-error fetchpriority isn't in React's img typings yet
-                    fetchpriority={active ? 'high' : undefined}
+                    fetchPriority={active ? 'high' : undefined}
                     loading={active ? 'eager' : 'lazy'}
                     className={[
                         'absolute inset-0 size-full object-cover transition-opacity duration-[2200ms] ease-in-out',
