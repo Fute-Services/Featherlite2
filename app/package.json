@@ -1,6 +1,6 @@
 {
   "name": "featherlite-signature-app",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "type": "module",
   "description": "Featherlite Signature - offline Android app (Capacitor shell around the web build)",
