@@ -1,22 +1,15 @@
-// import { IoReturnUpBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
+
 export default function BackButton() {
     const navigate = useNavigate();
-    return (<>
-
+    return (
         <button
             onClick={() => navigate("/floor-plan")}
-            className="absolute bottom-10 left-[5%] z-30 p-2.5
-                    bg-slate-900/70 hover:bg-slate-900/90 backdrop-blur-md border 
-                    border-white/70 rounded-full transition-all duration-500 ease-in-out cursor-pointer
-                     hover:scale-110 active:scale-95 shadow-xl"
+            className="fixed bottom-6 left-6 z-[100] flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:border-[#C89D54] hover:text-[#C89D54] sm:bottom-8 sm:left-8 cursor-pointer"
+            aria-label="Back to floor plan"
         >
-            <FaAngleLeft  className="w-4 h-4 text-white/80" />
-            {/* <TiArrowBackOutline className="w-4 h-4 text-white/80"/> */}
-
-            {/* <IoReturnUpBack className="w-4 h-4 text-white/80" /> */}
-
+            <FaAngleLeft className="size-4" />
         </button>
-    </>)
+    );
 }

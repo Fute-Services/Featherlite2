@@ -29,7 +29,7 @@
   },
   {
     "id": "cafe-seating",
-    "title": "cafe-seating",
+    "title": "Cafe Seating",
     "level": "ground",
     "polygon": "1774,1091,1774,1242,2113,1244,2111,1123,2081,1123,2061,1100",
     "image": "/hotspot-images/Cafe_seating.jpeg"
@@ -61,13 +61,6 @@
     "level": "ground",
     "polygon": "1573,303,1577,521,2113,523,2111,303",
     "image": "/hotspot-images/basement.jpg"
-  },
-  {
-    "id": "cafe-entry",
-    "title": "cafe-entry",
-    "level": "ground",
-    "polygon": "1522,1091,1522,1242,1767,1249,1770,1093",
-    "image": "/hotspot-images/cafe_entry.jpg"
   },
   {
     "id": "entry-foyer",

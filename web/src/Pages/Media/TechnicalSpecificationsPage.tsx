@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
+import { X } from "lucide-react";
 import buildingImg from "../../assets/Media/technical-page-building.jpg";
 const icon1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/1-structure-space-efficiency-1/card";
 const icon2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/technical-specification/2-facade-thermal-efficiency-1/card";
@@ -163,81 +164,24 @@ const specificationsData = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.6,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 1.4,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    },
-  },
-};
-
 const TechnicalSpecificationsPage = () => {
   const [activeDetail, setActiveDetail] = useState<number | null>(null);
 
-  // Geometric hover check using querySelector so the modal can be rendered at the root level (relative to viewport)
-  // to avoid CSS transform clipping, while still detecting hover leaves correctly.
+  // Close modal on Escape key
   useEffect(() => {
-    if (activeDetail === null) return;
-    const handleMouseMove = (e: MouseEvent) => {
-      const modalEl = document.querySelector(".technical-modal-content");
-      let insideModal = false;
-      if (modalEl) {
-        const modalRect = modalEl.getBoundingClientRect();
-        insideModal =
-          e.clientX >= modalRect.left &&
-          e.clientX <= modalRect.right &&
-          e.clientY >= modalRect.top &&
-          e.clientY <= modalRect.bottom;
-      }
-
-      let insideAnyCardIdx: number | null = null;
-      const padding = 2;
-      for (let i = 0; i < specificationsData.length; i++) {
-        const cardEl = document.querySelector(`.technical-card-${i}`);
-        if (cardEl) {
-          const cardRect = cardEl.getBoundingClientRect();
-          if (
-            e.clientX >= cardRect.left - padding &&
-            e.clientX <= cardRect.right + padding &&
-            e.clientY >= cardRect.top - padding &&
-            e.clientY <= cardRect.bottom + padding
-          ) {
-            insideAnyCardIdx = i;
-            break;
-          }
-        }
-      }
-
-      if (insideAnyCardIdx !== null) {
-        if (insideAnyCardIdx !== activeDetail) {
-          setActiveDetail(insideAnyCardIdx);
-        }
-      } else if (!insideModal) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
         setActiveDetail(null);
       }
     };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [activeDetail]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const activeSection = activeDetail !== null ? specificationsData[activeDetail] : null;
 
   return (
-    <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#0D2D43] pb-24 pt-28 sm:pb-28 sm:pt-32">
+    <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#0D2D43] px-6 pt-32 pb-24 sm:px-10 sm:pt-36 sm:pb-28 lg:px-14 lg:pt-36 lg:pb-28">
       {/* Ambient background glow */}
       <div
         aria-hidden
@@ -246,55 +190,56 @@ const TechnicalSpecificationsPage = () => {
       />
 
       {/* Floating Back Button */}
-      <div className="fixed bottom-6 left-6 z-[100] sm:bottom-8 sm:left-10">
+      <div className="fixed bottom-6 left-6 z-[100] sm:bottom-8 sm:left-8">
         <Link
           to="/media"
           aria-label="Back to Media"
-          className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-110 hover:border-[#C89D54] hover:text-[#C89D54]"
+          className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:border-[#C89D54] hover:text-[#C89D54]"
         >
           <FaAngleLeft className="size-4" />
         </Link>
       </div>
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col gap-4 px-5 font-sans sm:px-8 lg:flex-row lg:gap-5 lg:px-10 min-h-0">
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1600px] flex-col gap-5 lg:flex-row lg:gap-7 min-h-0">
         {/* Left Sidebar */}
-        <div className="flex flex-col gap-3 lg:w-[240px] xl:w-[260px] lg:shrink-0 min-h-0">
+        <div className="flex flex-col justify-between lg:w-[260px] xl:w-[290px] lg:shrink-0 min-h-0">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C89D54]">TECHNICAL</p>
-            <h1 className="font-serif mt-0.5 text-2xl font-normal text-white sm:text-3xl lg:text-4xl">Specifications</h1>
-            <span className="mt-2 block h-[2px] w-10 bg-[#C89D54]" />
-            <p className="mt-2 max-w-xs text-[11px] leading-relaxed text-white/70">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#C89D54]">TECHNICAL</p>
+            <h1 className="font-display mt-1 text-3xl font-normal tracking-wide text-white sm:text-4xl">Specifications</h1>
+            <span className="mt-3 block h-[2px] w-12 bg-[#C89D54]" />
+            <p className="mt-3 max-w-xs text-xs leading-relaxed text-white/70">
               Engineered for performance, efficiency and long-term flexibility.
             </p>
           </motion.div>
 
           {/* Building photo at bottom-left seamlessly blending into background */}
-          <div className="relative mt-3 hidden flex-1 overflow-hidden rounded-2xl lg:block min-h-0">
-            <img src={buildingImg} alt="Featherlite Signature" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2D43] via-transparent to-[#0D2D43]/40" />
+          <div className="relative mt-4 hidden flex-1 overflow-hidden rounded-2xl lg:block min-h-0 max-h-[360px]">
+            <img src={buildingImg} alt="Featherlite Signature" loading="lazy" decoding="async" className="h-full w-full object-cover object-top rounded-2xl" />
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0D2D43] via-transparent to-[#0D2D43]/40" />
           </div>
         </div>
 
         {/* Right Grid: 8 Cards (2 rows x 4 cols) */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
+        <div 
           className="grid flex-1 grid-cols-2 grid-rows-4 gap-2.5 sm:grid-cols-4 sm:grid-rows-2 lg:gap-3.5 min-h-0"
+          onMouseLeave={() => setActiveDetail(null)}
         >
           {specificationsData.map((section, idx) => (
             <motion.div
               key={section.title}
               onMouseEnter={() => setActiveDetail(idx)}
               onClick={() => setActiveDetail(idx)}
-              variants={cardVariants}
-              className={`group relative flex flex-col justify-between rounded-xl border bg-[#071628]/30 p-3 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-colors duration-300 cursor-pointer technical-card-${idx} ${activeDetail === idx
-                ? "border-[#C89D54]/50 bg-[#071628]/50"
-                : "border-white/10 hover:border-[#C89D54]/50 hover:bg-[#071628]/50"
+              initial={{ opacity: 0, y: 30, scale: 0.94 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 + idx * 0.15 }}
+              whileHover={{ scale: 1.015, translateY: -2 }}
+              className={`group relative flex flex-col justify-between rounded-xl border bg-[#071628]/35 p-3.5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all duration-300 cursor-pointer technical-card-${idx} ${activeDetail === idx
+                ? "border-[#C89D54] bg-[#071628]/60 shadow-[0_0_25px_rgba(200,157,84,0.25)]"
+                : "border-white/10 hover:border-[#C89D54]/60 hover:bg-[#071628]/50"
                 }`}
             >
               <div>
@@ -304,12 +249,12 @@ const TechnicalSpecificationsPage = () => {
                 </span>
 
                 {/* Circle Icon */}
-                <div className="my-1.5 flex size-9 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#C89D54]/15 p-1.5">
-                  <img src={section.icon} alt="" loading="lazy" decoding="async" className="h-5 w-5 object-contain brightness-0 invert" />
+                <div className="my-1.5 flex size-8 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#C89D54]/15 p-1.5">
+                  <img src={section.icon} alt="" loading="lazy" decoding="async" className="h-4 w-4 object-contain brightness-0 invert" />
                 </div>
 
                 {/* Title */}
-                <h2 className="font-serif text-xs font-normal text-white sm:text-sm line-clamp-2">
+                <h2 className="font-display text-sm font-normal text-white line-clamp-2">
                   {section.title}
                 </h2>
 
@@ -318,7 +263,7 @@ const TechnicalSpecificationsPage = () => {
                 {/* Bullet Points */}
                 <ul className="flex flex-col gap-1 text-[10px] text-white/70">
                   {section.bullets.map((item, i) => (
-                    <li key={i} className="flex items-start gap-1 leading-tight">
+                    <li key={i} className="flex items-start gap-1.5 leading-tight">
                       <span className="mt-1 size-1 shrink-0 rounded-full bg-[#C89D54]" />
                       <span className="line-clamp-1">{item}</span>
                     </li>
@@ -327,47 +272,59 @@ const TechnicalSpecificationsPage = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
 
-      {/* Expanded Modal */}
+      {/* Expanded Modal on Hover */}
       <AnimatePresence>
         {activeSection && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/40 p-4 backdrop-blur-md cursor-default"
-            onClick={(e) => {
-              e.stopPropagation();
-              setActiveDetail(null);
-            }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm pointer-events-none"
           >
             <motion.div
-              initial={{ opacity: 0, y: 16, scale: 0.97 }}
+              key={activeDetail}
+              initial={{ opacity: 0, y: 14, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.97 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628]/35 p-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-8 technical-modal-content"
+              exit={{ opacity: 0, y: 10, scale: 0.96 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-[#C89D54]/30 bg-[#071628]/95 p-6 shadow-[0_20px_60px_0_rgba(0,0,0,0.85)] backdrop-blur-2xl sm:p-8 technical-modal-content pointer-events-none"
             >
-              <div className="flex items-center gap-4">
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-[#C89D54]/40 bg-[#C89D54]/10 p-2">
-                  <img src={activeSection.icon} alt="" className="h-6 w-6 object-contain brightness-0 invert" />
+              <button
+                onClick={() => setActiveDetail(null)}
+                className="absolute top-5 right-5 z-10 rounded-full border border-white/20 bg-white/10 p-2 text-white/80 transition-all hover:bg-white/20 hover:text-white pointer-events-auto"
+                aria-label="Close"
+              >
+                <X className="size-4" />
+              </button>
+
+              <div className="flex items-center gap-4 pr-10">
+                <div className="flex size-12 shrink-0 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#C89D54]/15 p-2">
+                  <img src={activeSection.icon} alt="" className="h-6 w-6 object-contain brightness-0 invert drop-shadow-sm" />
                 </div>
                 <div>
                   <span className="text-xs font-semibold text-[#C89D54]">{activeSection.num}</span>
-                  <h2 className="font-serif text-2xl text-white">{activeSection.title}</h2>
+                  <h2 className="text-2xl font-semibold tracking-wide text-white">{activeSection.title}</h2>
                 </div>
               </div>
 
-              <span className="mt-4 block h-px w-full bg-white/10" />
+              <span className="mt-4 block h-px w-full bg-white/15" />
 
               <ul className="mt-4 flex flex-col gap-2.5">
                 {activeSection.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm leading-snug text-white/85">
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.25, delay: i * 0.03 }}
+                    className="flex items-start gap-2.5 text-sm leading-snug text-white/90"
+                  >
                     <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#C89D54]" />
                     <span>{item}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </motion.div>

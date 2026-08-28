@@ -14,9 +14,10 @@
 @theme {
   --color-brand: #E23A26;
   --color-brand-dark: #B92B1A;
-  --font-display: "Abhaya Libre", "Playfair Display", "Georgia", serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
-  --font-ibm: "IBM Plex Sans", sans-serif;
+  --font-display: "Nortica Typeface", "Nortica", "IBM Plex Sans", sans-serif;
+  --font-sans: "Nortica Typeface", "Nortica", "IBM Plex Sans", "Inter", system-ui, -apple-system, sans-serif;
+  --font-ibm: "IBM Plex Sans", "Nortica Typeface", "Nortica", sans-serif;
+  --font-nortica: "Nortica Typeface", "Nortica", "IBM Plex Sans", sans-serif;
 }
 
 @layer base {

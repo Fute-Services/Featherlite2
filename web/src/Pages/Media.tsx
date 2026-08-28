@@ -85,7 +85,7 @@ const Media = () => {
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col lg:w-[320px] lg:shrink-0"
         >
-          <h1 className="font-serif text-4xl font-normal tracking-wide text-[#C89D54] sm:text-5xl">
+          <h1 className="text-4xl font-medium tracking-wide text-[#C89D54] sm:text-5xl">
             MEDIA
           </h1>
           <p className="mt-1.5 text-base font-normal text-white/90">
@@ -122,7 +122,7 @@ const Media = () => {
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#C89D54]">
               WALK-THROUGH
             </p>
-            <h2 className="mt-0.5 font-serif text-3xl text-white sm:text-4xl">
+            <h2 className="mt-0.5 text-3xl font-medium text-white sm:text-4xl">
               Experience Signature
             </h2>
             <p className="mt-1.5 max-w-lg text-xs text-white/80 sm:text-sm">
@@ -137,7 +137,7 @@ const Media = () => {
       </div>
 
       {/* 4 Bottom Cards Grid */}
-      <div className="relative z-10 mx-auto mt-8 grid w-full max-w-[1850px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="relative z-10 mx-auto mt-8 grid w-full max-w-[1700px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {CARDS.map((card, idx) => {
           const Icon = card.icon;
           const content = (
@@ -146,7 +146,7 @@ const Media = () => {
                 {/* rounded to match the card: a backdrop-filter parent does not
                     clip its children to its own corner radius, so the photo has
                     to round itself or it squares off the card's top corners */}
-                <div className="relative h-[135px] w-full overflow-hidden rounded-t-xl">
+                <div className="relative h-[140px] w-full overflow-hidden rounded-t-xl">
                   <img
                     src={card.image}
                     alt={card.title}
@@ -157,15 +157,15 @@ const Media = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#081729]/30 via-transparent to-black/30" />
                 </div>
 
-                <span className="absolute left-4 top-[135px] flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#071424]/40 text-[#C89D54] backdrop-blur-md shadow-md">
+                <span className="absolute left-4 top-[140px] flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#071424]/80 text-[#C89D54] backdrop-blur-md shadow-md">
                   <Icon size={15} strokeWidth={1.5} />
                 </span>
 
-                <div className="px-4 pb-2 pt-6">
-                  <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[#C89D54]">
+                <div className="px-4 pb-4 pt-6">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-[#C89D54] line-clamp-1">
                     {card.title}
                   </h3>
-                  <p className="mt-1 text-[11px] leading-relaxed text-white/70">
+                  <p className="mt-1 text-xs leading-relaxed text-white/70 line-clamp-2">
                     {card.description}
                   </p>
                 </div>
@@ -174,7 +174,7 @@ const Media = () => {
           );
 
           const cardStyles =
-            "group relative flex flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-[#081729]/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all duration-300 hover:border-[#C89D54]/50 hover:bg-[#081729]/50 hover:-translate-y-1";
+            "group relative flex h-full flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-[#081729]/30 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all duration-300 hover:border-[#C89D54]/50 hover:bg-[#081729]/50 hover:-translate-y-1";
 
           return (
             <motion.div
@@ -184,6 +184,7 @@ const Media = () => {
               viewport={{ once: true, amount: 0.3 }}
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: idx * 0.12 }}
+              className="h-full"
             >
               {card.to ? (
                 <Link to={card.to} className={cardStyles}>

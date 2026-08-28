@@ -75,7 +75,7 @@ export default function Building({
                                 // stroke="url(#activeStrokeGradient)"
                                 initial={false}
                                 animate={{
-                                    opacity: 0,
+                                    opacity: isActive ? 1 : 0,
                                     strokeWidth: isActive ? 4 : 0,
                                 }}
                                 transition={{

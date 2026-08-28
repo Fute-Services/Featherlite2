@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaAngleLeft } from "react-icons/fa6";
+import { X } from "lucide-react";
 import buildingImg from "../../assets/Media/technical-page-building.jpg";
 const leedBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/leed-badge/card";
 const wellBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/well-badge/card";
 const igbcBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/igbc-badge/card";
 const wiredscoreBadge = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media/wiredscore-badge/card";
+
 // Custom exact gold line-art SVG icons matching the design screenshot
 const SolarPanelSunIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="#C89D54" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="size-5 shrink-0">
@@ -211,81 +213,24 @@ const certificationsData = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.6,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 1.4,
-      ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
-    },
-  },
-};
-
 const CertificationsPage = () => {
   const [activeDetail, setActiveDetail] = useState<number | null>(null);
 
-  // Geometric hover check using querySelector so the modal can be rendered at the root level (relative to viewport)
-  // to avoid CSS transform clipping, while still detecting hover leaves correctly.
+  // Close modal on Escape key
   useEffect(() => {
-    if (activeDetail === null) return;
-    const handleMouseMove = (e: MouseEvent) => {
-      const modalEl = document.querySelector(".certification-modal-content");
-      let insideModal = false;
-      if (modalEl) {
-        const modalRect = modalEl.getBoundingClientRect();
-        insideModal =
-          e.clientX >= modalRect.left &&
-          e.clientX <= modalRect.right &&
-          e.clientY >= modalRect.top &&
-          e.clientY <= modalRect.bottom;
-      }
-
-      let insideAnyCardIdx: number | null = null;
-      const padding = 2;
-      for (let i = 0; i < certificationsData.length; i++) {
-        const cardEl = document.querySelector(`.certification-card-${i}`);
-        if (cardEl) {
-          const cardRect = cardEl.getBoundingClientRect();
-          if (
-            e.clientX >= cardRect.left - padding &&
-            e.clientX <= cardRect.right + padding &&
-            e.clientY >= cardRect.top - padding &&
-            e.clientY <= cardRect.bottom + padding
-          ) {
-            insideAnyCardIdx = i;
-            break;
-          }
-        }
-      }
-
-      if (insideAnyCardIdx !== null) {
-        if (insideAnyCardIdx !== activeDetail) {
-          setActiveDetail(insideAnyCardIdx);
-        }
-      } else if (!insideModal) {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
         setActiveDetail(null);
       }
     };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [activeDetail]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const activeSection = activeDetail !== null ? certificationsData[activeDetail] : null;
 
   return (
-    <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#0D2D43] pb-28 pt-28 sm:pb-32 sm:pt-32">
+    <div className="relative flex h-dvh w-full flex-col justify-between overflow-hidden bg-[#0D2D43] px-6 pt-32 pb-24 sm:px-10 sm:pt-36 sm:pb-28 lg:px-14 lg:pt-36 lg:pb-28">
       {/* Background radial glow lights */}
       <div
         aria-hidden
@@ -293,82 +238,83 @@ const CertificationsPage = () => {
         style={{ background: "radial-gradient(circle, #C89D54 0%, transparent 70%)" }}
       />
 
-      {/* Floating Circular Back Button (Bottom-left) */}
-      <div className="fixed bottom-6 left-6 z-[100] sm:bottom-8 sm:left-10">
+      {/* Floating Circular Back Button */}
+      <div className="fixed bottom-6 left-6 z-[100] sm:bottom-8 sm:left-8">
         <Link
           to="/media"
           aria-label="Back to Media"
-          className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-110 hover:border-[#C89D54] hover:text-[#C89D54]"
+          className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:border-[#C89D54] hover:text-[#C89D54]"
         >
           <FaAngleLeft className="size-4" />
         </Link>
       </div>
 
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-6xl flex-col gap-4 px-5 font-sans sm:px-8 lg:flex-row lg:gap-6 lg:px-10 min-h-0">
+      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1600px] flex-col gap-6 lg:flex-row lg:gap-8 min-h-0">
         {/* Left Sidebar */}
-        <div className="flex flex-col gap-3 lg:w-[260px] xl:w-[280px] lg:shrink-0 min-h-0">
+        <div className="flex flex-col justify-between lg:w-[280px] xl:w-[320px] lg:shrink-0 min-h-0">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C89D54]">CERTIFICATIONS</p>
-            <h1 className="font-serif mt-0.5 text-2xl font-normal text-white sm:text-3xl">Certified Excellence</h1>
-            <span className="mt-2 block h-[2px] w-10 bg-[#C89D54]" />
-            <p className="mt-2 max-w-xs text-[11px] leading-relaxed text-white/70">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#C89D54]">CERTIFICATIONS</p>
+            <h1 className="font-display mt-1 text-3xl font-normal tracking-wide text-white sm:text-4xl">Certified Excellence</h1>
+            <span className="mt-3 block h-[2px] w-12 bg-[#C89D54]" />
+            <p className="mt-3 max-w-xs text-xs leading-relaxed text-white/70">
               Our commitment to sustainability, wellness and future-ready performance is validated by global standards.
             </p>
           </motion.div>
 
           {/* Building photo at bottom-left seamlessly blending into background */}
-          <div className="relative mt-3 hidden flex-1 overflow-hidden rounded-2xl lg:block min-h-0">
-            <img src={buildingImg} alt="Featherlite Signature" loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0D2D43] via-transparent to-[#0D2D43]/40" />
+          <div className="relative mt-4 hidden flex-1 overflow-hidden rounded-2xl lg:block min-h-0 max-h-[360px]">
+            <img src={buildingImg} alt="Featherlite Signature" loading="lazy" decoding="async" className="h-full w-full object-cover object-top rounded-2xl" />
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0D2D43] via-transparent to-[#0D2D43]/40" />
           </div>
         </div>
 
         {/* Right: 4 Compact Cards (2x2 Grid) */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          className="grid flex-1 grid-cols-1 grid-rows-2 gap-3 sm:grid-cols-2 lg:gap-3.5 min-h-0"
+        <div 
+          className="grid flex-1 grid-cols-1 grid-rows-2 gap-4 sm:grid-cols-2 lg:gap-5 min-h-0"
+          onMouseLeave={() => setActiveDetail(null)}
         >
           {certificationsData.map((section, idx) => (
             <motion.div
               key={section.title}
               onMouseEnter={() => setActiveDetail(idx)}
               onClick={() => setActiveDetail(idx)}
-              variants={cardVariants}
-              className={`group relative flex flex-col justify-between rounded-xl border bg-[#071628]/30 p-3.5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-colors duration-300 cursor-pointer sm:p-4 certification-card-${idx} ${activeDetail === idx
-                ? "border-[#C89D54]/50 bg-[#071628]/50"
-                : "border-white/10 hover:border-[#C89D54]/50 hover:bg-[#071628]/50"
+              initial={{ opacity: 0, y: 35, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.2 + idx * 0.28 }}
+              whileHover={{ scale: 1.015, translateY: -2 }}
+              className={`group relative flex flex-col justify-between rounded-2xl border bg-[#071628]/40 p-5 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] backdrop-blur-xl transition-all duration-300 cursor-pointer sm:p-6 certification-card-${idx} ${activeDetail === idx
+                ? "border-[#C89D54] bg-[#071628]/60 shadow-[0_0_25px_rgba(200,157,84,0.25)]"
+                : "border-white/10 hover:border-[#C89D54]/60 hover:bg-[#071628]/50"
                 }`}
             >
               <div>
                 {/* Header with emblem badge logo */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3.5">
                   <img
                     src={section.badge}
                     alt={section.title}
                     loading="lazy"
                     decoding="async"
-                    className="h-10 w-10 shrink-0 object-contain drop-shadow-md sm:h-11 sm:w-11"
+                    className="h-11 w-11 shrink-0 object-contain drop-shadow-md sm:h-12 sm:w-12"
                   />
                   <div>
-                    <h2 className="font-serif text-lg font-normal text-white sm:text-xl">{section.title}</h2>
-                    <p className="text-[10px] font-medium leading-tight text-[#C89D54]">{section.subtitle}</p>
+                    <h2 className="text-xl font-bold tracking-wide text-white">{section.title}</h2>
+                    <p className="text-xs font-medium leading-tight text-[#C89D54]">{section.subtitle}</p>
                   </div>
                 </div>
 
-                <span className="my-1.5 block h-px w-full bg-white/10" />
+                <span className="my-3 block h-px w-full bg-white/10" />
 
                 {/* Highlights List with custom gold SVG icons */}
-                <ul className="flex flex-col gap-1 py-0.5">
+                <ul className="flex flex-col gap-2 py-0.5">
                   {section.highlights.map((item, i) => {
                     const Icon = item.icon;
                     return (
-                      <li key={i} className="flex items-center gap-2 text-[10px] leading-tight text-white/85">
+                      <li key={i} className="flex items-center gap-2.5 text-xs leading-tight text-white/85">
                         <span className="flex size-4 shrink-0 items-center justify-center text-[#C89D54]">
                           <Icon />
                         </span>
@@ -380,45 +326,57 @@ const CertificationsPage = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
 
-      {/* Detail modal for expanded items (rendered at root for viewport-relative fixed centering) */}
+      {/* Detail modal on Hover */}
       <AnimatePresence>
         {activeSection && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/40 p-4 backdrop-blur-md cursor-default"
-            onClick={(e) => {
-              e.stopPropagation();
-              setActiveDetail(null);
-            }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/55 p-4 backdrop-blur-sm pointer-events-none"
           >
             <motion.div
-              initial={{ opacity: 0, y: 16, scale: 0.97 }}
+              key={activeDetail}
+              initial={{ opacity: 0, y: 14, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 16, scale: 0.97 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-h-[80vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#071628]/35 p-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-8 certification-modal-content"
+              exit={{ opacity: 0, y: 10, scale: 0.96 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="relative max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-[#C89D54]/30 bg-[#071628]/95 p-6 shadow-[0_20px_60px_0_rgba(0,0,0,0.85)] backdrop-blur-2xl sm:p-8 certification-modal-content pointer-events-none"
             >
-              <div className="flex items-center gap-4">
-                <img src={activeSection.badge} alt={activeSection.title} className="h-14 w-14 shrink-0 object-contain" />
+              <button
+                onClick={() => setActiveDetail(null)}
+                className="absolute top-5 right-5 z-10 rounded-full border border-white/20 bg-white/10 p-2 text-white/80 transition-all hover:bg-white/20 hover:text-white pointer-events-auto"
+                aria-label="Close"
+              >
+                <X className="size-4" />
+              </button>
+
+              <div className="flex items-center gap-4 pr-10">
+                <img src={activeSection.badge} alt={activeSection.title} className="h-14 w-14 shrink-0 object-contain drop-shadow-md" />
                 <div>
-                  <h2 className="font-serif text-2xl text-white">{activeSection.title}</h2>
+                  <h2 className="text-2xl font-bold tracking-wide text-white">{activeSection.title}</h2>
                   <p className="mt-0.5 text-xs font-medium text-[#C89D54]">{activeSection.subtitle}</p>
                 </div>
               </div>
 
-              <span className="mt-4 block h-px w-full bg-white/10" />
+              <span className="mt-4 block h-px w-full bg-white/15" />
 
               <ul className="mt-4 flex flex-col gap-2.5">
                 {activeSection.items.map((item, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm leading-snug text-white/85">
+                  <motion.li
+                    key={i}
+                    initial={{ opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.25, delay: i * 0.03 }}
+                    className="flex items-start gap-2.5 text-sm leading-snug text-white/90"
+                  >
                     <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-[#C89D54]" />
                     <span>{item}</span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </motion.div>
