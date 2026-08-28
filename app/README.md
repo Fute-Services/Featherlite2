@@ -113,7 +113,7 @@ from futeservices.com. None of that is reachable on a device with no network.
 
 | Feature | Why |
 | --- | --- |
-| Media -> "Watch full film" | A YouTube embed (`Media.tsx`). To make it offline, put the film in `web/public/media/` and play it from there instead of the iframe. |
+| Media -> "Watch full film" | Falls back to a YouTube embed when no local copy of the film is packaged. **To make it offline, drop the film at `web/public/media/walkthrough.mp4`** - nothing else to change. `WalkthroughModal` probes for that file and plays it when it is there, embed untouched otherwise. Encode it with `-movflags +faststart` so it starts before the whole file has arrived. With no film and no network the modal now says so, with a retry, instead of spinning forever. |
 | Gallery API | Already unused - `GalleryPage` reads the bundled `Data/Gallery.json`, whose images are mirrored. Nothing to do. |
 
 Everything else - home, floor plans, unit plans, the 3D model, the VR tour, the
