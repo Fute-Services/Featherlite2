@@ -94,7 +94,8 @@ export default function UnitPlanPage() {
 
             {/* Top Header */}
             <header
-                className={`absolute top-4 left-1/2 -translate-x-1/2 z-30 pointer-events-auto flex flex-col items-center text-center transition-all duration-500 ease-out ${popupInfo.isOpen
+                style={{ paddingTop: 'env(safe-area-inset-top)' }}
+                className={`absolute top-3 sm:top-4 left-1/2 -translate-x-1/2 z-30 pointer-events-auto flex flex-col items-center text-center transition-all duration-500 ease-out ${popupInfo.isOpen
                     ? 'opacity-0 -translate-y-4 pointer-events-none'
                     : 'opacity-100 translate-y-0'
                     }`}
@@ -110,7 +111,7 @@ export default function UnitPlanPage() {
   {floorPoints.name}
 </h1> */}
 
-                <h1 className="text-3xl md:text-4xl font-semibold tracking-wide whitespace-nowrap
+                <h1 className="text-3xl md:text-4xl font-semibold tracking-wide leading-tight whitespace-nowrap
   bg-gradient-to-l from-[#E6D7BA] via-[#B8A37E] to-[#E6D7BA]
   bg-clip-text text-transparent">
                     {floorPoints.name}
@@ -139,7 +140,7 @@ export default function UnitPlanPage() {
             </header>
 
             {/* Main Floor Plan Canvas */}
-            <main className="relative flex-1 w-full h-full flex items-center justify-center overflow-hidden">
+            <main className="relative flex-1 w-full h-full flex items-center justify-center overflow-hidden pt-20 sm:pt-24 md:pt-28">
                 <div
                     key={`building-stage-${idnew}`}
                     className={`relative w-full h-full ${String(floorPoints.id) === '101'

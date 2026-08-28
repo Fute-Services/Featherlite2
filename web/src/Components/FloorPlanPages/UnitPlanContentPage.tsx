@@ -1,4 +1,4 @@
-import  { useMemo } from 'react';
+import { useMemo } from 'react';
 
 interface UnitPlanContentPageProps {
     setSelectedId: (id: string | number) => void;
@@ -182,11 +182,10 @@ export default function UnitPlanContentPage({
                                 <div
                                     className={`w-full py-5 px-4 rounded-xl border 
                                     transition-all duration-500 ease-out
-                                    transform-gpu cursor-pointer shadow-2xl ${
-                                        isActive
+                                    transform-gpu cursor-pointer shadow-2xl ${isActive
                                             ? 'bg-[#082842] border-white/60 shadow-[0_0_30px_rgba(56,189,248,0.5)] scale-105 opacity-100'
                                             : 'bg-[#051a2d] border-white/40 hover:border-[#a17834] opacity-90 hover:opacity-100 hover:scale-[1.02]'
-                                    }`}
+                                        }`}
                                 >
                                     <div className="flex items-center gap-2 mb-1">
                                         <span className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-[#a17834] text-[16px] text-white/90 font-mono font-bold">
@@ -197,13 +196,29 @@ export default function UnitPlanContentPage({
                                         </h3>
                                     </div>
                                     <div className="flex items-start gap-2">
-                                        {point.icon && (
+                                        {/* {point.icon && (
                                             <img
                                                 src={point.icon}
                                                 className="w-6 h-6 shrink-0"
                                                 alt=""
                                             />
                                         )}
+                                        <p className="text-[16px] text-slate-300 mt-1 leading-tight line-clamp-2">
+                                            {point.subtitle}
+                                        </p> */}
+
+                                        {point.icon && (
+                                            typeof point.icon === 'string' ? (
+                                                <img
+                                                    src={point.icon}
+                                                    className="w-6 h-6 shrink-0 object-contain"
+                                                    alt={point.name || 'icon'}
+                                                />
+                                            ) : (
+                                                <point.icon className="w-6 h-6 shrink-0 text-white/90" />
+                                            )
+                                        )}
+
                                         <p className="text-[16px] text-slate-300 mt-1 leading-tight line-clamp-2">
                                             {point.subtitle}
                                         </p>

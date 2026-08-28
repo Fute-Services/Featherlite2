@@ -88,10 +88,72 @@ const CLICK_MAX_MS = 400
  */
 const HOVER_LABEL_GAP_PX = 14
 
+/** Stick length between a ring's halo edge and the badge floating above it. */
+const PIN_STICK_PX = 12
+
 /* ------------------------------------------------------------------ */
 
 const DEG = Math.PI / 180
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
+
+/**
+ * Picks a pin badge icon from a hotspot's label. Checked most-specific-first
+ * so e.g. "Terrace Cafe" reads as a cafe, not the more generic outdoor tree.
+ * Order matters here; category keywords are not mutually exclusive.
+ */
+function pinIconSvg(label: string): string {
+  const l = label.toLowerCase()
+  const stroke = 'fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'
+
+  if (/drop.?off|parking|valet|arrival/.test(l)) {
+    return `<svg viewBox="0 0 24 24" width="18" height="18" ${stroke}>
+      <path d="M5 16V9.5l1.6-4A2 2 0 0 1 8.5 4.5h7a2 2 0 0 1 1.9 1.4L19 9.5V16"/>
+      <path d="M5 16h14M6.5 16v2M17.5 16v2"/>
+      <circle cx="8" cy="13" r="1" fill="white" stroke="none"/>
+      <circle cx="16" cy="13" r="1" fill="white" stroke="none"/>
+    </svg>`
+  }
+  if (/kids|play/.test(l)) {
+    return `<svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+      <path d="M12 3.5l2.4 5 5.6.5-4.3 3.8 1.3 5.5L12 15.5 6.9 18.3l1.4-5.5-4.3-3.8 5.6-.5Z"/>
+    </svg>`
+  }
+  if (/cafe|coffee|dining|restaurant/.test(l)) {
+    return `<svg viewBox="0 0 24 24" width="18" height="18" ${stroke}>
+      <path d="M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z"/>
+      <path d="M17 9h1.5a2.5 2.5 0 0 1 0 5H17"/>
+    </svg>`
+  }
+  if (/lift|elevator/.test(l)) {
+    return `<svg viewBox="0 0 24 24" width="18" height="18" ${stroke}>
+      <rect x="6" y="3" width="12" height="18" rx="2"/>
+      <path d="M10 9l2-2 2 2M10 15l2 2 2-2"/>
+    </svg>`
+  }
+  if (/workstation|office|cabin/.test(l)) {
+    return `<svg viewBox="0 0 24 24" width="18" height="18" ${stroke}>
+      <rect x="4" y="5" width="16" height="11" rx="1"/>
+      <path d="M9 20h6M12 16v4"/>
+    </svg>`
+  }
+  if (/reception/.test(l)) {
+    return `<svg viewBox="0 0 24 24" width="18" height="18" ${stroke}>
+      <rect x="6" y="3" width="12" height="18" rx="1"/>
+      <circle cx="14.5" cy="12" r="1" fill="white" stroke="none"/>
+    </svg>`
+  }
+  if (/terrace|court|seating|garden|open/.test(l)) {
+    return `<svg viewBox="0 0 24 24" width="18" height="18" fill="white">
+      <circle cx="12" cy="9" r="5" opacity="0.95"/>
+      <rect x="10.5" y="14" width="3" height="6"/>
+    </svg>`
+  }
+  // Entry, gate, drop off and anything else that reads as "a way in/out".
+  return `<svg viewBox="0 0 24 24" width="18" height="18" ${stroke}>
+    <path d="M4 11.5 12 4l8 7.5"/>
+    <path d="M6 10v9h12v-9"/>
+  </svg>`
+}
 
 export interface PanoViewerCallbacks {
   onSceneChange?: (sceneId: string) => void
@@ -147,6 +209,11 @@ export class PanoViewer {
   private disposed = false
   private lastEmittedLabel: string | null = null
   private label: HTMLDivElement
+  /** One floating teal pin per marker, rebuilt whenever setMarkers() runs. */
+  private pinBadges: HTMLDivElement[] = []
+  private badgeHotspots: TourHotspot[] = []
+  /** Index into badgeHotspots/pinBadges while the pointer is over a badge itself. */
+  private badgeHoverIndex = -1
 
   private container: HTMLElement
   private callbacks: PanoViewerCallbacks
@@ -213,6 +280,7 @@ export class PanoViewer {
     this.applySceneFraming(sceneId)
     this.sphere = this.addSphere(texture, 1)
     this.markers.setMarkers(def.hotspots, this.sceneYawOffsetDeg)
+    this.syncPinBadges(def.hotspots)
     this.markers.setVisible(true)
     this.callbacks.onSceneChange?.(sceneId)
     this.preloadNeighbours(sceneId)
@@ -268,6 +336,7 @@ export class PanoViewer {
     this.sceneId = sceneId
     this.currentPanorama = def.panorama
     this.markers.setMarkers(def.hotspots, this.sceneYawOffsetDeg)
+    this.syncPinBadges(def.hotspots)
     this.callbacks.onSceneChange?.(sceneId)
 
     // Yaw stays put - swinging it is what made this lurch, and the panorama has
@@ -772,6 +841,11 @@ export class PanoViewer {
     }
     this.markers.update(dt)
     this.updateHoverLabel()
+    if (this.pinBadges.length) {
+      this.updatePinBadges(
+        this.markers.screenPositions(this.camera, this.container.clientWidth, this.container.clientHeight),
+      )
+    }
 
     this.renderer.render(this.scene, this.camera)
     this.frame = requestAnimationFrame(this.tick)
@@ -784,7 +858,12 @@ export class PanoViewer {
    * component sixty times a second for one line of text.
    */
   private updateHoverLabel() {
-    const hovered = this.markers.hovered
+    // The ring's own 3D pick takes priority; the pin badge is a fallback
+    // hover source so its name shows even when the pointer never reaches
+    // the ring itself (the badge floats well clear of it on screen).
+    const ringHovered = this.markers.hovered
+    const badgeHovered = this.badgeHoverIndex >= 0 ? this.badgeHotspots[this.badgeHoverIndex] : null
+    const hovered = ringHovered ?? badgeHovered
     if (!hovered) {
       if (this.lastEmittedLabel !== null) {
         this.lastEmittedLabel = null
@@ -792,17 +871,92 @@ export class PanoViewer {
       }
       return
     }
-    const pos = this.markers
-      .screenPositions(this.camera, this.container.clientWidth, this.container.clientHeight)
-      .find((p) => p.next === hovered.next && p.label === hovered.label)
-    if (!pos) return
     if (this.lastEmittedLabel !== hovered.label) {
       this.lastEmittedLabel = hovered.label
       this.label.textContent = hovered.label
       this.label.style.display = 'block'
     }
+    if (!ringHovered && badgeHovered) {
+      const badge = this.pinBadges[this.badgeHoverIndex]
+      const badgeRect = badge.getBoundingClientRect()
+      const containerRect = this.container.getBoundingClientRect()
+      this.label.style.left = `${badgeRect.left + badgeRect.width / 2 - containerRect.left}px`
+      this.label.style.top = `${badgeRect.top - containerRect.top - HOVER_LABEL_GAP_PX}px`
+      return
+    }
+    const pos = this.markers
+      .screenPositions(this.camera, this.container.clientWidth, this.container.clientHeight)
+      .find((p) => p.next === hovered.next && p.label === hovered.label)
+    if (!pos) return
     this.label.style.left = `${pos.x}px`
     this.label.style.top = `${pos.topPx - HOVER_LABEL_GAP_PX}px`
+  }
+
+  /**
+   * Rebuilds the floating pin badges to match the current scene's hotspots.
+   * Called wherever markers.setMarkers() is - the badges are a second, purely
+   * decorative DOM layer above the same floor rings, not something the
+   * three.js marker system needs to know about.
+   */
+  private syncPinBadges(hotspots: TourHotspot[]) {
+    for (const badge of this.pinBadges) badge.remove()
+    this.badgeHotspots = hotspots
+    this.badgeHoverIndex = -1
+    this.pinBadges = hotspots.map((spec, i) => {
+      const badge = document.createElement('div')
+      badge.className = 'vr-pin-badge'
+      badge.style.cssText = [
+        'position:absolute',
+        'display:flex',
+        'flex-direction:column',
+        'align-items:center',
+        'pointer-events:none',
+        'transform:translate(-50%,-100%)',
+        'z-index:35',
+      ].join(';')
+      badge.innerHTML = `
+        <div class="vr-pin-circle" style="width:36px;height:36px;border-radius:9999px;border:2px solid rgba(255,255,255,0.9);
+          background:radial-gradient(circle at 30% 30%, #ff4433, #b3160a);
+          box-shadow:0 2px 10px rgba(0,0,0,0.5), 0 0 0 4px rgba(179,22,10,0.25);
+          display:flex;align-items:center;justify-content:center;flex-shrink:0;
+          pointer-events:auto;cursor:pointer;">
+          ${pinIconSvg(spec.label)}
+        </div>
+        <div class="vr-pin-stick" style="width:2px;background:linear-gradient(to bottom, rgba(255,255,255,0.9), rgba(255,255,255,0.15));"></div>
+      `
+      // Only the circle is interactive - the stick stays click-through so it
+      // never steals a look-around drag passing behind it.
+      const circle = badge.querySelector<HTMLDivElement>('.vr-pin-circle')
+      circle?.addEventListener('mouseenter', () => {
+        this.badgeHoverIndex = i
+      })
+      circle?.addEventListener('mouseleave', () => {
+        if (this.badgeHoverIndex === i) this.badgeHoverIndex = -1
+      })
+      circle?.addEventListener('click', () => {
+        void this.goTo(spec.next, spec)
+      })
+      this.container.appendChild(badge)
+      return badge
+    })
+  }
+
+  /** Floats each pin badge above its ring, connected by a stick down to it. */
+  private updatePinBadges(positions: MarkerScreenPosition[]) {
+    const visible = this.markers.group.visible && !this.transitioning
+    for (let i = 0; i < this.pinBadges.length; i++) {
+      const badge = this.pinBadges[i]
+      const pos = positions[i]
+      if (!visible || !pos || !pos.onScreen) {
+        badge.style.display = 'none'
+        continue
+      }
+      badge.style.display = 'flex'
+      badge.style.left = `${pos.x}px`
+      badge.style.top = `${pos.topPx}px`
+      const stick = badge.querySelector<HTMLDivElement>('.vr-pin-stick')
+      if (stick) stick.style.height = `${PIN_STICK_PX}px`
+    }
   }
 
   /* ------------------------------ misc ------------------------------ */
@@ -856,6 +1010,7 @@ export class PanoViewer {
     window.removeEventListener('pointerup', this.onPointerUp)
     window.removeEventListener('pointercancel', this.onPointerCancel)
     this.label.remove()
+    for (const badge of this.pinBadges) badge.remove()
     if (this.sphere) this.disposeSphere(this.sphere)
     this.markers.dispose()
     this.decoder?.terminate()
