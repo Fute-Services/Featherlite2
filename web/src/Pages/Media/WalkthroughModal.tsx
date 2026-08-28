@@ -25,6 +25,29 @@ const WATCH_URL = "https://www.youtube.com/watch?v=CgHy7kYATNo";
 
 /** How long the embed gets before we stop pretending it is still coming. */
 const EMBED_TIMEOUT_MS = 9000;
+/** How long the "can we actually reach YouTube?" probe gets. */
+const REACH_TIMEOUT_MS = 3500;
+
+/**
+ * Can the device reach YouTube right now?
+ *
+ * `navigator.onLine` is not usable here: Android WebView answers `true`
+ * unconditionally unless the app holds ACCESS_NETWORK_STATE, which this one
+ * does not. So ask the network instead. `no-cors` means we never see the
+ * response body - we only care whether the request completed at all.
+ */
+function canReachEmbed(): Promise<boolean> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), REACH_TIMEOUT_MS);
+  return fetch("https://www.youtube.com/generate_204", {
+    mode: "no-cors",
+    cache: "no-store",
+    signal: ctrl.signal,
+  })
+    .then(() => true)
+    .catch(() => false)
+    .finally(() => clearTimeout(timer));
+}
 
 type Source = "probing" | "local" | "embed";
 
@@ -119,11 +142,22 @@ const WalkthroughModal = ({ onClose }: { onClose: () => void }) => {
   }, []);
 
   /* The embed never reports failure - a blocked YouTube simply never fires
-     load - so time it out instead of spinning forever. */
+     load - so time it out instead of spinning forever. The reachability probe
+     usually beats the timeout by several seconds on a tablet with no network,
+     which is the case that matters. */
   useEffect(() => {
     if (source !== "embed" || playing || offline) return;
-    const id = window.setTimeout(() => setStalled(true), EMBED_TIMEOUT_MS);
-    return () => window.clearTimeout(id);
+    let alive = true;
+    void canReachEmbed().then((reachable) => {
+      if (alive && !reachable) setOffline(true);
+    });
+    const id = window.setTimeout(() => {
+      if (alive) setStalled(true);
+    }, EMBED_TIMEOUT_MS);
+    return () => {
+      alive = false;
+      window.clearTimeout(id);
+    };
   }, [source, playing, offline, attempt]);
 
   const startFilm = useCallback(() => {
