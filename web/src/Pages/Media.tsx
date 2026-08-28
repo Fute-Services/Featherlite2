@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Award, FileText, Images, Play, Ruler, type LucideIcon } from "lucide-react";
+import { ArrowRight, Award, FileText, Images, Play, Ruler, X, type LucideIcon } from "lucide-react";
 import brochureImg from "../assets/Media/brochure_cover_navy.jpg";
 import galleryImg from "../assets/Media/gallery_cover.jpg";
 import certificationsImg from "../assets/Media/certifications_cover.jpg";
@@ -9,7 +9,6 @@ import technicalImg from "../assets/Media/technical_cover.jpg";
 import walkthroughImg from "../assets/Media/walkthrough_hero.jpg";
 
 const BrochureModal = lazy(() => import("./Media/BrochureModal"));
-const WalkthroughModal = lazy(() => import("./Media/WalkthroughModal"));
 
 interface MediaCard {
   title: string;
@@ -36,11 +35,6 @@ const Media = () => {
       link.as = "fetch";
       link.href = "/media/brochure.pdf";
       document.head.appendChild(link);
-      // and the film: its chunk, plus the "is a local copy packaged?" probe,
-      // so the walk-through opens straight into a player instead of a spinner
-      void import("./Media/WalkthroughModal").then((m) =>
-        m.probeWalkthroughFilm(),
-      );
     };
     const ric = (window as any).requestIdleCallback as
       | ((cb: () => void, opts?: { timeout: number }) => number)
@@ -221,9 +215,41 @@ const Media = () => {
       {/* Video Walkthrough Modal */}
       <AnimatePresence>
         {isWalkthroughOpen && (
-          <Suspense fallback={null}>
-            <WalkthroughModal onClose={() => setIsWalkthroughOpen(false)} />
-          </Suspense>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm md:p-10"
+          >
+            <button
+              onClick={() => setIsWalkthroughOpen(false)}
+              aria-label="Close walkthrough"
+              className="absolute top-4 right-4 z-20 rounded bg-[#FF0000] p-2 text-white shadow-lg transition-colors hover:bg-red-700 md:top-8 md:right-8"
+            >
+              <X className="size-6" />
+            </button>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex aspect-video w-full max-w-[1200px] flex-col overflow-hidden rounded-lg bg-black shadow-2xl"
+            >
+              {/* sits behind the iframe so the frame is never an empty black box */}
+              <span className="absolute inset-0 z-0 flex items-center justify-center">
+                <span className="size-9 animate-spin rounded-full border-2 border-white/15 border-t-[#C89D54]" />
+              </span>
+              <iframe
+                src="https://www.youtube.com/embed/CgHy7kYATNo?autoplay=1&rel=0&playsinline=1"
+                className="relative z-10 h-full w-full flex-1 border-none"
+                title="Walkthrough Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

@@ -7,6 +7,7 @@ import { createRequire } from 'node:module'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { offlineAssets } from './offline-plugin.mjs'
+import { appUi } from './app-ui-plugin.mjs'
 
 const HERE = path.dirname(fileURLToPath(import.meta.url))
 const APP = path.resolve(HERE, '..')
@@ -36,7 +37,13 @@ const appRuntime = {
 await build({
   root: WEB,
   configFile: false,
-  plugins: [offlineAssets({ appDir: APP, webDir: WEB }), react(), tailwindcss(), appRuntime],
+  plugins: [
+    appUi({ appDir: APP, webDir: WEB }),
+    offlineAssets({ appDir: APP, webDir: WEB }),
+    react(),
+    tailwindcss(),
+    appRuntime,
+  ],
   resolve: {
     // the runtime lives in app/src and imports Capacitor from app/node_modules
     preserveSymlinks: false,

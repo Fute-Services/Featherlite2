@@ -1,9 +1,8 @@
-import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom'
 import { lazy, Suspense } from 'react'
 import Header from '../Components/Header/Header'
 import Navbar from '../Components/Navbar/Navbar'
 import IntroCurtain from '../Components/Intro/IntroCurtain'
-import ErrorBoundary from '../Components/ErrorBoundary'
 import Homepage from '../Pages/Homepage'
 import Location from '../Pages/Location'
 
@@ -41,16 +40,10 @@ const PlainLayout = () => (
   </div>
 )
 
-/**
- * The routed screens, behind a crash guard. The guard sits *inside* the router
- * so a screen that throws does not take the shell down with it, and so moving
- * to another screen clears the error by itself.
- */
-const RoutedScreens = () => {
-  const location = useLocation()
-
+const Router = () => {
   return (
-    <ErrorBoundary resetKey={location.pathname}>
+    <BrowserRouter>
+      <IntroCurtain />
       <Suspense fallback={null}>
         <Routes>
           {/* Routes WITH Navbar */}
@@ -76,15 +69,6 @@ const RoutedScreens = () => {
           </Route>
         </Routes>
       </Suspense>
-    </ErrorBoundary>
-  )
-}
-
-const Router = () => {
-  return (
-    <BrowserRouter>
-      <IntroCurtain />
-      <RoutedScreens />
     </BrowserRouter>
   )
 }

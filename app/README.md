@@ -100,12 +100,19 @@ from futeservices.com. None of that is reachable on a device with no network.
    each one into `offline/`, and writes `offline/manifest.json`.
 2. `scripts/mirror-location-tour.mjs` mirrors the Pano2VR tour: player, skin,
    config and all 300 cube-face tiles.
-3. `scripts/offline-plugin.mjs` is a Vite plugin that rewrites those URLs to
+3. `scripts/app-ui-plugin.mjs` swaps two pieces of UI the app needs to behave
+   differently from the website - the walk-through player and a crash guard
+   around the router - by patching the web sources **in memory**. It compiles
+   `app/src/ui/*.tsx` as though they lived in `web/src`, so they can import
+   React and the site's own assets without a file being written into `web/`.
+   Each patch is an exact string match and the build fails if the website has
+   moved the code it targets, so an app fix can never silently disappear.
+4. `scripts/offline-plugin.mjs` is a Vite plugin that rewrites those URLs to
    their local copies **during the app build only**. `../web` is never edited,
    so the website keeps using its CDNs.
-4. The same plugin then re-scans the finished bundle and **fails the build** if
+5. The same plugin then re-scans the finished bundle and **fails the build** if
    any mirrored host survived. A missing asset cannot ship silently.
-5. It also drops packaged files nothing references. `web/public` carries three
+6. It also drops packaged files nothing references. `web/public` carries three
    generations of the same panoramas (`public/vr` is not referenced at all),
    which would have added ~500 MB of images the app never opens.
 
@@ -113,7 +120,7 @@ from futeservices.com. None of that is reachable on a device with no network.
 
 | Feature | Why |
 | --- | --- |
-| Media -> "Watch full film" | Falls back to a YouTube embed when no local copy of the film is packaged. **To make it offline, drop the film at `web/public/media/walkthrough.mp4`** - nothing else to change. `WalkthroughModal` probes for that file and plays it when it is there, embed untouched otherwise. Encode it with `-movflags +faststart` so it starts before the whole file has arrived. With no film and no network the modal now says so, with a retry, instead of spinning forever. |
+| Media -> "Watch full film" | Falls back to a YouTube embed when no local copy of the film is packaged. **To make it offline, drop the film at `web/public/media/walkthrough.mp4`** - nothing else to change. `app/src/ui/WalkthroughModal.tsx` probes for that file and plays it when it is there, embed untouched otherwise. This player is app-only - the website keeps its plain YouTube embed. Encode it with `-movflags +faststart` so it starts before the whole file has arrived. With no film and no network the modal now says so, with a retry, instead of spinning forever. |
 | Gallery API | Already unused - `GalleryPage` reads the bundled `Data/Gallery.json`, whose images are mirrored. Nothing to do. |
 
 Everything else - home, floor plans, unit plans, the 3D model, the VR tour, the
@@ -122,6 +129,10 @@ specifications - works with the device in airplane mode. That was verified on a
 Pixel Tablet emulator (2560x1600) with Wi-Fi and mobile data off.
 
 ## Native behaviour
+
+`src/ui/` holds the two components the app swaps in (see step 3 above): the
+walk-through player and the router's crash guard, which turns a white page
+into a card with a way back - the reload button a kiosk tablet does not have.
 
 `src/app-runtime.ts` is injected into the bundle for the app build only:
 

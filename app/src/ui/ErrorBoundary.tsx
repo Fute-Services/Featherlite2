@@ -1,12 +1,17 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 
 /**
- * Last line of defence around the router.
+ * Last line of defence around the router, for the app only.
  *
- * Without one of these, a throw in any screen - or a lazy chunk that fails to
- * load, which is what a half-written APK install looks like at runtime - leaves
- * a white page and no way back. On a kiosk tablet with no address bar that is
- * the end of the demo. This turns it into a branded card with two ways out.
+ * In a browser a crashed screen is survivable - there is an address bar and a
+ * reload button. On a kiosk tablet locked to landscape with no system bars,
+ * a throw in any screen (or a chunk that fails to load, which is what a
+ * half-written APK install looks like at runtime) leaves a white page and no
+ * way back: the demo is over until someone kills the app. This turns that into
+ * a branded card with two ways out.
+ *
+ * Injected by `scripts/app-ui-plugin.mjs`; `web/` is not edited.
  */
 interface Props {
   children: ReactNode;
@@ -31,7 +36,9 @@ class ErrorBoundary extends Component<Props, State> {
   static getDerivedStateFromProps(props: Props, state: State): State | null {
     if (!state.error) return { error: null, seenKey: props.resetKey };
     if (state.seenKey === undefined) return { ...state, seenKey: props.resetKey };
-    return state.seenKey === props.resetKey ? null : { error: null, seenKey: props.resetKey };
+    return state.seenKey === props.resetKey
+      ? null
+      : { error: null, seenKey: props.resetKey };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
@@ -77,4 +84,14 @@ class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-export default ErrorBoundary;
+/**
+ * What the patched Router renders. It reads the location itself so the plugin
+ * only has to wrap a pair of tags, and so moving to another screen clears the
+ * error without the user doing anything.
+ */
+const AppErrorBoundary = ({ children }: { children: ReactNode }) => {
+  const location = useLocation();
+  return <ErrorBoundary resetKey={location.pathname}>{children}</ErrorBoundary>;
+};
+
+export default AppErrorBoundary;

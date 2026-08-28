@@ -11,7 +11,6 @@ export default function UnitPlanPopupOverlay({
 }: UnitPlanPopupOverlayProps) {
     // Filter out ID 101 and duplicate entries
     const filteredPoints = useMemo(() => {
-        if (!pointsData) return [];
         return pointsData.filter(
             (point, index, self) =>
                 point.id !== 101 && index === self.findIndex((p) => p.id === point.id)
@@ -47,11 +46,6 @@ export default function UnitPlanPopupOverlay({
 
         return orderMap;
     }, [filteredPoints]);
-
-    // Bail out *after* the hooks. An early return above them changes the hook
-    // count between renders, which React answers with a hard crash the moment a
-    // floor plan swaps to a plate that carries no points.
-    if (filteredPoints.length === 0) return null;
 
     return (
         <>
