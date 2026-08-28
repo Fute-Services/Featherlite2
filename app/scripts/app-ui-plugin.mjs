@@ -124,6 +124,35 @@ export function appUi({ appDir, webDir }) {
       return touched ? { code: out, map: null } : null
     },
 
+    /* app/media/* is packaged into www/media/ - media the app carries and the
+       website does not, the walk-through film above all. Keeping it here rather
+       than in web/public is the whole point: the film never reaches the site,
+       and web/ stays untouched. */
+    async writeBundle(options) {
+      const from = path.join(appDir, 'media')
+      const to = path.join(options.dir ?? path.join(appDir, 'www'), 'media')
+      let names
+      try {
+        names = await fs.readdir(from)
+      } catch {
+        return
+      }
+      const files = names.filter((n) => !n.endsWith('.md'))
+      if (!files.length) {
+        console.log(
+          '[app-ui] app/media holds no film - the walk-through will fall back ' +
+            'to the YouTube embed, which needs a network. See app/media/README.md.',
+        )
+        return
+      }
+      await fs.mkdir(to, { recursive: true })
+      for (const name of files) {
+        await fs.copyFile(path.join(from, name), path.join(to, name))
+        const { size } = await fs.stat(path.join(to, name))
+        console.log(`[app-ui] packaged media/${name} (${Math.round(size / 1e6)} MB)`)
+      }
+    },
+
     buildEnd() {
       const wanted = new Set(PATCHES.map((p) => p.what))
       const missing = [...wanted].filter((w) => !applied.has(w))
