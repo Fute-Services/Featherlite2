@@ -974,7 +974,7 @@ export default function FloorPlanViewer({
             </svg>
 
             {/* Magnifier Lens for hover inspection (Image Only) */}
-            {!isTouchDevice && !isGlobalZoomed && (
+            {false && !isTouchDevice && !isGlobalZoomed && (
               <div
                 ref={lensRef}
                 aria-hidden="true"

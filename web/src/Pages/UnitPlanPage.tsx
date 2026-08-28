@@ -12,7 +12,7 @@ import { pointsData } from '../Data/UnitPlanData';
 const VRModel = lazy(() => import('../Components/FloorPlanPages/VRModel'));
 import BackButton from '../Components/FloorPlanPages/BackButton';
 import UnitPlanContentPage from '../Components/FloorPlanPages/UnitPlanContentPage';
-import UnitPlanPopupOverlay from '../Components/FloorPlanPages/UnitPlanPopupOverlay';
+// import UnitPlanPopupOverlay from '../Components/FloorPlanPages/UnitPlanPopupOverlay';
 
 export default function UnitPlanPage() {
     const { idnew } = useParams<{ idnew: string }>();
@@ -35,12 +35,6 @@ export default function UnitPlanPage() {
     const dragStart = useRef({ x: 0, y: 0 });
     const [viewdata] = useState(true);
     const [showVRModal, setShowVRModal] = useState(false);
-
-    const [popupInfo, setPopupInfo] = useState<{
-        isOpen: boolean;
-        x: number;
-        y: number;
-    }>({ isOpen: false, x: 0, y: 0 });
 
     useEffect(() => {
         if (units.length > 0) {
@@ -95,10 +89,7 @@ export default function UnitPlanPage() {
             {/* Top Header */}
             <header
                 style={{ paddingTop: 'env(safe-area-inset-top)' }}
-                className={`absolute top-3 sm:top-4 left-1/2 -translate-x-1/2 z-30 pointer-events-auto flex flex-col items-center text-center transition-all duration-500 ease-out ${popupInfo.isOpen
-                    ? 'opacity-0 -translate-y-4 pointer-events-none'
-                    : 'opacity-100 translate-y-0'
-                    }`}
+                className="absolute top-3 sm:top-4 left-1/2 -translate-x-1/2 z-30 pointer-events-auto flex flex-col items-center text-center transition-all duration-500 ease-out opacity-100 translate-y-0"
             >
                 {/* <h1 className="text-3xl md:text-4xl font-semibold tracking-wide whitespace-nowrap
   bg-gradient-to-r from-[#B7B694] via-[#D4AF37] to-[#F5E6A8]
@@ -170,38 +161,19 @@ export default function UnitPlanPage() {
                                 className="w-full h-full max-h-full"
                                 preserveAspectRatio="xMidYMid meet"
                             >
-                                {!popupInfo.isOpen && (
-                                    <image
-                                        href={floorPoints.image}
-                                        x="0"
-                                        y="0"
-                                        width={floorPoints.imagew}
-                                        height={floorPoints.imageh}
-                                        preserveAspectRatio="xMidYMid meet"
-                                        className="brightness-95 contrast-105 bg-transparent"
-                                        style={{ backgroundColor: 'transparent' }}
-                                    />
-                                )}
+                                <image
+                                    href={floorPoints.image}
+                                    x="0"
+                                    y="0"
+                                    width={floorPoints.imagew}
+                                    height={floorPoints.imageh}
+                                    preserveAspectRatio="xMidYMid meet"
+                                    className="brightness-95 contrast-105 bg-transparent"
+                                    style={{ backgroundColor: 'transparent' }}
+                                />
 
-                                {/* Polygon Target Triggering the Popup */}
-                                {/* Main View Polygon Target */}
-                                {floorPoints.polygonpopup && (
-                                    <polygon
-                                        points={floorPoints.polygonpopup}
-                                        fill="rgba(255, 255, 255, 0.001)"
-                                        className="cursor-pointer transition-all duration-300 pointer-events-auto"
-                                        onMouseEnter={(e) => {
-                                            const bbox = e.currentTarget.getBBox();
-                                            setPopupInfo({
-                                                isOpen: true,
-                                                x: bbox.x + bbox.width / 2,
-                                                y: bbox.y,
-                                            });
-                                        }}
-                                    />
-                                )}
                                 {/* Main View Hotspot Pins */}
-                                {!popupInfo.isOpen && viewdata && units.length > 0 && (
+                                {viewdata && units.length > 0 && (
                                     <g
                                         key={`unit-group-${idnew}`}
                                         className="animate-unit-pins-delayed"
@@ -228,58 +200,6 @@ export default function UnitPlanPage() {
                     />
                 )} */}
             </main>
-
-
-            {/* Fullscreen Glassmorphism Hover Overlay */}
-            {popupInfo.isOpen && (
-                <div className="fixed inset-0 animate-zoom-back-to-front z-[999]
-                 flex items-center justify-center pointer-events-none 
-                 transition-all duration-500 animate-in fade-in">
-                    <div
-                        className="relative flex items-center justify-center 
-                        transition-all duration-300 transform-gpu animate-in zoom-in-95"
-                        style={{
-                            width: `${floorPoints.imagew}px`,
-                            height: `${floorPoints.imageh}px`,
-                            maxWidth: '100vw',
-                            maxHeight: '100vh',
-                            aspectRatio: `${floorPoints.imagew} / ${floorPoints.imageh}`,
-                        }}
-                    >
-                        {/* Preview Image */}
-                        <img
-                            src={floorPoints.image}
-                            alt={floorPoints.name || 'Preview'}
-                            className="w-full h-full object-contain pointer-events-none select-none"
-                        />
-
-                        {/* SVG Overlay containing the exact boundary tracker */}
-                        <svg
-                            viewBox={floorPoints.imagesvg}
-                            className="absolute inset-0 w-full h-full pointer-events-none"
-                            preserveAspectRatio="xMidYMid meet"
-                        >
-                            {/* Visual Unit Plan Overlay */}
-                            <UnitPlanPopupOverlay
-                                pointsData={units}
-                            // selectedId={null}
-                            />
-
-                            {/* EXACT POLYGON HITBOX: Closes immediately when leaving the polygon boundary */}
-                            {floorPoints.polygonpopup && (
-                                <polygon
-                                    points={floorPoints.polygonpopup}
-                                    fill="transparent"
-                                    className="pointer-events-auto cursor-pointer"
-                                    onMouseLeave={() => {
-                                        setPopupInfo((prev) => ({ ...prev, isOpen: false }));
-                                    }}
-                                />
-                            )}
-                        </svg>
-                    </div>
-                </div>
-            )}
             <BackButton />
 
             {showVRModal && activePoint && (
