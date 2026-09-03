@@ -17,8 +17,8 @@
         "y": 460
     },
     {
-        "id": "Office Users Entry",
-        "title": "Office Users Entry",
+        "id": "Office User Entry",
+        "title": "Office User Entry",
         "description": "Main entrance security and visitor registration.",
         "polygon": "2182,1220,2258,1220,2258,1263",
         "x": 1060,
@@ -35,7 +35,7 @@
     },
     {
         "id": "vistors-parking",
-        "title": "Visitors Parking ",
+        "title": "Visitor's Parking",
         "description": "Main entrance security and visitor registration.",
         "polygon": "1337,366,1337,441",
         "x": 620,
@@ -59,7 +59,7 @@
     },
     {
         "id": "Crèche-play-area",
-        "title": "Crèche Play Area",
+        "title": "Outdoor Kids Play",
         "description": "Main entrance security and visitor registration.",
         "polygon": "1967,487,1967,457",
         "x": 915,

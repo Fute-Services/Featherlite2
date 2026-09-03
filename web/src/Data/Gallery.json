@@ -8,7 +8,7 @@
     "images": [
       {
         "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268810/Copy_of_Double_Height_Reception_bd978h.jpg",
-        "title": "Double Height Reception",
+        "title": "Doubled Heighted Receptions",
         "_id": "69f0a1b35b064f66de329210"
       },
 
@@ -49,16 +49,6 @@
       },
     
       {
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268630/Copy_of_Office_01_hq4nkh.jpg",
-        "title": "Workstation",
-        "_id": "69f0a1b35b064f66de32921b"
-      },
-      {
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268577/Entry_Lobby_3_szxpmk.jpg",
-        "title": "Collaboration Space",
-        "_id": "69f0a1b35b064f66de32921c"
-      },
-      {
         "image": "\nhttps://res.cloudinary.com/db0f2ofgf/image/upload/v1777268154/Lobby_A_250226_1_isifpm.png",
         "title": "Reception",
         "_id": "69f0a1b35b064f66de32921d"
@@ -70,7 +60,7 @@
       },
       {
         "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268417/Lift_Lobby_250226_1_1_1_1_ljbiep.png",
-        "title": "Destination Control System Lift Lobby",
+        "title": "Lift Lobby - Destination Control System",
         "_id": "69f0a1b35b064f66de32921f"
       },
       {
@@ -99,7 +89,7 @@
       },
       {
         "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268811/Copy_of_day_full_frunt_pmpfak.jpg",
-        "title": "Elevation Shot",
+        "title": "Side Elevation View",
         "_id": "69f0a2755b064f66de329272"
       },
       {
@@ -114,7 +104,7 @@
       },
       {
         "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268813/Copy_of_day_frunt_h828qc.jpg",
-        "title": "Elevation View",
+        "title": "Front Elevation View",
         "_id": "69f0a2755b064f66de329275"
       },
       {
@@ -124,7 +114,7 @@
       },
       {
         "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777269034/Copy_of_Kids_Play_1_dyo6xh.jpg",
-        "title": "Kid's Play Area",
+        "title": "Kids Play Area",
         "_id": "69f0a2755b064f66de329277"
       },
       {

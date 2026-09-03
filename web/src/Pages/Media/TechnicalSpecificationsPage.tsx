@@ -157,6 +157,7 @@ const TechnicalSpecificationsPage = () => {
               className="h-full w-full object-cover object-top rounded-2xl"
             />
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#0D2D43] via-transparent to-[#0D2D43]/40" />
+            <div className="absolute inset-0 rounded-2xl bg-[#0D2D43]/35 mix-blend-color" />
           </div>
         </div>
 

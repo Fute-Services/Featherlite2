@@ -16,6 +16,10 @@ interface MediaCard {
   description: string;
   image: string;
   imagePosition?: string;
+  // The technical-specs cover is a brighter, more saturated night shot than
+  // the other three covers' muted navy tones; this pulls it back in line
+  // without needing a re-graded photo.
+  tint?: boolean;
   to?: string;
   onClick?: () => void;
   icon: LucideIcon;
@@ -52,7 +56,7 @@ const Media = () => {
     { title: "BROCHURE", description: "Download our detailed project brochure.", image: brochureImg, onClick: () => setIsBrochureOpen(true), icon: FileText },
     { title: "GALLERY", description: "A collection of images that capture the essence.", image: galleryImg, to: "/media/gallery", icon: Images },
     { title: "CERTIFICATIONS", description: "Our commitment to quality and excellence.", image: certificationsImg, imagePosition: "object-top", to: "/certifications", icon: Award },
-    { title: "TECHNICAL SPECIFICATIONS", description: "Technical details and specifications at a glance.", image: technicalImg, imagePosition: "object-top", to: "/technical-specifications", icon: Ruler },
+    { title: "TECHNICAL SPECIFICATIONS", description: "Technical details and specifications at a glance.", image: technicalImg, imagePosition: "object-top", tint: true, to: "/technical-specifications", icon: Ruler },
   ];
 
   return (
@@ -156,6 +160,7 @@ const Media = () => {
                     className={`absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 ${card.imagePosition ?? ""}`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#081729]/30 via-transparent to-black/30" />
+                  {card.tint && <div className="absolute inset-0 bg-[#0D2D43]/35 mix-blend-color" />}
                 </div>
 
                 <span className="absolute left-4 top-[140px] flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-[#C89D54]/60 bg-[#071424]/80 text-[#C89D54] backdrop-blur-md shadow-md">

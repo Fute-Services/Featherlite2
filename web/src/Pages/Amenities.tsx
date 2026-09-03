@@ -151,7 +151,7 @@ const amenities: Amenity[] = [
   },
   {
     id: "3d-led-screen",
-    label: ["Cutting Edge", "3D LED Screen"],
+    label: ["3D LED Screen Display"],
     cx: 560,
     cy: 480,
     lineSvg: cuttingEdgeLineImg,
@@ -201,7 +201,7 @@ const amenities: Amenity[] = [
   },
   {
     id: "parking",
-    label: ["Vistors Car Parking", "With EV charging"],
+    label: ["Visitor's Parking", "With EV Charging Point"],
     cx: 670,
     cy: 935,
     thumbnailPos: "right",

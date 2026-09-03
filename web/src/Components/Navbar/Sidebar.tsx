@@ -51,7 +51,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
     activeImageIndex,
     onImageSelect,
 }) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    // The masterplan page's Ground layout + Circulation panel should greet the
+    // user already expanded, not behind a click - every other page still
+    // starts collapsed.
+    const opensExpanded = typeof window !== "undefined" && window.location.pathname.includes("masterplan");
+    const [isOpen, setIsOpen] = useState<boolean>(opensExpanded);
 
     useEffect(() => {
         onOpenChange?.(isOpen);
@@ -83,7 +87,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     // Dropdown states
     const [isLayoutOpen, setIsLayoutOpen] = useState<boolean>(false);
-    const [isCirculationOpen, setIsCirculationOpen] = useState<boolean>(false);
+    const [isCirculationOpen, setIsCirculationOpen] = useState<boolean>(opensExpanded);
 
     // Selection state values
     const [selectedLayout, setSelectedLayout] = useState<string>("Ground layout");

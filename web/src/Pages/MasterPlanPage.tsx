@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { X } from "lucide-react";
 import AutoVideo, { prefetchVideo } from "../Components/Media/AutoVideo";
 const MasterplanGround = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/masterplan-2-jpg/web2560";
 const MasterplanTerrace = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/terrace-plan-2-jpg/web2560";
@@ -274,6 +275,14 @@ export default function MasterplanPage() {
                 src={circulationVideo}
                 className="absolute inset-0 size-full object-cover [filter:brightness(1.15)_contrast(1.08)_saturate(1.15)]"
               />
+              <button
+                type="button"
+                onClick={() => setSelectedCirculation(null)}
+                aria-label="Close circulation video"
+                className="absolute right-6 top-6 z-10 flex size-10 items-center justify-center rounded-full border border-white/30 bg-black/40 text-white backdrop-blur-md transition-colors hover:bg-black/60"
+              >
+                <X className="size-5" />
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
