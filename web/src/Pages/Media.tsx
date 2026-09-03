@@ -2,11 +2,12 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Award, FileText, Images, Play, Ruler, X, type LucideIcon } from "lucide-react";
-import brochureImg from "../assets/Media/brochure_cover_navy.jpg";
-import galleryImg from "../assets/Media/gallery_cover.jpg";
-import certificationsImg from "../assets/Media/certifications_cover.jpg";
-import technicalImg from "../assets/Media/technical_cover.jpg";
-import walkthroughImg from "../assets/Media/walkthrough_hero.jpg";
+const CF_MEDIA = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media";
+const brochureImg = `${CF_MEDIA}/brochure-cover-navy/orig`;
+const galleryImg = `${CF_MEDIA}/gallery-cover-2026/orig`;
+const certificationsImg = `${CF_MEDIA}/certifications-cover-2026/orig`;
+const technicalImg = `${CF_MEDIA}/technical-cover/orig`;
+const walkthroughImg = `${CF_MEDIA}/walkthrough-hero/orig`;
 
 const BrochureModal = lazy(() => import("./Media/BrochureModal"));
 

@@ -37,16 +37,10 @@ export interface TourScene {
 }
 
 /**
- * The tour reads the re-exported panoramas in public/virtual tour/opt/.
- *
- * The originals next to them are 12000x6000 and 12-18 MB each. That is far more
- * than a 360 viewer can use - the sphere is sampled at roughly 1:1 on screen -
- * and it cost a multi-second wait on every single scene change while the file
- * came down. The opt/ copies are 4096x2048 and about 1 MB, which is 500 MB of
- * panoramas down to 16 MB across the whole tour. The originals are left in
- * place, untouched.
+ * Panoramas are served from Cloudflare Images (same CDN the rest of the app
+ * already uses), at the `orig` variant to keep the full re-exported quality.
  */
-const vt = (name: string) => `/virtual tour/opt/${encodeURIComponent(name)}`
+const cf = (slug: string) => `https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/vr/${slug}/orig`
 
 export const FIRST_SCENE = 'ext_entry_gate'
 
@@ -73,14 +67,14 @@ export const vrCategories: Record<string, { id: string; name: string }[]> = {
 
 export const scenes: Record<string, TourScene> = {
   ext_entry_gate: {
-    panorama: vt('CAM_01_Entry_Gate_Hero_View_1_1_n8epa4.jpg'),
+    panorama: cf('entry-gate'),
     yaw: 350,
     hotspots: [
       { yaw: 0, pitch: -5, label: 'Entry Perspective', next: 'ext_entry_perspective' },
     ],
   },
   ext_entry_perspective: {
-    panorama: vt('Cam_02_Entry_Perspective_Inside_1_1_gnb1hi.jpg'),
+    panorama: cf('entry-perspective'),
     yaw: 260,
     hotspots: [
       { yaw: 260, pitch: -5, label: 'Arrival Plaza', next: 'ext_drop_off_area' },
@@ -89,7 +83,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   ext_drop_off_area: {
-    panorama: vt('Cam_11_Drop_Off_Area_opt.jpg'),
+    panorama: cf('drop-off-area'),
     hotspots: [
       { yaw: 35, pitch: -12, label: 'Open Seating Area', next: 'ext_open_seating' },
       { yaw: 0, pitch: -5, label: 'Reception Lobby', next: 'int_reception_lobby' },
@@ -97,21 +91,21 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   ext_kids_play_area: {
-    panorama: vt('Cam_06_Kids_Play_Area_1_1_feonwl.jpg'),
+    panorama: cf('kids-play-area'),
     pitch: -15,
     hotspots: [
       { yaw: 0, pitch: -30, label: 'Entry Perspective', next: 'ext_entry_perspective' },
     ],
   },
   ext_open_seating: {
-    panorama: vt('Cam_07_GF_Open_Seating_Area_1_1_livzbf.jpg'),
+    panorama: cf('open-seating-area'),
     pitch: -15,
     hotspots: [
       { yaw: 0, pitch: -8, label: 'Arrival Plaza', next: 'ext_drop_off_area' },
     ],
   },
   ext_terrace_cafe_1: {
-    panorama: vt('Cam_08_Terrace_Cafe_Area_1_1_hpgybq.jpg'),
+    panorama: cf('terrace-cafe-1'),
     pitch: -20,
     hotspots: [
       { yaw: -20, pitch: -16, label: 'Terrace Cafe', next: 'ext_terrace_cafe_2' },
@@ -119,7 +113,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   ext_terrace_cafe_2: {
-    panorama: vt('Cam_10_Terrace_Cafe_Area_02_1_1_pubwuq.jpg'),
+    panorama: cf('terrace-cafe-2'),
     pitch: -20,
     hotspots: [
       { yaw: 30, pitch: -16, label: 'Terrace Multipurpose Court', next: 'ext_multipurpose_court' },
@@ -127,7 +121,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   ext_multipurpose_court: {
-    panorama: vt('Cam_09_Terrace_Multipurpose_Court_2_1_1_eeujyx.jpg'),
+    panorama: cf('multipurpose-court'),
     pitch: -10,
     hotspots: [
       { yaw: -30, pitch: -16, label: 'Terrace Cafe', next: 'ext_terrace_cafe_2' },
@@ -135,7 +129,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   int_reception_lobby: {
-    panorama: vt('Cam_03_Reception_Lobby_opt.jpg'),
+    panorama: cf('reception-lobby'),
     pitch: -10,
     yaw: -50,
     hotspots: [
@@ -145,7 +139,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   int_lift_lobby: {
-    panorama: vt('Cam_04_Lift_Lobby_opt.jpg'),
+    panorama: cf('lift-lobby'),
     pitch: -25,
     hotspots: [
       { yaw: -20, pitch: -28, label: 'Workstation Area', next: 'int_workstation_2' },
@@ -153,7 +147,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   int_lift_lobby_2: {
-    panorama: vt('Cam_04_Lift_Lobby_opt.jpg'),
+    panorama: cf('lift-lobby'),
     pitch: -25,
     hotspots: [
       { yaw: -30, pitch: -24, label: 'Terrace Cafe', next: 'ext_terrace_cafe_1' },
@@ -162,7 +156,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   int_gf_cafe_waiting: {
-    panorama: vt('Cam_05_GF_Cafe_Waiting_opt.jpg'),
+    panorama: cf('gf-cafe-waiting'),
     pitch: -10,
     yaw: 180,
     hotspots: [
@@ -170,7 +164,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   int_workstation_1: {
-    panorama: vt('CAM_05_Workstation_01_opt.jpg'),
+    panorama: cf('workstation-1'),
     // The only scene that declared no opening pitch. Level is fine outdoors,
     // where the rings sit 6 m out, but in here they are 3 m away and land on
     // the bottom edge of the frame.
@@ -180,7 +174,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   int_workstation_2: {
-    panorama: vt('CAM_05_Workstation_02_opt.jpg'),
+    panorama: cf('workstation-2'),
     pitch: -15,
     hotspots: [
       { yaw: 20, pitch: -24, label: 'Lift Lobby', next: 'int_lift_lobby_2' },

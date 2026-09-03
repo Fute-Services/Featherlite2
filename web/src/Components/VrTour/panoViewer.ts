@@ -55,6 +55,8 @@ const DRAG_INERTIA_CUTOFF_DEG_PER_S = 1.5
 const DRAG_VELOCITY_BLEND = 0.3
 /** A gap longer than this means the drag paused, so the glide starts from rest. */
 const MAX_MOVE_GAP_MS = 100
+/** How fast the rendered view catches up to the drag target. */
+const DRAG_SMOOTH_HALF_LIFE_MS = 40
 
 const AUTOROTATE_DEG_PER_SEC = -2
 const AUTOROTATE_IDLE_MS = 5000
@@ -188,6 +190,12 @@ export class PanoViewer {
 
   private yawDeg = 0
   private pitchDeg = 0
+  // Where the drag wants the camera. yawDeg/pitchDeg chase this every frame
+  // instead of jumping straight to it - raw pointermove deltas land at
+  // whatever cadence the OS/browser feels like, and rendering them the instant
+  // they arrive reads as jitter rather than a smooth pan.
+  private targetYawDeg = 0
+  private targetPitchDeg = 0
   private hfovDeg = DEFAULT_HFOV_DEG
 
   private sceneId = ''
@@ -659,6 +667,10 @@ export class PanoViewer {
     this.downY = this.lastY = e.clientY
     this.downAt = performance.now()
     this.movedPx = 0
+    // Start the chase from exactly where the view already is, not wherever the
+    // last drag's target was left.
+    this.targetYawDeg = this.yawDeg
+    this.targetPitchDeg = this.pitchDeg
     this.yawVelDegPerS = 0
     this.pitchVelDegPerS = 0
     this.lastMoveAt = this.downAt
@@ -706,9 +718,9 @@ export class PanoViewer {
     const perPx = this.hfovDeg / rect.width
     const dYaw = -dx * perPx
     const dPitch = dy * perPx
-    const before = this.pitchDeg
-    this.yawDeg += dYaw
-    this.pitchDeg = clamp(this.pitchDeg + dPitch, -MAX_PITCH_DEG, MAX_PITCH_DEG)
+    const before = this.targetPitchDeg
+    this.targetYawDeg += dYaw
+    this.targetPitchDeg = clamp(this.targetPitchDeg + dPitch, -MAX_PITCH_DEG, MAX_PITCH_DEG)
 
     // Remember how fast the view was moving, so releasing it glides to a stop.
     // Smoothed, because a single pointer sample is noisy and would fling.
@@ -719,7 +731,7 @@ export class PanoViewer {
       const blend = DRAG_VELOCITY_BLEND
       this.yawVelDegPerS += ((dYaw / dt) * 1000 - this.yawVelDegPerS) * blend
       this.pitchVelDegPerS +=
-        (((this.pitchDeg - before) / dt) * 1000 - this.pitchVelDegPerS) * blend
+        (((this.targetPitchDeg - before) / dt) * 1000 - this.pitchVelDegPerS) * blend
     } else {
       this.yawVelDegPerS = 0
       this.pitchVelDegPerS = 0
@@ -821,6 +833,12 @@ export class PanoViewer {
     if (this.disposed) return
     const dt = Math.min(now - this.lastFrameAt, 100)
     this.lastFrameAt = now
+
+    if (this.dragging) {
+      const chase = 1 - Math.pow(0.5, dt / DRAG_SMOOTH_HALF_LIFE_MS)
+      this.yawDeg += (this.targetYawDeg - this.yawDeg) * chase
+      this.pitchDeg += (this.targetPitchDeg - this.pitchDeg) * chase
+    }
 
     const gliding = this.applyDragInertia(dt)
 
