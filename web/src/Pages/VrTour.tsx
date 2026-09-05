@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { Plus, Minus } from 'lucide-react'
 import { PanoViewer } from '../Components/VrTour/panoViewer'
 import { FIRST_SCENE, vrCategories } from '../Components/VrTour/tourData'
+import VrMiniMap from '../Components/VrTour/VrMiniMap'
 
 declare global {
   interface Window {
@@ -49,6 +50,12 @@ export default function Vr() {
     }
   }, [])
 
+  const handleSelectScene = (sceneId: string) => {
+    if (viewerRef.current && sceneId !== currentScene) {
+      void viewerRef.current.goTo(sceneId)
+    }
+  }
+
   const sceneName = (() => {
     for (const cat of Object.values(vrCategories)) {
       const match = cat.find((item) => item.id === currentScene)
@@ -59,18 +66,8 @@ export default function Vr() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-black font-sans">
-      {/* Decorative walk-mode badge (no click behavior) */}
-      <div
-        aria-hidden="true"
-        className="absolute top-8 right-3 sm:top-6 sm:right-8 z-50 w-9 h-9 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-white shadow-lg animate-pulse-glow"
-      >
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-          <path d="M13.5 5.5c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-3.6 13.9l1-4.4 2.1 2v6h2v-7.5l-2.1-2 .6-3C14.8 12 16.8 13 19 13v-2c-1.9 0-3.5-1-4.3-2.4l-1-1.6c-.4-.6-1-1-1.7-1-.3 0-.5.1-.8.1L6 8.3V13h2V9.6l1.8-.7-1.6 8.1-4.9-1-.4 2 6 1.4z" />
-        </svg>
-      </div>
-
       {/* Zoom Controls */}
-      <div className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-1 p-1 rounded-full bg-gradient-to-b from-black/50 via-black/60 to-black/70 backdrop-blur-xl backdrop-saturate-150 border border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.37)]">
+      <div className="absolute right-3 sm:right-8 top-6 sm:top-6 z-50 flex flex-col items-center gap-1 p-1 rounded-full bg-gradient-to-b from-black/50 via-black/60 to-black/70 backdrop-blur-xl backdrop-saturate-150 border border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.37)]">
         <button
           onClick={() => viewerRef.current?.zoomIn()}
           aria-label="Zoom In"
@@ -98,7 +95,7 @@ export default function Vr() {
 
       {/* Active Scene Display Label */}
       {/* Clear of the site navbar, which sits along the bottom of this route. */}
-      <div className="absolute bottom-24 sm:bottom-28 left-1/2 -translate-x-1/2 z-50 flex justify-center pointer-events-none px-4">
+      <div className="absolute bottom-24 sm:bottom-28 left-1/2 -translate-x-1/2 z-40 flex justify-center pointer-events-none px-4">
         <span
           key={sceneName}
           className="relative overflow-hidden rounded-xl border border-white/[0.1] bg-black/35 backdrop-blur-sm px-6 py-2.5 text-[10px] sm:text-sm font-medium uppercase tracking-[0.2em] text-[#E6D7BA] [text-shadow:0_1px_3px_rgba(0,0,0,0.9)] shadow-[inset_1.5px_1.5px_1px_rgba(255,255,255,0.15),inset_-1px_-1px_1px_rgba(0,0,0,0.2),0_20px_40px_-10px_rgba(0,0,0,0.8)] backdrop-saturate-150 whitespace-nowrap"
@@ -112,6 +109,9 @@ export default function Vr() {
         </span>
       </div>
 
+      {/* Interactive Minimap (Masterplan) on the bottom right */}
+      <VrMiniMap currentScene={currentScene} onSelectScene={handleSelectScene} />
+
       <style>{`
         .animate-pulse-glow {
           animation: pulse-glow 2.2s ease-in-out infinite;
@@ -124,3 +124,4 @@ export default function Vr() {
     </div>
   )
 }
+
