@@ -19,8 +19,8 @@
     },
     {
         "id": "rooftop-lunch-cafe",
-        "title": "Main entry to Rooftop Lunch Cafe",
-        "description": "Main entry to the rooftop lunch cafe.",
+        "title": "Entry to Rooftop Lunch Cafe",
+        "description": "Entry to the Rooftop Lunch Cafe.",
         "polygon": "1580,802,1582,1157",
         "x": 760,
         "y": 470,

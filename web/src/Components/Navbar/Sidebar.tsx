@@ -52,10 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onImageSelect,
 }) => {
     // The masterplan page's Ground layout + Circulation panel should greet the
-    // user already expanded, not behind a click - every other page still
-    // starts collapsed.
-    const opensExpanded = typeof window !== "undefined" && window.location.pathname.includes("masterplan");
-    const [isOpen, setIsOpen] = useState<boolean>(opensExpanded);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
     useEffect(() => {
         onOpenChange?.(isOpen);
@@ -87,7 +84,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
     // Dropdown states
     const [isLayoutOpen, setIsLayoutOpen] = useState<boolean>(false);
-    const [isCirculationOpen, setIsCirculationOpen] = useState<boolean>(opensExpanded);
+    const [isCirculationOpen, setIsCirculationOpen] = useState<boolean>(true);
 
     // Selection state values
     const [selectedLayout, setSelectedLayout] = useState<string>("Ground layout");
@@ -267,6 +264,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                     {isOpen && activeTab === "layout" && (
                                         <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#E6D7BA]" />
                                     )}
+                                    <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-[11px] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                                        Master Plan
+                                    </span>
                                 </Link>
                             )}
 
@@ -300,6 +300,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                     {isOpen && activeTab === "section" && (
                                         <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#E6D7BA]" />
                                     )}
+                                    <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-[11px] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                                        Floor Plan
+                                    </span>
                                 </Link>
                             )}
                         </>

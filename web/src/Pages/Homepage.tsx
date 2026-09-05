@@ -4,9 +4,9 @@ import { useTheme } from '../Context/ThemeContext'
 import { useIntro } from '../Context/IntroContext'
 const heroLight = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/home-page-light-2026/orig";
 const heroDark = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/home/home-page-dark-2026/orig";
-const stats = ['10 floors', '2 Acre Area', '43% Ground Area', '25% Green Cover']
+const stats = ['G+10 Floors', '2 Acre', '4,10,000 sq ft Area', '25% Green Cover']
 const headingLines = [
-    ['Designed', 'For'],
+    ['Designed', 'For', 'A'],
     ['Better', 'Tomorrow'],
 ]
 
