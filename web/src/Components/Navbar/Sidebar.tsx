@@ -7,6 +7,7 @@ import {
     PieChart,
     Trees,
     Image,
+    Rotate3d,
 } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
@@ -35,6 +36,12 @@ interface SidebarProps {
     galleryImages?: { title: string; [key: string]: any }[];
     activeImageIndex?: number;
     onImageSelect?: (index: number) => void;
+    isVrTourPage?: boolean;
+    vrMode?: "interior" | "exterior";
+    onVrModeChange?: (mode: "interior" | "exterior") => void;
+    vrScenes?: { id: string; name: string }[];
+    activeSceneId?: string;
+    onSceneSelect?: (sceneId: string) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -50,9 +57,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
     galleryImages,
     activeImageIndex,
     onImageSelect,
+    isVrTourPage = false,
+    vrMode,
+    onVrModeChange,
+    vrScenes,
+    activeSceneId,
+    onSceneSelect,
 }) => {
     // The masterplan page's Ground layout + Circulation panel should greet the
-    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(isVrTourPage);
 
     useEffect(() => {
         onOpenChange?.(isOpen);
@@ -61,6 +74,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
     }, [isOpen]);
     const [isGalleryDropdownOpen, setIsGalleryDropdownOpen] = useState<boolean>(false);
     const [isImagesDropdownOpen, setIsImagesDropdownOpen] = useState<boolean>(false);
+    const [isVrDropdownOpen, setIsVrDropdownOpen] = useState<boolean>(false);
+    const [isScenesDropdownOpen, setIsScenesDropdownOpen] = useState<boolean>(isVrTourPage);
 
 
     // Inside your Sidebar component:
@@ -73,13 +88,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
             setActiveTab("layout");
         } else if (location.pathname.includes("gallery")) {
             setActiveTab("gallery");
+        } else if (location.pathname.includes("vr")) {
+            setActiveTab("vr");
         }
     }, [location.pathname]);
 
 
-    // Track active navigation tab ('layout' | 'section' | 'gallery')
-    const [activeTab, setActiveTab] = useState<"layout" | "section" | "gallery">(
-        isGalleryPage ? "gallery" : "layout"
+    // Track active navigation tab ('layout' | 'section' | 'gallery' | 'vr')
+    const [activeTab, setActiveTab] = useState<"layout" | "section" | "gallery" | "vr">(
+        isGalleryPage ? "gallery" : isVrTourPage ? "vr" : "layout"
     );
 
     // Dropdown states
@@ -125,6 +142,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
     const selectedImageTitle = hasSelectedCategory && galleryImages && activeImageIndex !== undefined && galleryImages[activeImageIndex]
         ? galleryImages[activeImageIndex].title
         : "Images";
+
+    const displayVrCategory = vrMode === "interior" ? "Interior" : "Exterior";
+    const selectedVrSceneTitle = vrScenes?.find((s) => s.id === activeSceneId)?.name || "Scenes";
 
     return (
         <aside className={`fixed top-0 left-0 w-screen h-screen flex select-none pointer-events-none transition-all duration-300 ${isOpen ? "z-[1005]" : "z-[999]"}`}>
@@ -212,7 +232,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     </button>
                 </div>
 
-                <div className={`flex absolute left-[20%] flex-col items-center gap-3 my-auto ${isGalleryPage ? "top-[49%]" : "top-[44%]"}`}>
+                <div className={`flex absolute left-[20%] flex-col items-center gap-3 my-auto ${isGalleryPage || isVrTourPage ? "top-[49%]" : "top-[44%]"}`}>
                     {isGalleryPage ? (
                         <button
                             onClick={() => {
@@ -227,6 +247,27 @@ export const Sidebar: React.FC<SidebarProps> = ({
                             {isOpen && activeTab === "gallery" && (
                                 <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#E6D7BA]" />
                             )}
+                            <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-[11px] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                                Gallery
+                            </span>
+                        </button>
+                    ) : isVrTourPage ? (
+                        <button
+                            onClick={() => {
+                                setActiveTab("vr");
+                                setIsOpen((prev) => !prev);
+                            }}
+                            className="group relative flex items-center justify-center p-2 rounded-xl transition-all cursor-pointer hover:bg-transparent outline-none pointer-events-auto"
+                        >
+                            <Rotate3d
+                                className={`w-7 h-7 text-gray-300 transition-colors duration-200 ${isOpen && activeTab === "vr" ? "text-[#E6D7BA]" : "group-hover:text-[#E6D7BA]"}`}
+                            />
+                            {isOpen && activeTab === "vr" && (
+                                <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#E6D7BA]" />
+                            )}
+                            <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-[11px] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                                VR Tour
+                            </span>
                         </button>
                     ) : (
                         <>
@@ -344,7 +385,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
                 {/* Middle Interactive Inputs */}
 
-                <div className={`flex absolute flex-col gap-3 my-auto w-full pointer-events-auto ${isGalleryPage ? "top-[49.5%]" : "top-[44%]"}`}>
+                <div className={`flex absolute flex-col gap-3 my-auto w-full pointer-events-auto ${isGalleryPage || isVrTourPage ? "top-[49.5%]" : "top-[44%]"}`}>
 
                     {isGalleryPage ? (
                         <>
@@ -445,6 +486,101 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                     )}
                                 </div>
                             )}
+                        </>
+                    ) : isVrTourPage ? (
+                        <>
+                            {/* VR Category Dropdown (Exterior / Interior) */}
+                            <div className="relative w-full pointer-events-auto">
+                                <button
+                                    onClick={() => {
+                                        setIsVrDropdownOpen((prev) => !prev);
+                                        setIsScenesDropdownOpen(false);
+                                    }}
+                                    className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${isVrDropdownOpen
+                                        ? "bg-black/35 border-white/50 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_8px_32px_rgba(0,0,0,0.37)]"
+                                        : "bg-black/30 hover:bg-black/40 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                        }`}
+                                >
+                                    <span className="truncate">{displayVrCategory}</span>
+                                    {isVrDropdownOpen ? (
+                                        <ChevronUp className="w-3.5 h-3.5 text-white/70" />
+                                    ) : (
+                                        <ChevronDown className="w-3.5 h-3.5 text-white/70" />
+                                    )}
+                                </button>
+
+                                {isVrDropdownOpen && (
+                                    <div className="absolute top-full left-0 mt-2 w-[60%] bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col gap-1 text-xs font-light z-30 pointer-events-auto">
+                                        {vrMode !== "exterior" && (
+                                            <button
+                                                onClick={() => {
+                                                    if (onVrModeChange) onVrModeChange("exterior");
+                                                    setIsVrDropdownOpen(false);
+                                                    setIsScenesDropdownOpen(true);
+                                                }}
+                                                className="w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                            >
+                                                Exterior
+                                            </button>
+                                        )}
+                                        {vrMode !== "interior" && (
+                                            <button
+                                                onClick={() => {
+                                                    if (onVrModeChange) onVrModeChange("interior");
+                                                    setIsVrDropdownOpen(false);
+                                                    setIsScenesDropdownOpen(true);
+                                                }}
+                                                className="w-full text-left px-3 py-1.5 rounded-full transition-all duration-250 backdrop-blur-sm cursor-pointer border border-transparent text-gray-200 hover:bg-[rgba(231,33,0,0.30)] hover:border-white/45 hover:shadow-[0_4px_12px_rgba(231,33,0,0.3)] hover:text-white"
+                                            >
+                                                Interior
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* VR Scenes Dropdown */}
+                            <div className="relative w-full pointer-events-auto">
+                                <button
+                                    onClick={() => {
+                                        setIsScenesDropdownOpen((prev) => !prev);
+                                        setIsVrDropdownOpen(false);
+                                    }}
+                                    className={`w-[60%] flex items-center justify-between px-4 py-1.5 rounded-full border text-xs font-light transition-all duration-200 backdrop-blur-md ${isScenesDropdownOpen
+                                        ? "bg-white/10 border-white/50 ring-1 ring-white/10 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_4px_12px_rgba(0,0,0,0.3)]"
+                                        : "bg-black/30 hover:bg-black/40 border-white/35 text-white cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.25)]"
+                                        }`}
+                                >
+                                    <span className="truncate">{selectedVrSceneTitle}</span>
+                                    {isScenesDropdownOpen ? (
+                                        <ChevronUp className="w-3.5 h-3.5 text-white/70" />
+                                    ) : (
+                                        <ChevronDown className="w-3.5 h-3.5 text-white/70" />
+                                    )}
+                                </button>
+
+                                {isScenesDropdownOpen && vrScenes && vrScenes.length > 0 && (
+                                    <div className="absolute top-full left-0 mt-2 w-[60%] max-h-60 overflow-y-auto bg-black/40 backdrop-blur-xl border border-white/50 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl p-1.5 flex flex-col z-30 pointer-events-auto custom-scrollbar">
+                                        {vrScenes.map((scene) => {
+                                            const isSelected = activeSceneId === scene.id;
+                                            return (
+                                                <button
+                                                    key={scene.id}
+                                                    onClick={() => {
+                                                        if (onSceneSelect) onSceneSelect(scene.id);
+                                                    }}
+                                                    className={`w-full text-left px-3 py-[3.5px] text-[9px] transition-colors cursor-pointer border-b border-white/10 last:border-0 ${isSelected
+                                                        ? "text-white font-bold bg-white/10"
+                                                        : "text-gray-300 hover:bg-white/5 hover:text-white"
+                                                        }`}
+                                                >
+                                                    {scene.name}
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
                         </>
                     ) : (
                         <>
@@ -549,7 +685,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </div>
 
                 {/* Bottom Statistics Section */}
-                {!isGalleryPage && (
+                {!isGalleryPage && !isVrTourPage && (
                     <div className={`flex flex-col absolute top-[75%] gap-4 border-t border-white/35 pt-4 shrink-0 transition-opacity duration-200 ${isCirculationOpen ? "opacity-0 pointer-events-none" : "opacity-100"
                         }`}>
                         <div className="flex items-center gap-3">

@@ -76,17 +76,17 @@ export const vrCategories: Record<string, { id: string; name: string }[]> = {
     { id: 'ext_drop_off_area', name: 'Arrival Plaza' },
     { id: 'ext_kids_play_area', name: 'Kids Play Area' },
     { id: 'ext_open_seating', name: 'Open Seating Area' },
-    { id: 'ext_terrace_cafe_1', name: 'Terrace Cafe' },
-    { id: 'ext_terrace_cafe_2', name: 'Terrace Cafe' },
+    { id: 'ext_terrace_cafe_1', name: 'Terrace Cafe 1' },
+    { id: 'ext_terrace_cafe_2', name: 'Terrace Cafe 2' },
     { id: 'ext_multipurpose_court', name: 'Terrace Multipurpose Court' },
   ],
   Interior: [
     { id: 'int_reception_lobby', name: 'Reception Lobby' },
-    { id: 'int_lift_lobby', name: 'Lift Lobby' },
-    { id: 'int_lift_lobby_2', name: 'Lift Lobby' },
+    { id: 'int_lift_lobby', name: 'Ground Lift Lobby' },
+    { id: 'int_lift_lobby_2', name: 'Terrace Lift Lobby' },
     { id: 'int_gf_cafe_waiting', name: 'GF Cafe & Waiting Area' },
-    { id: 'int_workstation_1', name: 'Workstation Area' },
-    { id: 'int_workstation_2', name: 'Workstation Area' },
+    { id: 'int_workstation_1', name: 'Workstation Area 1' },
+    { id: 'int_workstation_2', name: 'Workstation Area 2' },
   ],
 }
 

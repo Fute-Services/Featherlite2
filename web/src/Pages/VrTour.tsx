@@ -3,6 +3,7 @@ import { Plus, Minus } from 'lucide-react'
 import { PanoViewer } from '../Components/VrTour/panoViewer'
 import { FIRST_SCENE, vrCategories } from '../Components/VrTour/tourData'
 import VrMiniMap from '../Components/VrTour/VrMiniMap'
+import { Sidebar } from '../Components/Navbar/Sidebar'
 
 declare global {
   interface Window {
@@ -23,6 +24,18 @@ export default function Vr() {
   const containerRef = useRef<HTMLDivElement>(null)
   const viewerRef = useRef<PanoViewer | null>(null)
   const [currentScene, setCurrentScene] = useState<string>(FIRST_SCENE)
+
+  const isInterior = vrCategories.Interior.some((item) => item.id === currentScene)
+  const [vrMode, setVrMode] = useState<'exterior' | 'interior'>(
+    isInterior ? 'interior' : 'exterior'
+  )
+
+  // Keep vrMode in sync with active scene
+  useEffect(() => {
+    setVrMode(isInterior ? 'interior' : 'exterior')
+  }, [isInterior])
+
+  const vrScenes = vrMode === 'interior' ? vrCategories.Interior : vrCategories.Exterior
 
   useEffect(() => {
     const container = containerRef.current
@@ -66,6 +79,21 @@ export default function Vr() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-black font-sans">
+      {/* Sidebar for Category (Exterior / Interior) & Scene Navigation */}
+      <Sidebar
+        isVrTourPage={true}
+        vrMode={vrMode}
+        onVrModeChange={(mode) => {
+          setVrMode(mode)
+          const targetCategory = vrCategories[mode === 'interior' ? 'Interior' : 'Exterior']
+          if (targetCategory && targetCategory.length > 0) {
+            handleSelectScene(targetCategory[0].id)
+          }
+        }}
+        vrScenes={vrScenes}
+        activeSceneId={currentScene}
+        onSceneSelect={handleSelectScene}
+      />
       {/* Zoom Controls */}
       <div className="absolute right-3 sm:right-8 top-6 sm:top-6 z-50 flex flex-col items-center gap-1 p-1 rounded-full bg-gradient-to-b from-black/50 via-black/60 to-black/70 backdrop-blur-xl backdrop-saturate-150 border border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_8px_32px_rgba(0,0,0,0.37)]">
         <button
