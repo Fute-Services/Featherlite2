@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 // import building from '../assets/floorplan/mainbuildingimage.jpeg'
 // import building from '../assets/floorplan/mainbuilding1.png'
 import Building from '../Components/FloorPlanPages/Building'
-const building = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/buildingimage/orig'
+const building = '/floorplan/building.jpg'
 import Table from '../Components/FloorPlanPages/Table'
 
 import { useNavigate } from 'react-router-dom'
