@@ -77,17 +77,17 @@ export const scenes: Record<string, TourScene> = {
     panorama: cf('entry-perspective'),
     yaw: 260,
     hotspots: [
-      { yaw: 260, pitch: -5, label: 'Arrival Plaza', next: 'ext_drop_off_area' },
-      { yaw: 220, pitch: -12, label: 'Kids Play Area', next: 'ext_kids_play_area' },
-      { yaw: 300, pitch: -20, label: 'Entry Gate', next: 'ext_entry_gate' },
+      { yaw: 265, pitch: -8, label: 'Arrival Plaza', next: 'ext_drop_off_area' },
+      { yaw: 185, pitch: -18, label: 'Kids Play Area', next: 'ext_kids_play_area' },
+      { yaw: 335, pitch: -22, label: 'Entry Gate', next: 'ext_entry_gate' },
     ],
   },
   ext_drop_off_area: {
     panorama: cf('drop-off-area'),
     hotspots: [
-      { yaw: 35, pitch: -12, label: 'Open Seating Area', next: 'ext_open_seating' },
+      { yaw: 48, pitch: -20, label: 'Open Seating Area', next: 'ext_open_seating' },
       { yaw: 0, pitch: -5, label: 'Reception Lobby', next: 'int_reception_lobby' },
-      { yaw: -35, pitch: -20, label: 'Entry Perspective', next: 'ext_entry_perspective' },
+      { yaw: -52, pitch: -16, label: 'Entry Perspective', next: 'ext_entry_perspective' },
     ],
   },
   ext_kids_play_area: {
@@ -133,9 +133,9 @@ export const scenes: Record<string, TourScene> = {
     pitch: -10,
     yaw: -50,
     hotspots: [
-      { yaw: -50, pitch: -22, label: 'Lift Lobby', next: 'int_lift_lobby' },
-      { yaw: -15, pitch: -26, label: 'GF Cafe & Waiting Area', next: 'int_gf_cafe_waiting' },
-      { yaw: 25, pitch: -30, label: 'Arrival Plaza', next: 'ext_drop_off_area' },
+      { yaw: -50, pitch: -30, label: 'Lift Lobby', next: 'int_lift_lobby' },
+      { yaw: -16, pitch: -28, label: 'GF Cafe & Waiting Area', next: 'int_gf_cafe_waiting' },
+      { yaw: 29, pitch: -25, label: 'Arrival Plaza', next: 'ext_drop_off_area' },
     ],
   },
   int_lift_lobby: {
@@ -177,7 +177,7 @@ export const scenes: Record<string, TourScene> = {
     panorama: cf('workstation-2'),
     pitch: -15,
     hotspots: [
-      { yaw: 20, pitch: -24, label: 'Lift Lobby', next: 'int_lift_lobby_2' },
+      { yaw: 12, pitch: -22, label: 'Lift Lobby', next: 'int_lift_lobby_2' },
       { yaw: -20, pitch: -32, label: 'Workstation Area', next: 'int_workstation_1' },
     ],
   },
