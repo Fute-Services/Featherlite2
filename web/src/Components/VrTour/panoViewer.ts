@@ -45,21 +45,42 @@ const ZOOM_STEP_DEG = 10
 const MAX_PITCH_DEG = 85
 
 /**
- * Look-around momentum. A drag that stops dead the instant the finger lifts
- * feels mechanical; the view carries on and settles instead.
+ * ONE PLACE MOVES THE VIEW. Every source of motion - the drag, the glide after
+ * it, the idle autorotate - writes to targetYawDeg/targetPitchDeg, and a single
+ * exponential chase in tick() carries the rendered angles there. Nothing else
+ * assigns yawDeg or pitchDeg except setView(), which moves both together.
+ *
+ * That is the whole smoothness fix. Before, the chase ran only while
+ * `dragging` was true, so the instant the finger lifted the view abandoned
+ * whatever gap was still left between rendered and target and handed over to a
+ * separate integrator that drove yawDeg directly - a step at exactly the moment
+ * the eye is following the motion most closely, on both axes. Everything now
+ * goes through the same filter, so a drag, its glide and the autorotate that
+ * follows are one continuous move.
  */
-const DRAG_INERTIA_HALF_LIFE_MS = 120
-/** Below this the glide is finished and would only jitter. */
-const DRAG_INERTIA_CUTOFF_DEG_PER_S = 1.5
+const VIEW_SMOOTH_HALF_LIFE_MS = 42
+/** Momentum: a drag that stops dead the instant the finger lifts feels mechanical. */
+const DRAG_INERTIA_HALF_LIFE_MS = 260
+/**
+ * Below this the glide is finished. Low, because the chase adds its own soft
+ * landing on top - at the old 1.5 deg/s the glide was still visibly moving when
+ * it was cut, which is the small jerk at the end of every flick.
+ */
+const DRAG_INERTIA_CUTOFF_DEG_PER_S = 0.4
 /** How much of each new pointer sample feeds the velocity estimate. */
-const DRAG_VELOCITY_BLEND = 0.3
+const DRAG_VELOCITY_BLEND = 0.25
 /** A gap longer than this means the drag paused, so the glide starts from rest. */
 const MAX_MOVE_GAP_MS = 100
-/** How fast the rendered view catches up to the drag target. */
-const DRAG_SMOOTH_HALF_LIFE_MS = 40
 
 const AUTOROTATE_DEG_PER_SEC = -2
 const AUTOROTATE_IDLE_MS = 5000
+/** Autorotate fades in over this, rather than snapping to full speed. */
+const AUTOROTATE_EASE_IN_MS = 1600
+
+/** How fast the rendered field of view catches up to the zoom target. */
+const ZOOM_SMOOTH_HALF_LIFE_MS = 90
+/** One mouse notch (deltaY 100) is worth this much zoom. */
+const WHEEL_DEG_PER_NOTCH = ZOOM_STEP_DEG * 0.5
 
 /**
  * The whole scene change. Measured off the reference tour: about 200 ms of
@@ -126,15 +147,18 @@ export class PanoViewer {
   private pitchVelDegPerS = 0
   private lastMoveAt = 0
 
+  // What is on screen this frame.
   private yawDeg = 0
   private pitchDeg = 0
-  // Where the drag wants the camera. yawDeg/pitchDeg chase this every frame
-  // instead of jumping straight to it - raw pointermove deltas land at
-  // whatever cadence the OS/browser feels like, and rendering them the instant
-  // they arrive reads as jitter rather than a smooth pan.
+  // Where the view is heading. Drag deltas, glide momentum and autorotate all
+  // land here and nowhere else; yawDeg/pitchDeg chase it every frame instead of
+  // jumping straight to it - raw pointermove deltas arrive at whatever cadence
+  // the OS feels like, and rendering them the instant they land reads as jitter.
   private targetYawDeg = 0
   private targetPitchDeg = 0
+  // Same idea for zoom: a wheel notch moves the target and the lens eases over.
   private hfovDeg = DEFAULT_HFOV_DEG
+  private targetHfovDeg = DEFAULT_HFOV_DEG
 
   private sceneId = ''
   private transitioning = false
@@ -294,7 +318,9 @@ export class PanoViewer {
 
     await this.tween(CROSSFADE_MS, (t) => {
       incoming.material.opacity = t
-      this.pitchDeg = startPitch + (targetPitch - startPitch) * t
+      // Through setView, so the frame chase is not left holding the outgoing
+      // scene's pitch and pulling the new one back up as it eases down.
+      this.setView(this.yawDeg, startPitch + (targetPitch - startPitch) * t)
     })
     if (this.disposed) return
 
@@ -314,8 +340,7 @@ export class PanoViewer {
   private applySceneFraming(sceneId: string) {
     const def = scenes[sceneId]
     this.sceneYawOffsetDeg = 0
-    this.yawDeg = def.yaw ?? 0
-    this.pitchDeg = Math.max(def.pitch ?? 0, -SCENE_PITCH_LIMIT_DEG)
+    this.setView(def.yaw ?? 0, Math.max(def.pitch ?? 0, -SCENE_PITCH_LIMIT_DEG))
   }
 
   /**
@@ -546,6 +571,19 @@ export class PanoViewer {
     this.camera.updateMatrixWorld()
   }
 
+  /**
+   * Put the view somewhere with no easing, target included. Anything that
+   * teleports the camera - the first scene's framing, the arrival pitch tween -
+   * has to go through here: setting yawDeg alone leaves the target where it
+   * was, and the chase in tick() then drags the view straight back off it.
+   */
+  private setView(yawDeg: number, pitchDeg: number) {
+    this.yawDeg = this.targetYawDeg = yawDeg
+    this.pitchDeg = this.targetPitchDeg = clamp(pitchDeg, -MAX_PITCH_DEG, MAX_PITCH_DEG)
+    this.yawVelDegPerS = 0
+    this.pitchVelDegPerS = 0
+  }
+
   private applyHfov() {
     const aspect = this.camera.aspect || 1
     const vFov = 2 * Math.atan(Math.tan((this.hfovDeg * DEG) / 2) / aspect)
@@ -554,14 +592,16 @@ export class PanoViewer {
   }
 
   zoomIn() {
-    this.hfovDeg = clamp(this.hfovDeg - ZOOM_STEP_DEG, MIN_HFOV_DEG, MAX_HFOV_DEG)
-    this.applyHfov()
-    this.lastInteractionAt = performance.now()
+    this.zoomBy(-ZOOM_STEP_DEG)
   }
 
   zoomOut() {
-    this.hfovDeg = clamp(this.hfovDeg + ZOOM_STEP_DEG, MIN_HFOV_DEG, MAX_HFOV_DEG)
-    this.applyHfov()
+    this.zoomBy(ZOOM_STEP_DEG)
+  }
+
+  /** Move the zoom target; tick() eases the lens onto it. */
+  private zoomBy(deltaDeg: number) {
+    this.targetHfovDeg = clamp(this.targetHfovDeg + deltaDeg, MIN_HFOV_DEG, MAX_HFOV_DEG)
     this.lastInteractionAt = performance.now()
   }
 
@@ -605,12 +645,10 @@ export class PanoViewer {
     this.downY = this.lastY = e.clientY
     this.downAt = performance.now()
     this.movedPx = 0
-    // Start the chase from exactly where the view already is, not wherever the
-    // last drag's target was left.
-    this.targetYawDeg = this.yawDeg
-    this.targetPitchDeg = this.pitchDeg
-    this.yawVelDegPerS = 0
-    this.pitchVelDegPerS = 0
+    // Take hold of the view exactly where it is on screen. Grabbing a glide
+    // mid-flight has to stop it dead, or the leftover momentum keeps pushing
+    // against the finger.
+    this.setView(this.yawDeg, this.pitchDeg)
     this.lastMoveAt = this.downAt
     this.lastInteractionAt = this.downAt
     // Capture is a convenience, not a requirement - if the browser refuses it
@@ -714,13 +752,13 @@ export class PanoViewer {
 
   private onWheel = (e: WheelEvent) => {
     e.preventDefault()
-    this.hfovDeg = clamp(
-      this.hfovDeg + Math.sign(e.deltaY) * ZOOM_STEP_DEG * 0.5,
-      MIN_HFOV_DEG,
-      MAX_HFOV_DEG,
-    )
-    this.applyHfov()
-    this.lastInteractionAt = performance.now()
+    // Proportional to how far the wheel actually turned, not Math.sign of it.
+    // A trackpad sends a stream of small deltas; one full zoom step per event
+    // turned a gentle two-finger scroll into a staircase. deltaMode says what
+    // the number is counted in - pixels, lines or pages - so normalise first.
+    const perUnit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 100 : 1
+    const notches = clamp((e.deltaY * perUnit) / 100, -1, 1)
+    this.zoomBy(notches * WHEEL_DEG_PER_NOTCH)
   }
 
   /**
@@ -738,12 +776,15 @@ export class PanoViewer {
       this.pitchVelDegPerS = 0
       return false
     }
-    this.yawDeg += (this.yawVelDegPerS * dtMs) / 1000
-    this.pitchDeg = clamp(
-      this.pitchDeg + (this.pitchVelDegPerS * dtMs) / 1000,
-      -MAX_PITCH_DEG,
-      MAX_PITCH_DEG,
-    )
+    // Drives the target, exactly as the drag does, so the same chase smooths
+    // the glide and the hand-off between them has nothing to step over.
+    this.targetYawDeg += (this.yawVelDegPerS * dtMs) / 1000
+    const wantPitch = this.targetPitchDeg + (this.pitchVelDegPerS * dtMs) / 1000
+    this.targetPitchDeg = clamp(wantPitch, -MAX_PITCH_DEG, MAX_PITCH_DEG)
+    // Glide into the top or bottom of the sphere and the pitch is pinned but
+    // the velocity is not, so the view sat there "pushing" for a quarter of a
+    // second before the decay let go. Spend it at the wall instead.
+    if (wantPitch !== this.targetPitchDeg) this.pitchVelDegPerS = 0
     const decay = Math.pow(0.5, dtMs / DRAG_INERTIA_HALF_LIFE_MS)
     this.yawVelDegPerS *= decay
     this.pitchVelDegPerS *= decay
@@ -772,21 +813,30 @@ export class PanoViewer {
     const dt = Math.min(now - this.lastFrameAt, 100)
     this.lastFrameAt = now
 
-    if (this.dragging) {
-      const chase = 1 - Math.pow(0.5, dt / DRAG_SMOOTH_HALF_LIFE_MS)
-      this.yawDeg += (this.targetYawDeg - this.yawDeg) * chase
-      this.pitchDeg += (this.targetPitchDeg - this.pitchDeg) * chase
-    }
-
     const gliding = this.applyDragInertia(dt)
 
-    if (
-      !this.dragging &&
-      !gliding &&
-      !this.transitioning &&
-      now - this.lastInteractionAt > AUTOROTATE_IDLE_MS
-    ) {
-      this.yawDeg += (AUTOROTATE_DEG_PER_SEC * dt) / 1000
+    if (!this.dragging && !gliding && !this.transitioning) {
+      const idleMs = now - this.lastInteractionAt - AUTOROTATE_IDLE_MS
+      if (idleMs > 0) {
+        // Eased in, because arriving at full speed on the 5000th millisecond is
+        // a visible twitch on an otherwise still frame.
+        const ease = Math.min(idleMs / AUTOROTATE_EASE_IN_MS, 1)
+        this.targetYawDeg += (AUTOROTATE_DEG_PER_SEC * ease * dt) / 1000
+      }
+    }
+
+    // The one chase. Drag, glide and autorotate have all had their say on the
+    // target by now; this is the only thing that moves what is on screen.
+    const chase = 1 - Math.pow(0.5, dt / VIEW_SMOOTH_HALF_LIFE_MS)
+    this.yawDeg += (this.targetYawDeg - this.yawDeg) * chase
+    this.pitchDeg += (this.targetPitchDeg - this.pitchDeg) * chase
+
+    if (this.hfovDeg !== this.targetHfovDeg) {
+      const zoomChase = 1 - Math.pow(0.5, dt / ZOOM_SMOOTH_HALF_LIFE_MS)
+      const next = this.hfovDeg + (this.targetHfovDeg - this.hfovDeg) * zoomChase
+      // Settle rather than crawl the last hundredth of a degree forever.
+      this.hfovDeg = Math.abs(this.targetHfovDeg - next) < 0.01 ? this.targetHfovDeg : next
+      this.applyHfov()
     }
 
     this.syncCamera()
