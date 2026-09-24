@@ -88,7 +88,7 @@
         "_id": "69f0a2755b064f66de329271"
       },
       {
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268811/Copy_of_day_full_frunt_pmpfak.jpg",
+        "image": "/gallery/side-elevation.jpg",
         "title": "Side Elevation View",
         "_id": "69f0a2755b064f66de329272"
       },
@@ -103,12 +103,12 @@
         "_id": "69f0a2755b064f66de329274"
       },
       {
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268813/Copy_of_day_frunt_h828qc.jpg",
+        "image": "/gallery/front-elevation.jpg",
         "title": "Front Elevation View",
         "_id": "69f0a2755b064f66de329275"
       },
       {
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268825/Copy_of_02_jpg_gsyacn.jpg",
+        "image": "/gallery/drop-off-overview.jpg",
         "title": "Drop Off Overview",
         "_id": "69f0a2755b064f66de329276"
       },

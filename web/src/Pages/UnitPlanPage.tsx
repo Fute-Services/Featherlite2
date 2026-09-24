@@ -14,6 +14,12 @@ import BackButton from '../Components/FloorPlanPages/BackButton';
 import UnitPlanContentPage from '../Components/FloorPlanPages/UnitPlanContentPage';
 // import UnitPlanPopupOverlay from '../Components/FloorPlanPages/UnitPlanPopupOverlay';
 
+// Per-floor 2D plans: src/assets/floorplan/2d/<floorId>.(png|jpg|webp). The card shows only for floors that have one.
+const plans2d = Object.fromEntries(
+    Object.entries(import.meta.glob('../assets/floorplan/2d/*.{png,jpg,jpeg,webp}', { eager: true, query: '?url', import: 'default' }))
+        .map(([path, url]) => [path.split('/').pop()!.replace(/\.\w+$/, ''), url as string])
+);
+
 export default function UnitPlanPage() {
     const { idnew } = useParams<{ idnew: string }>();
 
@@ -35,6 +41,7 @@ export default function UnitPlanPage() {
     const dragStart = useRef({ x: 0, y: 0 });
     const [viewdata] = useState(true);
     const [showVRModal, setShowVRModal] = useState(false);
+    const [showPlan, setShowPlan] = useState(false);
 
     useEffect(() => {
         if (units.length > 0) {
@@ -42,6 +49,7 @@ export default function UnitPlanPage() {
         }
         setPosition({ x: 0, y: 0 });
         setZoomLevel(1);
+        setShowPlan(false);
     }, [idnew]);
 
     if (!floorPoints) {
@@ -57,6 +65,8 @@ export default function UnitPlanPage() {
 
     const activePoint =
         units.find((p) => String(p.id) === String(selectedId)) || units[0];
+
+    const plan2d = plans2d[String(floorPoints.id)];
 
     const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
         if (zoomLevel <= 1) return;
@@ -201,6 +211,27 @@ export default function UnitPlanPage() {
                 )} */}
             </main>
             <BackButton />
+
+            {plan2d && (
+                <>
+                    <button
+                        onClick={() => setShowPlan(true)}
+                        aria-label="Expand 2D plan"
+                        className="group absolute right-6 bottom-28 z-30 hidden sm:block w-52 h-36 rounded-lg overflow-hidden border border-[#B8A37E]/70 shadow-[0_8px_30px_rgba(0,0,0,0.5)] hover:border-[#E6D7BA] transition-all duration-300"
+                    >
+                        <img src={plan2d} alt="2D plan" className="w-full h-full object-cover bg-[#04121f] transition-transform duration-500 group-hover:scale-110" draggable={false} />
+                        <span className="absolute inset-x-0 bottom-0 px-3 py-1.5 text-left text-[10px] font-semibold tracking-[0.25em] text-[#E6D7BA] bg-gradient-to-t from-black/80 to-transparent">
+                            2D PLAN
+                        </span>
+                        <span className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-black/50 text-white/90 text-xs opacity-0 group-hover:opacity-100 transition-opacity">⤢</span>
+                    </button>
+                    {showPlan && (
+                        <div onClick={() => setShowPlan(false)} className="absolute inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm p-8 cursor-zoom-out">
+                            <img src={plan2d} alt="2D plan" className="max-w-full max-h-full object-contain rounded-xl" />
+                        </div>
+                    )}
+                </>
+            )}
 
             {showVRModal && activePoint && (
                 <Suspense fallback={null}>

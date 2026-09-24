@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { type LucideIcon } from "lucide-react";
 import AutoVideo, { prefetchVideo } from "../Components/Media/AutoVideo";
 
-const buildingImg = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/availabilitypage/building-new/orig";
+const buildingImg = "/gallery/amenities-building.jpg";
 import outsideLineImg from "../assets/AvailabilityPage/lines/outside_line.svg";
 import cafeLineImg from "../assets/AvailabilityPage/lines/cafe.svg";
 import tableTennisLineImg from "../assets/AvailabilityPage/lines/table tennis.svg";
