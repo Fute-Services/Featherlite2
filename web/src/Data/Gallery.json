@@ -78,12 +78,12 @@
     "category": "exterior",
     "images": [
       {
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777274747/Copy_of_Featherlite_Signature_Aerial_Shot_01_day_1_1_qpnqpk.jpg",
+        "image": "/gallery/aerial-day-1.jpg",
         "title": "Overview",
         "_id": "69f0a2755b064f66de329270"
       },
       {
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268759/Copy_of_Featherlite_Signature_Aerial_Shot_02_day_1_xsqctx.jpg",
+        "image": "/gallery/aerial-day-2.jpg",
         "title": "Aerial View",
         "_id": "69f0a2755b064f66de329271"
       },
@@ -93,12 +93,12 @@
         "_id": "69f0a2755b064f66de329272"
       },
       {
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268748/Copy_of_Night_Areal_sudin_1_1_irrmxu.jpg",
+        "image": "/gallery/aerial-night.jpg",
         "title": "Terrace View",
         "_id": "69f0a2755b064f66de329273"
       },
       {
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268813/Copy_of_dat_grunt_gate_ldgmha.jpg",
+        "image": "/gallery/main-entry.jpg",
         "title": "Main Entry",
         "_id": "69f0a2755b064f66de329274"
       },
@@ -139,7 +139,7 @@
       },
       {
         "_id": "6a8bed8c3dd4217f02dc9cb8",
-        "image": "https://res.cloudinary.com/db0f2ofgf/image/upload/v1777268756/Copy_of_Featherlite_Terrace_Shot_Day_crabns.jpg",
+        "image": "/gallery/terrace-day.jpg",
         "title": "Terrace View"
       },
       {

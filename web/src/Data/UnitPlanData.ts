@@ -8,19 +8,19 @@ const office = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherl
 const balcony = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/balcony/card";
 const mens = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/mens/card";
 const elevator = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/icons/elevator/card";
-const image1 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/terrace/web2560";
-const image2 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/tenth/web2560";
-const image3 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/nineth/web2560";
-const image4 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/eighth/web2560";
-const image5 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/unit/7th-floor-2/web2560";
-const image6 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/sixth/web2560";
-const image7 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/fifth/web2560";
+const image1 = "/floorplan/unit/terrace.png";
+const image2 = "/floorplan/unit/tenth.png";
+const image3 = "/floorplan/unit/nineth.png";
+const image4 = "/floorplan/unit/eighth.png";
+const image5 = "/floorplan/unit/7th-floor-2.png";
+const image6 = "/floorplan/unit/sixth.png";
+const image7 = "/floorplan/unit/fifth.png";
 
-const image8 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/forth/web2560";
-const image9 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/third/web2560";
-const image10 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/second/web2560";
-const image11 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/firstfloor/web2560";
-const image12 = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/floorplan/iso/ground/web2560";
+const image8 = "/floorplan/unit/forth.png";
+const image9 = "/floorplan/unit/third.png";
+const image10 = "/floorplan/unit/second.png";
+const image11 = "/floorplan/unit/firstfloor.png";
+const image12 = "/floorplan/unit/ground.png";
 import { GiTennisCourt } from "react-icons/gi";
 
 // import { Trophy } from 'lucide-react';
