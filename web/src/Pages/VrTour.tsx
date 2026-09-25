@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Plus, Minus } from 'lucide-react'
 import { PanoViewer } from '../Components/VrTour/panoViewer'
-import { FIRST_SCENE, vrCategories } from '../Components/VrTour/tourData'
+import { FIRST_SCENE, vrCategories, scenes } from '../Components/VrTour/tourData'
 import VrMiniMap from '../Components/VrTour/VrMiniMap'
 import { Sidebar } from '../Components/Navbar/Sidebar'
 
@@ -23,7 +24,11 @@ declare global {
 export default function Vr() {
   const containerRef = useRef<HTMLDivElement>(null)
   const viewerRef = useRef<PanoViewer | null>(null)
-  const [currentScene, setCurrentScene] = useState<string>(FIRST_SCENE)
+  const [searchParams] = useSearchParams()
+  const initialSceneParam = searchParams.get('scene')
+  const initialScene = (initialSceneParam && scenes[initialSceneParam]) ? initialSceneParam : FIRST_SCENE
+
+  const [currentScene, setCurrentScene] = useState<string>(initialScene)
 
   const isInterior = vrCategories.Interior.some((item) => item.id === currentScene)
   const [vrMode, setVrMode] = useState<'exterior' | 'interior'>(
@@ -45,7 +50,7 @@ export default function Vr() {
       onSceneChange: setCurrentScene,
     })
     viewerRef.current = viewer
-    void viewer.load(FIRST_SCENE)
+    void viewer.load(initialScene)
 
     window.__vrTour = {
       scene: () => viewer.currentScene,
@@ -61,7 +66,7 @@ export default function Vr() {
       viewerRef.current = null
       viewer.dispose()
     }
-  }, [])
+  }, [initialScene])
 
   const handleSelectScene = (sceneId: string) => {
     if (viewerRef.current && sceneId !== currentScene) {

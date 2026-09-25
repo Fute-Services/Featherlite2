@@ -167,10 +167,10 @@ export default function UnitPlanPopupOverlay({
                     return (
                         <foreignObject
                             key={`popup-card-${point.id}`}
-                            x={(point.labelX ?? 0) - 125}
+                            x={(point.labelX ?? 0) - 150}
                             y={(point.labelY ?? 0) - 30}
-                            width="290"
-                            height="110"
+                            width="340"
+                            height="130"
                             className="overflow-visible pointer-events-none"
                             style={{ zIndex: isActive ? 50 : 10 }}
                         >
@@ -180,19 +180,19 @@ export default function UnitPlanPopupOverlay({
                                 style={{ animationDelay: `${delaySeconds}s` }}
                             >
                                 <div
-                                    className={`w-full py-5 px-4 rounded-xl border backdrop-blur-md transition-all duration-500 ease-out shadow-2xl ${isActive
+                                    className={`w-full py-4 px-4 rounded-xl border backdrop-blur-md transition-all duration-500 ease-out shadow-2xl ${isActive
                                             ? 'bg-[#082842]/95 border-white/60 shadow-[0_0_25px_rgba(56,189,248,0.45)] scale-105 opacity-100'
                                             : 'bg-[#051a2d]/90 border-white/40 opacity-90'
                                         }`}
                                 >
                                     {/* Name and ID Header */}
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-start gap-2">
                                         <span className="flex items-center justify-center
-                                         shrink-0 w-8 h-8 rounded-full border-2 
-                                         border-[#a17834] text-[18px] text-white/90 font-mono font-bold">
+                                         shrink-0 w-7 h-7 rounded-full border-2 
+                                         border-[#a17834] text-[16px] text-white/90 font-mono font-bold mt-0.5">
                                             {point.id}
                                         </span>
-                                        <h3 className="text-[20px] font-semibold text-white tracking-wide truncate">
+                                        <h3 className="text-[16px] sm:text-[17px] font-semibold text-white tracking-wide leading-snug">
                                             {point.name ? point.name.replace(/\s*\(.*?\)/g, '').trim() : ''}
                                         </h3>
                                     </div>

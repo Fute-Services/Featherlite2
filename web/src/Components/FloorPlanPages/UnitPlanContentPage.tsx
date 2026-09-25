@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface UnitPlanContentPageProps {
     setSelectedId: (id: string | number) => void;
@@ -6,11 +7,31 @@ interface UnitPlanContentPageProps {
     selectedId: string | number;
 }
 
+function getVrSceneForUnit(name: string = '', vrSceneProp?: string): string | null {
+    if (vrSceneProp) return vrSceneProp;
+    const lower = name.toLowerCase();
+
+    if (lower.includes('lift lobby')) return 'int_lift_lobby';
+    if (lower.includes('office space') || lower.includes('workstation')) return 'int_workstation_1';
+    if (lower.includes('court') || lower.includes('multipurpose')) return 'ext_multipurpose_court';
+    if (lower.includes('reception')) return 'int_reception_lobby';
+    if (lower.includes('terrace cafe') || lower.includes('cafe 1') || lower.includes('cafe 2')) return 'ext_terrace_cafe_1';
+    if (lower.includes('cafe') || lower.includes('waiting')) return 'int_gf_cafe_waiting';
+    if (lower.includes('seating')) return 'ext_open_seating';
+    if (lower.includes('play area') || lower.includes('kids')) return 'ext_kids_play_area';
+    if (lower.includes('plaza') || lower.includes('arrival') || lower.includes('drop off')) return 'ext_drop_off_area';
+    if (lower.includes('entry gate') || lower.includes('gate')) return 'ext_entry_gate';
+
+    return null;
+}
+
 export default function UnitPlanContentPage({
     setSelectedId,
     pointsData = [],
     selectedId,
 }: UnitPlanContentPageProps) {
+    const navigate = useNavigate();
+
     // Filter out ID 101 and duplicate entries
     const filteredPoints = useMemo(() => {
         return pointsData.filter(
@@ -155,6 +176,8 @@ export default function UnitPlanContentPage({
             <g className="pointer-events-auto">
                 {filteredPoints.map((point) => {
                     const isActive = point.id === selectedId;
+                    const vrSceneTarget = getVrSceneForUnit(point.name, point.vrScene);
+                    const hasVrButton = Boolean(vrSceneTarget);
 
                     // Retrieve sequence index based on position ordering
                     const sequenceIndex = animationOrderMap.get(point.id) ?? 0;
@@ -163,10 +186,10 @@ export default function UnitPlanContentPage({
                     return (
                         <foreignObject
                             key={`card-${point.id}`}
-                            x={(point.labelX ?? 0) - 120}
+                            x={(point.labelX ?? 0) - 150}
                             y={(point.labelY ?? 0) - 50}
-                            width="270"
-                            height="190"
+                            width="330"
+                            height={hasVrButton ? "250" : "210"}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedId(point.id);
@@ -180,49 +203,55 @@ export default function UnitPlanContentPage({
                                 style={{ animationDelay: `${delaySeconds}s` }}
                             >
                                 <div
-                                    className={`w-full py-5 px-4 rounded-xl border 
+                                    className={`w-full py-4 px-4 rounded-xl border 
                                     transition-all duration-500 ease-out
                                     transform-gpu cursor-pointer shadow-2xl ${isActive
                                             ? 'bg-[#082842] border-white/60 shadow-[0_0_30px_rgba(56,189,248,0.5)] scale-105 opacity-100'
                                             : 'bg-[#051a2d] border-white/40 hover:border-[#a17834] opacity-90 hover:opacity-100 hover:scale-[1.02]'
                                         }`}
                                 >
-                                    <div className="flex items-center gap-2 mb-1">
-                                        <span className="flex items-center justify-center w-6 h-6 rounded-full border-2 border-[#a17834] text-[16px] text-white/90 font-mono font-bold">
+                                    <div className="flex items-start gap-2 mb-1.5">
+                                        <span className="flex items-center justify-center shrink-0 w-6 h-6 rounded-full border-2 border-[#a17834] text-[15px] text-white/90 font-mono font-bold mt-0.5">
                                             {point.id}
                                         </span>
-                                        <h3 className="text-[17px] font-semibold text-white tracking-wide truncate">
+                                        <h3 className="text-[15px] sm:text-[16px] font-semibold text-white tracking-wide leading-snug">
                                             {point.name}
                                         </h3>
                                     </div>
                                     <div className="flex items-start gap-2">
-                                        {/* {point.icon && (
-                                            <img
-                                                src={point.icon}
-                                                className="w-6 h-6 shrink-0"
-                                                alt=""
-                                            />
-                                        )}
-                                        <p className="text-[16px] text-slate-300 mt-1 leading-tight line-clamp-2">
-                                            {point.subtitle}
-                                        </p> */}
-
                                         {point.icon && (
                                             typeof point.icon === 'string' ? (
                                                 <img
                                                     src={point.icon}
-                                                    className="w-6 h-6 shrink-0 object-contain"
+                                                    className="w-6 h-6 shrink-0 object-contain mt-0.5"
                                                     alt={point.name || 'icon'}
                                                 />
                                             ) : (
-                                                <point.icon className="w-6 h-6 shrink-0 text-white/90" />
+                                                <point.icon className="w-6 h-6 shrink-0 text-white/90 mt-0.5" />
                                             )
                                         )}
 
-                                        <p className="text-[16px] text-slate-300 mt-1 leading-tight line-clamp-2">
+                                        <p className="text-[14px] text-slate-300 leading-tight line-clamp-2">
                                             {point.subtitle}
                                         </p>
                                     </div>
+
+                                    {hasVrButton && (
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigate(`/vr-tour?scene=${vrSceneTarget}`);
+                                            }}
+                                            className="mt-2.5 flex items-center justify-center gap-1.5 w-full py-1.5 px-3 bg-gradient-to-r from-amber-600/90 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 border border-amber-300/50 rounded-lg text-[12px] font-semibold text-white tracking-wide transition-all shadow-md active:scale-95 cursor-pointer"
+                                        >
+                                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
+                                                <path d="m3.3 7 8.7 5 8.7-5"/>
+                                                <path d="M12 22V12"/>
+                                            </svg>
+                                            Go to VR
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </foreignObject>

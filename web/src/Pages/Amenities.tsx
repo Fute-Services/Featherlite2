@@ -6,7 +6,7 @@ import AutoVideo, { prefetchVideo } from "../Components/Media/AutoVideo";
 const buildingImg = "/gallery/amenities-building.jpg";
 import outsideLineImg from "../assets/AvailabilityPage/lines/outside_line.svg";
 import cafeLineImg from "../assets/AvailabilityPage/lines/cafe.svg";
-import tableTennisLineImg from "../assets/AvailabilityPage/lines/table tennis.svg";
+// import tableTennisLineImg from "../assets/AvailabilityPage/lines/table tennis.svg";
 import crecheLineImg from "../assets/AvailabilityPage/lines/creache.svg";
 import cuttingEdgeLineImg from "../assets/AvailabilityPage/lines/cutting edge.svg";
 import restaurantLineImg from "../assets/AvailabilityPage/lines/resturant.svg";
@@ -15,7 +15,7 @@ import doubleHeightLineImg from "../assets/AvailabilityPage/lines/Double hight.s
 import kioskIconImg from "../assets/AvailabilityPage/icons/Kiosk on Wheels.svg";
 import foodIconImg from "../assets/AvailabilityPage/icons/Food.svg";
 // import travelerIconImg from "../assets/AvailabilityPage/icons/Traveler.svg";
-import tableTennisIconImg from "../assets/AvailabilityPage/icons/Table Tennis.svg";
+// import tableTennisIconImg from "../assets/AvailabilityPage/icons/Table Tennis.svg";
 import stadiumIconImg from "../assets/AvailabilityPage/icons/Stadium.svg";
 import doubleHeightIconImg from "../assets/AvailabilityPage/icons/Height.svg";
 import cafeIconImg from "../assets/AvailabilityPage/icons/Cafe.svg";
@@ -123,27 +123,24 @@ const amenities: Amenity[] = [
   //   delay: 0.15,
   //   image: exploreImg,
   // },
-  {
-    id: "table-tennis",
-    label: ["Table Tennis"],
-    cx: 1370,
-    cy: 400,
-    lineSvg: tableTennisLineImg,
-    lineSvgProps: { x: 1260, y: 403, w: 220, h: 167 },
-    labelPos: "top",
-    customIcon: tableTennisIconImg,
-    delay: 0.2,
-    image: tableTennisImg,
-  },
+  // {
+  //   id: "table-tennis",
+  //   label: ["Table Tennis"],
+  //   cx: 1370,
+  //   cy: 400,
+  //   lineSvg: tableTennisLineImg,
+  //   lineSvgProps: { x: 1260, y: 403, w: 220, h: 167 },
+  //   labelPos: "top",
+  //   customIcon: tableTennisIconImg,
+  //   delay: 0.2,
+  //   image: tableTennisImg,
+  // },
   {
     id: "multipurpose-court",
     label: ["Multipurpose Court"],
-    cx: 1480,
-    cy: 400,
-    // Straight horizontal line connecting to the Table Tennis icon:
-    // Point 1 (Start near icon) : 1584,413
-    // Point 2 (End at Table Tennis icon) : 1496,413
-    linePts: "1370,407,1456,407",
+    cx: 1250,
+    cy: 300,
+    linePts: "1250,440,1250,320",
     labelPos: "top",
     customIcon: stadiumIconImg,
     delay: 0.25,
