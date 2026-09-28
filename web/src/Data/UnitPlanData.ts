@@ -563,33 +563,20 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'box',
         x: 1550,
         y: 500,
-        labelX: 1510,
-        labelY: 150,
+        labelX: 1490,
+        labelY: 115,
         points: [
           {
             "x": 788,
-            "y": 146
+            "y": 133
           },
           {
             "x": 790,
-            "y": 112,
-            "hIn": {
-              "x": 0,
-              "y": 0
-            },
-            "hOut": {
-              "x": 0,
-              "y": 0
-            },
-            "smooth": true
+            "y": 90
           },
           {
-            "x": 1235,
-            "y": 113
-          },
-          {
-            "x": 1235,
-            "y": 142
+            "x": 1362,
+            "y": 87
           }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
@@ -816,32 +803,19 @@ export const pointsData: FloorPointsData[] = [
         x: 1550,
         y: 500,
         labelX: 1490,
-        labelY: 180,
+        labelY: 159,
         points: [
           {
             "x": 787,
-            "y": 185
+            "y": 177
           },
           {
-            "x": 788,
-            "y": 153,
-            "hIn": {
-              "x": 0,
-              "y": 0
-            },
-            "hOut": {
-              "x": 0,
-              "y": 0
-            },
-            "smooth": true
+            "x": 789,
+            "y": 134
           },
           {
-            "x": 1221,
-            "y": 156
-          },
-          {
-            "x": 1222,
-            "y": 192
+            "x": 1362,
+            "y": 131
           }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
@@ -1008,16 +982,20 @@ export const pointsData: FloorPointsData[] = [
         iconType: 'box',
         x: 1550,
         y: 500,
-        labelX: 1800,
-        labelY: 290,
+        labelX: 1855,
+        labelY: 235,
         points: [
           {
-            x: 1488,
-            y: 276
+            x: 1005,
+            y: 266
           },
           {
-            x: 1656,
-            y: 276
+            x: 1006,
+            y: 210
+          },
+          {
+            x: 1727,
+            y: 207
           }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779183497/reception_znsboa_1_oaowtz.jpg',
