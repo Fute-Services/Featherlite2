@@ -7,10 +7,11 @@ const buildingImg = "/gallery/amenities-building.jpg";
 import outsideLineImg from "../assets/AvailabilityPage/lines/outside_line.svg";
 import cafeLineImg from "../assets/AvailabilityPage/lines/cafe.svg";
 // import tableTennisLineImg from "../assets/AvailabilityPage/lines/table tennis.svg";
-import crecheLineImg from "../assets/AvailabilityPage/lines/creache.svg";
+import crecheLineImg from "../assets/AvailabilityPage/lines/creche-line.svg";
 import cuttingEdgeLineImg from "../assets/AvailabilityPage/lines/cutting edge.svg";
-import restaurantLineImg from "../assets/AvailabilityPage/lines/resturant.svg";
-import visitorCarLineImg from "../assets/AvailabilityPage/lines/visitor car.svg";
+import kidsPlayLineImg from "../assets/AvailabilityPage/lines/kids-play-line.svg";
+import parkingLineImg from "../assets/AvailabilityPage/lines/parking-line.svg";
+import restaurantLineImg from "../assets/AvailabilityPage/lines/restaurant-line.svg";
 import doubleHeightLineImg from "../assets/AvailabilityPage/lines/Double hight.svg";
 import kioskIconImg from "../assets/AvailabilityPage/icons/Kiosk on Wheels.svg";
 import foodIconImg from "../assets/AvailabilityPage/icons/Food.svg";
@@ -161,10 +162,11 @@ const amenities: Amenity[] = [
   {
     id: "kids-play",
     label: ["Outdoor", "Kids Play"],
-    cx: 631,
-    cy: 733,
+    cx: 492,
+    cy: 856,
     thumbnailPos: "left",
-    // linePts: "610,910 722,919",
+    lineSvg: kidsPlayLineImg,
+    lineSvgProps: { x: 511.5, y: 855, w: 105, h: 62 },
     labelPos: "top",
     customIcon: seesawIconImg,
     delay: 0.35,
@@ -186,12 +188,12 @@ const amenities: Amenity[] = [
   {
     id: "restaurant",
     label: ["Restaurant"],
-    cx: 660,
-    cy: 850,
+    cx: 686,
+    cy: 899,
     thumbnailPos: "right",
     lineSvg: restaurantLineImg,
-    lineSvgProps: { x: 660, y: 810, w: 200, h: 130 },
-    labelPos: "top",
+    lineSvgProps: { x: 705.5, y: 898, w: 126, h: 2 },
+    labelPos: "bottom",
     customIcon: restaurantIconImg,
     delay: 0.45,
     image: restaurantImg,
@@ -199,11 +201,11 @@ const amenities: Amenity[] = [
   {
     id: "parking",
     label: ["Visitor's Parking", "With EV Charging Point"],
-    cx: 670,
-    cy: 935,
+    cx: 419,
+    cy: 916,
     thumbnailPos: "right",
-    lineSvg: visitorCarLineImg,
-    lineSvgProps: { x: 690, y: 898, w: 100, h: 50 },
+    lineSvg: parkingLineImg,
+    lineSvgProps: { x: 438.5, y: 915, w: 177, h: 2 },
     labelPos: "left",
     customIcon: parkingIconImg,
     delay: 0.5,
