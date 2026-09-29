@@ -67,6 +67,11 @@ export interface TourScene {
  */
 const cf = (slug: string) => `https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/vr/${slug}/orig`
 
+// ponytail: served from /public instead of Cloudflare Images until these are
+// uploaded to the CDN under their slug - swap the calls below back to cf()
+// once that upload happens.
+const local = (slug: string) => `/vr-tour/${slug}.jpg`
+
 export const FIRST_SCENE = 'ext_entry_gate'
 
 export const vrCategories: Record<string, { id: string; name: string }[]> = {
@@ -92,7 +97,7 @@ export const vrCategories: Record<string, { id: string; name: string }[]> = {
 
 export const scenes: Record<string, TourScene> = {
   ext_entry_gate: {
-    panorama: cf('entry-gate'),
+    panorama: local('entry-gate'),
     // The boom barrier and the driveway through the arch are dead centre.
     yaw: -10,
     hotspots: [
@@ -100,7 +105,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   ext_entry_perspective: {
-    panorama: cf('entry-perspective'),
+    panorama: local('entry-perspective'),
     // Opens on the walk towards the porte-cochere, which is the way on.
     yaw: -50,
     hotspots: [
@@ -113,7 +118,7 @@ export const scenes: Record<string, TourScene> = {
     ],
   },
   ext_drop_off_area: {
-    panorama: cf('drop-off-area'),
+    panorama: local('drop-off-area'),
     // Frames the entrance doors with the garden lane still in shot.
     yaw: 30,
     hotspots: [
