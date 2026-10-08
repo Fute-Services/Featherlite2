@@ -1,4 +1,4 @@
-const VR_TOUR_URL = 'https://featherl.vercel.app/'
+const VR_TOUR_URL = 'https://web-tau-bice-73.vercel.app/'
 
 const Location = () => (
   <section className="h-dvh w-full">
