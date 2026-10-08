@@ -1,4 +1,4 @@
-const VR_TOUR_URL = 'https://futeservices.com/26-27/Featherlight/VR%205/index.html'
+const VR_TOUR_URL = 'https://featherl.vercel.app/'
 
 const Location = () => (
   <section className="h-dvh w-full">
