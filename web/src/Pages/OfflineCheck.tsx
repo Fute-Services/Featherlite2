@@ -19,7 +19,7 @@ const PROBES: { label: string; kind: 'img' | 'video' | 'fetch' | 'range' | 'reac
   { label: 'VR - entry-gate.jpg', kind: 'img', url: '/vr-tour/entry-gate.jpg' },
   { label: 'VR (CDN) - reception-lobby', kind: 'img', url: `${CDN}/vr/reception-lobby/orig` },
   { label: 'Circulation video - ramp-access.mp4', kind: 'video', url: '/circulation-videos/ramp-access.mp4' },
-  { label: 'Walkthrough video (stored copy)', kind: 'video', url: '/media/walkthrough.mp4' },
+  { label: 'Walkthrough video (stored copy)', kind: 'video', url: '/media/walkthrough-v2.mp4' },
   { label: 'Vimeo reachable (needs internet)', kind: 'reach', url: 'https://player.vimeo.com/api/player.js' },
   { label: 'Brochure PDF (range request)', kind: 'range', url: '/media/brochure.pdf' },
   { label: 'Location tour - pano.xml', kind: 'fetch', url: '/location-tour/pano.xml' },

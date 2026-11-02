@@ -30,7 +30,7 @@ const Media = () => {
   const [isBrochureOpen, setIsBrochureOpen] = useState(false);
   const [isWalkthroughOpen, setIsWalkthroughOpen] = useState(false);
   // Walkthrough source: Vimeo when the internet really reaches Vimeo, otherwise the
-  // copy stored in the app (/media/walkthrough.mp4, part of the offline download).
+  // copy stored in the app (/media/walkthrough-v2.mp4, part of the offline download).
   const [walkSource, setWalkSource] = useState<"checking" | "vimeo" | "local">("checking");
   const [videoErr, setVideoErr] = useState<string | null>(null);
   useEffect(() => setVideoErr(null), [walkSource, isWalkthroughOpen]);
@@ -294,7 +294,7 @@ const Media = () => {
               )}
               {walkSource === "local" && (
                 <video
-                  src="/media/walkthrough.mp4"
+                  src="/media/walkthrough-v2.mp4"
                   className="relative z-10 h-full w-full flex-1 bg-black object-contain"
                   controls
                   autoPlay
