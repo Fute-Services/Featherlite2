@@ -28,6 +28,29 @@ interface MediaCard {
 const Media = () => {
   const [isBrochureOpen, setIsBrochureOpen] = useState(false);
   const [isWalkthroughOpen, setIsWalkthroughOpen] = useState(false);
+  // Walkthrough source: Vimeo when the internet really reaches Vimeo, otherwise the
+  // copy stored in the app (/media/walkthrough.mp4, part of the offline download).
+  const [walkSource, setWalkSource] = useState<"checking" | "vimeo" | "local">("checking");
+
+  useEffect(() => {
+    if (!isWalkthroughOpen) return;
+    setWalkSource("checking");
+    if (!navigator.onLine) {
+      setWalkSource("local");
+      return;
+    }
+    // navigator.onLine is also true on wifi without internet, so really try to reach Vimeo
+    const ac = new AbortController();
+    const timer = window.setTimeout(() => ac.abort(), 3500);
+    fetch("https://player.vimeo.com/api/player.js", { mode: "no-cors", cache: "no-store", signal: ac.signal })
+      .then(() => setWalkSource("vimeo"))
+      .catch(() => setWalkSource("local"))
+      .finally(() => window.clearTimeout(timer));
+    return () => {
+      window.clearTimeout(timer);
+      ac.abort();
+    };
+  }, [isWalkthroughOpen]);
 
   // Warm the brochure while the page sits idle: its JS chunk (pdf.js + the
   // flipbook) and the PDF itself are the two things that used to make the
@@ -248,13 +271,25 @@ const Media = () => {
               <span className="absolute inset-0 z-0 flex items-center justify-center">
                 <span className="size-9 animate-spin rounded-full border-2 border-white/15 border-t-[#C89D54]" />
               </span>
-              <iframe
-                src="https://player.vimeo.com/video/1242341287?h=c0ca052bd7&autoplay=1&playsinline=1&title=0&byline=0&portrait=0"
-                className="relative z-10 h-full w-full flex-1 border-none"
-                title="Walkthrough Video"
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
-                allowFullScreen
-              />
+              {walkSource === "vimeo" && (
+                <iframe
+                  src="https://player.vimeo.com/video/1242341287?h=c0ca052bd7&autoplay=1&playsinline=1&title=0&byline=0&portrait=0"
+                  className="relative z-10 h-full w-full flex-1 border-none"
+                  title="Walkthrough Video"
+                  allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+                  allowFullScreen
+                />
+              )}
+              {walkSource === "local" && (
+                <video
+                  src="/media/walkthrough.mp4"
+                  className="relative z-10 h-full w-full flex-1 bg-black object-contain"
+                  controls
+                  autoPlay
+                  playsInline
+                  preload="auto"
+                />
+              )}
             </motion.div>
           </motion.div>
         )}
