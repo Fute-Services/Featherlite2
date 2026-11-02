@@ -36,7 +36,7 @@ function offlineManifest(): Plugin {
         for (const name of readdirSync(dir)) {
           const p = join(dir, name)
           if (statSync(p).isDirectory()) { walkSrc(p); continue }
-          if (/\.(tsx?|css)$/.test(name)) texts.push(readFileSync(p, 'utf8'))
+          if (/\.(tsx?|css|json)$/.test(name)) texts.push(readFileSync(p, 'utf8'))
         }
       }
       walkSrc(join(process.cwd(), 'src'))
