@@ -29,6 +29,10 @@ export const totalBytes = (m: OfflineManifest) => m.files.reduce((s, f) => s + f
 
 export interface Progress { done: number; total: number; bytes: number; failed: number }
 
+let downloadPaused = false
+/** Pauses the background download between files (e.g. while the walkthrough video plays). */
+export function setDownloadPaused(v: boolean) { downloadPaused = v }
+
 /** Downloads everything not already cached. Resolves with the number of failures. */
 export async function downloadAll(
   m: OfflineManifest,
@@ -46,6 +50,8 @@ export async function downloadAll(
 
   const worker = async () => {
     while (!signal.aborted) {
+      // hold still while a video is playing, so the download does not compete with it
+      while (downloadPaused && !signal.aborted) await new Promise((r) => setTimeout(r, 500))
       const item = items[i++]
       if (!item) return
       try {

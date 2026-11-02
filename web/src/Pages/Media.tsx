@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { setDownloadPaused } from "../lib/offlineCache";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Award, FileText, Images, Play, Ruler, X, type LucideIcon } from "lucide-react";
 const CF_MEDIA = "https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/media";
@@ -32,33 +33,12 @@ const Media = () => {
   // copy stored in the app (/media/walkthrough.mp4, part of the offline download).
   const [walkSource, setWalkSource] = useState<"checking" | "vimeo" | "local">("checking");
 
-  // The stored mp4 is played from a blob made out of the offline cache. A plain <video src>
-  // makes the service worker answer every small Range request by re-slicing the whole 80 MB
-  // file, which stutters on a tablet; a blob url is read by the browser directly.
-  const [localSrc, setLocalSrc] = useState<string | null>(null);
+  // keep the background offline download quiet while the walkthrough is open
   useEffect(() => {
-    if (walkSource !== "local") return;
-    let url: string | null = null;
-    let dead = false;
-    (async () => {
-      try {
-        const hit = await caches.match("/media/walkthrough.mp4");
-        if (hit && !dead) {
-          url = URL.createObjectURL(await hit.blob());
-          setLocalSrc(url);
-          return;
-        }
-      } catch {
-        /* no cache available: fall back to the normal url below */
-      }
-      if (!dead) setLocalSrc("/media/walkthrough.mp4");
-    })();
-    return () => {
-      dead = true;
-      if (url) URL.revokeObjectURL(url);
-      setLocalSrc(null);
-    };
-  }, [walkSource]);
+    if (!isWalkthroughOpen) return;
+    setDownloadPaused(true);
+    return () => setDownloadPaused(false);
+  }, [isWalkthroughOpen]);
 
   useEffect(() => {
     if (!isWalkthroughOpen) return;
@@ -308,9 +288,9 @@ const Media = () => {
                   allowFullScreen
                 />
               )}
-              {walkSource === "local" && localSrc && (
+              {walkSource === "local" && (
                 <video
-                  src={localSrc}
+                  src="/media/walkthrough.mp4"
                   className="relative z-10 h-full w-full flex-1 bg-black object-contain"
                   controls
                   autoPlay
