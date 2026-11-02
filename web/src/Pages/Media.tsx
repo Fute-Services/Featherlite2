@@ -32,6 +32,34 @@ const Media = () => {
   // copy stored in the app (/media/walkthrough.mp4, part of the offline download).
   const [walkSource, setWalkSource] = useState<"checking" | "vimeo" | "local">("checking");
 
+  // The stored mp4 is played from a blob made out of the offline cache. A plain <video src>
+  // makes the service worker answer every small Range request by re-slicing the whole 80 MB
+  // file, which stutters on a tablet; a blob url is read by the browser directly.
+  const [localSrc, setLocalSrc] = useState<string | null>(null);
+  useEffect(() => {
+    if (walkSource !== "local") return;
+    let url: string | null = null;
+    let dead = false;
+    (async () => {
+      try {
+        const hit = await caches.match("/media/walkthrough.mp4");
+        if (hit && !dead) {
+          url = URL.createObjectURL(await hit.blob());
+          setLocalSrc(url);
+          return;
+        }
+      } catch {
+        /* no cache available: fall back to the normal url below */
+      }
+      if (!dead) setLocalSrc("/media/walkthrough.mp4");
+    })();
+    return () => {
+      dead = true;
+      if (url) URL.revokeObjectURL(url);
+      setLocalSrc(null);
+    };
+  }, [walkSource]);
+
   useEffect(() => {
     if (!isWalkthroughOpen) return;
     setWalkSource("checking");
@@ -250,7 +278,7 @@ const Media = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm md:p-10"
+            className="fixed inset-0 z-[1020] flex items-center justify-center bg-black/90 p-4 md:p-10"
           >
             <button
               onClick={() => setIsWalkthroughOpen(false)}
@@ -280,9 +308,9 @@ const Media = () => {
                   allowFullScreen
                 />
               )}
-              {walkSource === "local" && (
+              {walkSource === "local" && localSrc && (
                 <video
-                  src="/media/walkthrough.mp4"
+                  src={localSrc}
                   className="relative z-10 h-full w-full flex-1 bg-black object-contain"
                   controls
                   autoPlay
