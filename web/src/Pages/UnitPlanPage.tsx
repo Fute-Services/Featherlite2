@@ -217,7 +217,7 @@ export default function UnitPlanPage() {
                     <button
                         onClick={() => setShowPlan(true)}
                         aria-label="Expand 2D plan"
-                        className="group absolute right-4 sm:right-6 bottom-24 sm:bottom-28 z-40 w-44 sm:w-56 h-28 sm:h-36 rounded-xl overflow-hidden border-2 border-[#B8A37E]/80 shadow-[0_8px_30px_rgba(0,0,0,0.7)] hover:border-[#E6D7BA] hover:scale-105 transition-all duration-300 bg-[#04121f] cursor-pointer"
+                        className="group absolute right-4 bottom-4 xl:right-6 xl:bottom-28 z-40 w-32 xl:w-56 h-20 xl:h-36 rounded-xl overflow-hidden border-2 border-[#B8A37E]/80 shadow-[0_8px_30px_rgba(0,0,0,0.7)] hover:border-[#E6D7BA] hover:scale-105 transition-all duration-300 bg-[#04121f] cursor-pointer"
                     >
                         <img src={plan2d} alt="2D plan" className="w-full h-full object-cover bg-[#04121f] transition-transform duration-500 group-hover:scale-105" draggable={false} />
                         <span className="absolute inset-x-0 bottom-0 px-3 py-1.5 text-left text-[11px] font-bold tracking-[0.25em] text-[#E6D7BA] bg-gradient-to-t from-black/90 via-black/60 to-transparent">

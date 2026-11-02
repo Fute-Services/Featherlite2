@@ -630,6 +630,28 @@ export const pointsData: FloorPointsData[] = [
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776409574/leftlobby_hhdbqu.jpg',
       },
+      {
+        id: 3,
+        name: 'Refuge Area',
+        subtitle: 'Designated safe refuge area for emergency situations',
+        icon: health,
+        iconType: 'shield',
+        x: 1176,
+        y: 224,
+        labelX: 1580,
+        labelY: 252,
+        points: [
+          {
+            "x": 1176,
+            "y": 224
+          },
+          {
+            "x": 1485,
+            "y": 224
+          }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
+      },
     ]
   },
 
@@ -1262,6 +1284,28 @@ export const pointsData: FloorPointsData[] = [
           }
         ],
         detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1776409574/leftlobby_hhdbqu.jpg',
+      },
+      {
+        id: 3,
+        name: 'Refuge Area',
+        subtitle: 'Designated safe refuge area for emergency situations',
+        icon: health,
+        iconType: 'shield',
+        x: 1170,
+        y: 330,
+        labelX: 1580,
+        labelY: 358,
+        points: [
+          {
+            "x": 1170,
+            "y": 330
+          },
+          {
+            "x": 1485,
+            "y": 330
+          }
+        ],
+        detailImage: 'https://res.cloudinary.com/db0f2ofgf/image/upload/v1779167779/dropoff_hphas8.png',
       },
     ]
   },

@@ -165,6 +165,9 @@ export class PanoViewer {
 
   private pointerNdc = new THREE.Vector2(-2, -2)
   private pointerOnCanvas = false
+  /** Touch has no hover, so a first tap on a ring only "arms" it (its name shows); the second tap goes. */
+  private lastPointerType = 'mouse'
+  private touchArmed: TourHotspot | null = null
   private dragging = false
   private downX = 0
   private downY = 0
@@ -635,6 +638,7 @@ export class PanoViewer {
       -((e.clientY - rect.top) / rect.height) * 2 + 1,
     )
     this.pointerOnCanvas = true
+    this.lastPointerType = e.pointerType || 'mouse'
     return rect
   }
 
@@ -730,13 +734,29 @@ export class PanoViewer {
     // teleports the viewer somewhere they did not ask to go.
     const isClick =
       this.movedPx < CLICK_MAX_MOVE_PX && performance.now() - this.downAt < CLICK_MAX_MS
+    const isTouch = e.pointerType === 'touch' || e.pointerType === 'pen'
     if (!isClick) {
+      if (isTouch) {
+        // looking around on a touch screen clears any armed ring and its label
+        this.touchArmed = null
+        this.pointerNdc.set(-2, -2)
+        this.markers.pick(this.pointerNdc, this.camera)
+      }
       this.updateCursorStyle()
       return
     }
     this.syncCamera()
     this.markers.pick(this.pointerNdc, this.camera)
     const hit = this.markers.hovered
+    if (isTouch && hit) {
+      const armed = this.touchArmed
+      if (!armed || armed.next !== hit.next || armed.label !== hit.label) {
+        // first tap: just show the ring's name (the hovered state keeps the label up)
+        this.touchArmed = hit
+        return
+      }
+    }
+    this.touchArmed = null
     if (hit) void this.goTo(hit.next, hit)
   }
 
@@ -841,7 +861,8 @@ export class PanoViewer {
 
     this.syncCamera()
 
-    if (this.pointerOnCanvas && !this.dragging) {
+    // Touch has no hover: re-picking every frame would drop a tapped ring as soon as the view drifts.
+    if (this.pointerOnCanvas && !this.dragging && this.lastPointerType !== 'touch' && this.lastPointerType !== 'pen') {
       this.markers.pick(this.pointerNdc, this.camera)
       this.updateCursorStyle()
     }

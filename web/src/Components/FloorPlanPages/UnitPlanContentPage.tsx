@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface UnitPlanContentPageProps {
@@ -31,6 +31,24 @@ export default function UnitPlanContentPage({
     selectedId,
 }: UnitPlanContentPageProps) {
     const navigate = useNavigate();
+
+    // The cards live inside a scaled SVG, so on small screens they shrink with it.
+    // Measure the on-screen scale and grow the cards to compensate (1x on large screens).
+    const groupRef = useRef<SVGGElement>(null);
+    const [cardScale, setCardScale] = useState(1);
+    useEffect(() => {
+        const svg = groupRef.current?.ownerSVGElement;
+        if (!svg) return;
+        const update = () => {
+            const k = svg.getScreenCTM()?.a ?? 0;
+            if (k > 0) setCardScale(Math.min(1.8, Math.max(1, 0.52 / k)));
+        };
+        update();
+        const ro = new ResizeObserver(update);
+        ro.observe(svg);
+        return () => ro.disconnect();
+    }, []);
+    const f = cardScale;
 
     // Filter out ID 101 and duplicate entries
     const filteredPoints = useMemo(() => {
@@ -83,10 +101,10 @@ export default function UnitPlanContentPage({
     // that would sit on top of the one above it (heights are estimates in SVG units).
     const adjustedLabelY = useMemo(() => {
         const estHeight = (p: any) =>
-            (getVrSceneForUnit(p.name, p.vrScene) ? 240 : 175) +
+            ((getVrSceneForUnit(p.name, p.vrScene) ? 240 : 175) +
             ((p.name?.length ?? 0) > 24 ? 36 : 0) +
-            ((p.subtitle?.length ?? 0) > 40 ? 32 : 0);
-        const GAP = 28;
+            ((p.subtitle?.length ?? 0) > 40 ? 32 : 0)) * f;
+        const GAP = 28 * f;
         const result = new Map<string | number, number>();
         const sorted = [...filteredPoints].sort((a, b) => (a.labelY ?? 0) - (b.labelY ?? 0));
         const placed: { x: number; y: number; h: number }[] = [];
@@ -95,7 +113,7 @@ export default function UnitPlanContentPage({
             let y = p.labelY ?? 0;
             const h = estHeight(p);
             placed
-                .filter((q) => Math.abs(q.x - x) < 500)
+                .filter((q) => Math.abs(q.x - x) < 500 * f)
                 .sort((a, b) => a.y - b.y)
                 .forEach((q) => {
                     if (y < q.y + q.h + GAP && y + h > q.y) y = q.y + q.h + GAP;
@@ -104,7 +122,45 @@ export default function UnitPlanContentPage({
             result.set(p.id, y);
         });
         return result;
-    }, [filteredPoints]);
+    }, [filteredPoints, f]);
+
+    // Connector routes: the original line from the pin is clipped at a "gutter" just outside the
+    // column of cards, then runs vertically in that gutter to the card's own height and enters the
+    // card from the side. That keeps lines from running along or under neighbouring cards.
+    const routes = useMemo(() => {
+        const res = new Map<string | number, { x: number; y: number }[]>();
+        const info = filteredPoints.map((p) => {
+            const lx = p.labelX ?? 0;
+            const left = lx <= midLabelX;
+            const dx = left ? -40 : 90;
+            const cardLeft = left ? lx + 180 - 500 * f + dx : lx - 150 + dx;
+            const cardRight = cardLeft + 500 * f;
+            const y = adjustedLabelY.get(p.id) ?? p.labelY ?? 0;
+            return { p, left, cardLeft, cardRight, anchorY: y - 50 + 40 * f };
+        });
+        (['left', 'right'] as const).forEach((side) => {
+            const col = info.filter((i) => (side === 'left') === i.left).sort((a, b) => a.anchorY - b.anchorY);
+            if (col.length === 0) return;
+            const edge = side === 'left' ? Math.max(...col.map((c) => c.cardRight)) : Math.min(...col.map((c) => c.cardLeft));
+            col.forEach((c, rank) => {
+                const gutter = side === 'left' ? edge + 22 + 14 * rank : edge - 22 - 14 * rank;
+                const base: { x: number; y: number }[] = (c.p.points || []).map((q: any) => ({
+                    x: side === 'left' ? Math.max(q.x, gutter) : Math.min(q.x, gutter),
+                    y: q.y,
+                }));
+                if (base.length === 0) return;
+                const last = base[base.length - 1];
+                const entry = side === 'left' ? c.cardRight : c.cardLeft;
+                const route = [...base, { x: gutter, y: last.y }, { x: gutter, y: c.anchorY }, { x: entry, y: c.anchorY }];
+                // drop consecutive duplicates
+                res.set(
+                    c.p.id,
+                    route.filter((q, i) => i === 0 || q.x !== route[i - 1].x || q.y !== route[i - 1].y),
+                );
+            });
+        });
+        return res;
+    }, [filteredPoints, adjustedLabelY, midLabelX, f]);
 
     if (!pointsData || pointsData.length === 0) return null;
 
@@ -135,17 +191,7 @@ export default function UnitPlanContentPage({
             <g className="pointer-events-none bg-transparent">
                 {filteredPoints.map((point) => {
                     const isActive = point.id === selectedId;
-                    const basePoints = point.points || [];
-                    const shift = (adjustedLabelY.get(point.id) ?? point.labelY ?? 0) - (point.labelY ?? 0);
-                    const lastPt = basePoints[basePoints.length - 1];
-                    const dx = cardOffsetX(point);
-                    const pointsList = lastPt
-                        ? [
-                            ...basePoints,
-                            ...(shift > 0 ? [{ x: lastPt.x, y: lastPt.y + shift }] : []),
-                            { x: lastPt.x + dx, y: lastPt.y + (shift > 0 ? shift : 0) },
-                        ]
-                        : basePoints;
+                    const pointsList = routes.get(point.id) ?? point.points ?? [];
                     const startCoords = pointsList[0];
 
                     if (!startCoords) return null;
@@ -219,7 +265,7 @@ export default function UnitPlanContentPage({
             </g>
 
             {/* Layer 3: Hotspot Cards (Left Column Top-to-Bottom, then Right Column Top-to-Bottom) */}
-            <g className="pointer-events-auto">
+            <g ref={groupRef} className="pointer-events-auto">
                 {filteredPoints.map((point) => {
                     const isActive = point.id === selectedId;
                     const vrSceneTarget = getVrSceneForUnit(point.name, point.vrScene);
@@ -232,10 +278,10 @@ export default function UnitPlanContentPage({
                     return (
                         <foreignObject
                             key={`card-${point.id}`}
-                            x={(point.labelX ?? 0) - 150 - ((point.labelX ?? 0) <= midLabelX ? 170 : 0) + cardOffsetX(point)}
+                            x={(point.labelX ?? 0) <= midLabelX ? (point.labelX ?? 0) + 180 - 500 * f + cardOffsetX(point) : (point.labelX ?? 0) - 150 + cardOffsetX(point)}
                             y={(adjustedLabelY.get(point.id) ?? point.labelY ?? 0) - 50}
-                            width="500"
-                            height={hasVrButton ? "380" : "320"}
+                            width={500 * f}
+                            height={(hasVrButton ? 380 : 320) * f}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedId(point.id);
@@ -244,6 +290,7 @@ export default function UnitPlanContentPage({
                             style={{ zIndex: isActive ? 50 : 10 }}
                         >
                             {/* Staggered entrance wrapper */}
+                            <div style={{ width: `${100 / f}%`, height: `${100 / f}%`, transform: `scale(${f})`, transformOrigin: 'top left' }}>
                             <div
                                 className="animate-once-entrance w-full h-full"
                                 style={{ animationDelay: `${delaySeconds}s` }}
@@ -299,6 +346,7 @@ export default function UnitPlanContentPage({
                                         </button>
                                     )}
                                 </div>
+                            </div>
                             </div>
                         </foreignObject>
                     );
