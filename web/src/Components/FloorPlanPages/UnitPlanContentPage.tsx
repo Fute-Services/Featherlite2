@@ -101,9 +101,10 @@ export default function UnitPlanContentPage({
     // that would sit on top of the one above it (heights are estimates in SVG units).
     const adjustedLabelY = useMemo(() => {
         const estHeight = (p: any) =>
-            ((getVrSceneForUnit(p.name, p.vrScene) ? 240 : 175) +
-            ((p.name?.length ?? 0) > 24 ? 36 : 0) +
-            ((p.subtitle?.length ?? 0) > 40 ? 32 : 0)) * f;
+            // measured on screen: ~190 (with VR button) / ~130 (without), +~30 per wrapped line
+            ((getVrSceneForUnit(p.name, p.vrScene) ? 200 : 140) +
+            ((p.name?.length ?? 0) > 24 ? 30 : 0) +
+            ((p.subtitle?.length ?? 0) > 40 ? 28 : 0)) * f;
         const GAP = 28 * f;
         const result = new Map<string | number, number>();
         const sorted = [...filteredPoints].sort((a, b) => (a.labelY ?? 0) - (b.labelY ?? 0));
@@ -121,6 +122,21 @@ export default function UnitPlanContentPage({
             placed.push({ x, y, h });
             result.set(p.id, y);
         });
+
+        // Keep the lowest cards inside the picture: when pushing down moved a card past the
+        // bottom edge (small screens scale cards up), slide the column back up from the bottom.
+        const MAX_BOTTOM = 1125 - 10; // SVG viewBox height, minus a small margin
+        const items = sorted.map((p, i) => ({ id: p.id, ...placed[i] }));
+        for (let i = items.length - 1; i >= 0; i--) {
+            const it = items[i];
+            let maxY = MAX_BOTTOM + 50 - it.h; // card top is y - 50
+            for (let j = i + 1; j < items.length; j++) {
+                const q = items[j];
+                if (Math.abs(q.x - it.x) < 500 * f) maxY = Math.min(maxY, q.y - GAP - it.h);
+            }
+            if (it.y > maxY) it.y = Math.max(maxY, 60);
+            result.set(it.id, it.y);
+        }
         return result;
     }, [filteredPoints, f]);
 
