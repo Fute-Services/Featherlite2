@@ -21,7 +21,10 @@ cleanupOutdatedCaches()
 precacheAndRoute(self.__WB_MANIFEST as never)
 
 // SPA: any page navigation falls back to the cached index.html
-registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')))
+// (except the mirrored Location tour, which is its own static page shown in an iframe)
+registerRoute(
+  new NavigationRoute(createHandlerBoundToURL('/index.html'), { denylist: [/^\/location-tour\//] }),
+)
 
 // Remote image CDNs send CORS headers; re-request them in cors mode so the cached
 // copy is a real (non-opaque) response, which costs far less storage quota.
@@ -34,20 +37,27 @@ const isMedia = (url: URL, req: Request) =>
   req.destination === 'image' ||
   req.destination === 'video' ||
   req.destination === 'audio' ||
-  /\.(?:png|jpe?g|webp|avif|gif|svg|mp4|webm|pdf|mjs)$/i.test(url.pathname)
+  /\.(?:png|jpe?g|webp|avif|gif|svg|mp4|webm|pdf|mjs|xml)$/i.test(url.pathname)
 
+// Same-origin media (videos, brochure PDF, renders): the request goes out untouched so
+// the browser's Range header survives (a video needs a 206 answer to its Range request).
 registerRoute(
-  ({ url, request }) =>
-    (url.origin === self.location.origin && isMedia(url, request)) ||
-    url.hostname === 'res.cloudinary.com' ||
-    url.hostname === 'imagedelivery.net',
+  ({ url, request }) => url.origin === self.location.origin && isMedia(url, request),
   new CacheFirst({
     cacheName: MEDIA_CACHE,
     plugins: [
       new CacheableResponsePlugin({ statuses: [200] }),
-      new RangeRequestsPlugin(), // videos and the brochure PDF are fetched with Range headers
-      corsPlugin,
+      new RangeRequestsPlugin(), // answers Range requests from the cached full file
     ],
+  }),
+)
+
+// Remote image CDNs (no Range needed)
+registerRoute(
+  ({ url }) => url.hostname === 'res.cloudinary.com' || url.hostname === 'imagedelivery.net',
+  new CacheFirst({
+    cacheName: MEDIA_CACHE,
+    plugins: [new CacheableResponsePlugin({ statuses: [200] }), corsPlugin],
   }),
 )
 

@@ -30,23 +30,45 @@ function offlineManifest(): Plugin {
       walk(dist)
 
       const remote = new Set<string>()
+      const CDN = /^https:\/\/(?:res\.cloudinary\.com|imagedelivery\.net)\//
+      const texts: string[] = []
       const walkSrc = (dir: string) => {
         for (const name of readdirSync(dir)) {
           const p = join(dir, name)
           if (statSync(p).isDirectory()) { walkSrc(p); continue }
-          if (!/\.(tsx?|css)$/.test(name)) continue
-          const text = readFileSync(p, 'utf8')
-          for (const m of text.matchAll(/https:\/\/(?:res\.cloudinary\.com|imagedelivery\.net)\/[^"'`\s)\\]+/g)) {
-            // skip template fragments such as ".../vr/${slug}/orig" and bare base paths
-            if (!m[0].includes('${') && !/\/assets\/featherlite(?:\/media)?$/.test(m[0])) remote.add(m[0])
-          }
-          // VR panoramas: cf('slug') in tourData.ts expands to a CDN url
-          for (const m of text.matchAll(/\bcf\('([^']+)'\)/g)) {
-            remote.add(`https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/vr/${m[1]}/orig`)
-          }
+          if (/\.(tsx?|css)$/.test(name)) texts.push(readFileSync(p, 'utf8'))
         }
       }
       walkSrc(join(process.cwd(), 'src'))
+
+      // pass 1: base constants that are later template-concatenated, e.g.
+      //   const CF = "https://imagedelivery.net/.../featherlite"   ->   `${CF}/gallery/x/web2560`
+      const bases = new Map<string, string>()
+      for (const text of texts) {
+        for (const m of text.matchAll(/const\s+([A-Za-z_]\w*)\s*=\s*["'](https:\/\/[^"']+)["']/g)) bases.set(m[1], m[2])
+      }
+      // only constants that are really used inside a `${NAME}` template count as bases
+      // (a plain `const img = "https://.../photo"` is a finished url, not a base)
+      const templated = new Set<string>()
+      for (const text of texts) for (const m of text.matchAll(/\$\{([A-Za-z_]\w*)\}/g)) templated.add(m[1])
+      const baseValues = new Set([...bases].filter(([k]) => templated.has(k)).map(([, v]) => v))
+
+      // pass 2: collect every CDN url
+      for (const text of texts) {
+        for (const m of text.matchAll(/https:\/\/(?:res\.cloudinary\.com|imagedelivery\.net)\/[^"'`\s)\\]+/g)) {
+          // skip template fragments such as ".../vr/${slug}/orig" and the bare base constants
+          if (!m[0].includes('${') && !baseValues.has(m[0])) remote.add(m[0])
+        }
+        // `${CF}/home/signature-sunset/web2560`
+        for (const m of text.matchAll(/\$\{([A-Za-z_]\w*)\}([^`"'\s)\\$]*)/g)) {
+          const base = bases.get(m[1])
+          if (base && CDN.test(base) && m[2].length > 1) remote.add(base + m[2])
+        }
+        // VR panoramas: cf('slug') in tourData.ts expands to a CDN url
+        for (const m of text.matchAll(/\bcf\('([^']+)'\)/g)) {
+          remote.add(`https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite/vr/${m[1]}/orig`)
+        }
+      }
 
       writeFileSync(
         join(dist, 'offline-manifest.json'),
@@ -86,7 +108,7 @@ export default defineConfig({
       },
       injectManifest: {
         // app shell only; the heavy media goes through the runtime cache
-        globPatterns: ['**/*.{js,mjs,css,html,svg,woff,woff2}', 'icons-pwa/*.png', 'favicon.svg'],
+        globPatterns: ['**/*.{js,mjs,css,html,svg,woff,woff2}', 'icons-pwa/*.png', 'favicon.svg', 'location-tour/**/*.{png,jpg,xml,json}'],
         globIgnores: ['**/node_modules/**'],
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
       },

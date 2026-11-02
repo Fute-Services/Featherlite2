@@ -1,4 +1,6 @@
-const VR_TOUR_URL = 'https://featherl.vercel.app/'
+// Local copy of the Pano2VR tour (public/location-tour) so it also works offline.
+// Source of the copy: https://featherl.vercel.app/ - re-mirror it if that tour changes.
+const VR_TOUR_URL = '/location-tour/index.html'
 
 const Location = () => (
   <section className="h-dvh w-full">

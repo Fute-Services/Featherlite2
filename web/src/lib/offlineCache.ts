@@ -74,3 +74,28 @@ export async function downloadAll(
   }
   return p.failed
 }
+
+let autoRunning = false
+
+/**
+ * Silent background download of everything (no UI). Runs shortly after the app opens,
+ * only when online, not on a metered/cellular link and not in data-saver mode. If it
+ * is cut short (tab closed, connection lost) it simply resumes on the next open or as
+ * soon as the connection returns - files already stored are skipped.
+ */
+export function autoDownload() {
+  if (import.meta.env.DEV || !offlineSupported()) return
+  const conn = (navigator as unknown as { connection?: { saveData?: boolean; type?: string } }).connection
+  const run = async () => {
+    if (autoRunning || !navigator.onLine) return
+    if (conn?.saveData || conn?.type === 'cellular') return
+    const m = await loadManifest()
+    if (!m || isDownloaded(m)) return
+    autoRunning = true
+    try { await downloadAll(m, () => {}, new AbortController().signal, 3) } finally { autoRunning = false }
+  }
+  const start = () => setTimeout(run, 4000)
+  if (document.readyState === 'complete') start()
+  else window.addEventListener('load', start, { once: true })
+  window.addEventListener('online', start)
+}
