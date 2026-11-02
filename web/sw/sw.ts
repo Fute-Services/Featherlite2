@@ -61,6 +61,12 @@ registerRoute(
   }),
 )
 
+// the file list used by the offline download / diagnostics page
+registerRoute(
+  ({ url }) => url.origin === self.location.origin && url.pathname === '/offline-manifest.json',
+  new StaleWhileRevalidate({ cacheName: 'fl-meta', plugins: [new CacheableResponsePlugin({ statuses: [200] })] }),
+)
+
 // Google Fonts
 registerRoute(
   ({ url }) => url.origin === 'https://fonts.googleapis.com',

@@ -18,6 +18,7 @@ const TechnicalSpecificationsPage = lazy(() => import('../Pages/Media/TechnicalS
 const NotFound = lazy(() => import('../Pages/NotFound'))
 const UnitPlanPage = lazy(() => import('../Pages/UnitPlanPage'))
 const MasterplanPage = lazy(() => import('../Pages/MasterPlanPage'))
+const OfflineCheck = lazy(() => import('../Pages/OfflineCheck'))
 
 /** Full Layout: Includes Header + Navbar */
 const MainLayout = () => (
@@ -62,6 +63,9 @@ const Router = () => {
             <Route path="/masterplan" element={<MasterplanPage />} />
             <Route path="/unitplan/:idnew" element={<UnitPlanPage />} />
           </Route>
+
+          {/* Hidden diagnostics page (no header/navbar) */}
+          <Route path="/offline-check" element={<OfflineCheck />} />
 
           {/* Routes WITHOUT Navbar */}
           <Route element={<PlainLayout />}>
