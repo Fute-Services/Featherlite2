@@ -32,10 +32,6 @@ const Media = () => {
   // Walkthrough source: Vimeo when the internet really reaches Vimeo, otherwise the
   // copy stored in the app (/media/walkthrough-v2.mp4, part of the offline download).
   const [walkSource, setWalkSource] = useState<"checking" | "vimeo" | "local">("checking");
-  const [videoErr, setVideoErr] = useState<string | null>(null);
-  useEffect(() => setVideoErr(null), [walkSource, isWalkthroughOpen]);
-
-  useEffect(() => setVideoErr(null), [walkSource, isWalkthroughOpen]);
 
   // keep the background offline download quiet while the walkthrough is open
   useEffect(() => {
@@ -300,32 +296,9 @@ const Media = () => {
                   autoPlay
                   playsInline
                   preload="auto"
-                  onError={(e) =>
-                    setVideoErr("video error " + (e.currentTarget.error?.code ?? "?") + " " + (e.currentTarget.error?.message ?? ""))
-                  }
                 />
               )}
             </motion.div>
-
-            {/* source switch + status: lets the viewer pick Vimeo or the copy stored in the app */}
-            <div className="absolute bottom-2 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 text-xs text-white/70 md:bottom-3">
-              <button
-                onClick={() => setWalkSource("vimeo")}
-                className={`rounded border px-3 py-1.5 ${walkSource === "vimeo" ? "border-[#C89D54] text-[#C89D54]" : "border-white/30"}`}
-              >
-                Vimeo
-              </button>
-              <button
-                onClick={() => setWalkSource("local")}
-                className={`rounded border px-3 py-1.5 ${walkSource === "local" ? "border-[#C89D54] text-[#C89D54]" : "border-white/30"}`}
-              >
-                Offline copy
-              </button>
-              <span>
-                {walkSource === "checking" ? "checking..." : walkSource}
-                {videoErr ? " - " + videoErr : ""} - wt6
-              </span>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

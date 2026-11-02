@@ -29,6 +29,16 @@ export const totalBytes = (m: OfflineManifest) => m.files.reduce((s, f) => s + f
 
 export interface Progress { done: number; total: number; bytes: number; failed: number }
 
+// A file shipped once and then replaced (the first, heavier walkthrough video). Devices that
+// already stored it drop it from the offline cache on their next open.
+const REMOVED_FILES = ['/media/walkthrough.mp4']
+async function dropRemovedFiles() {
+  try {
+    const cache = await caches.open(MEDIA_CACHE)
+    await Promise.all(REMOVED_FILES.map((u) => cache.delete(u)))
+  } catch { /* no cache API */ }
+}
+
 let downloadPaused = false
 /** Pauses the background download between files (e.g. while the walkthrough video plays). */
 export function setDownloadPaused(v: boolean) { downloadPaused = v }
@@ -92,6 +102,7 @@ let autoRunning = false
 export function autoDownload() {
   if (import.meta.env.DEV || !offlineSupported()) return
   const conn = (navigator as unknown as { connection?: { saveData?: boolean; type?: string } }).connection
+  void dropRemovedFiles()
   const run = async () => {
     if (autoRunning || !navigator.onLine) return
     if (conn?.saveData || conn?.type === 'cellular') return
