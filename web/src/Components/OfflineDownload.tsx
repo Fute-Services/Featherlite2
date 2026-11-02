@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Download, CheckCircle2, WifiOff, X } from 'lucide-react'
+import { Download, X } from 'lucide-react'
 import {
   downloadAll, isDownloaded, loadManifest, offlineSupported, totalBytes,
   type OfflineManifest, type Progress,
@@ -12,17 +12,7 @@ export default function OfflineDownload() {
   const [manifest, setManifest] = useState<OfflineManifest | null>(null)
   const [state, setState] = useState<'idle' | 'running' | 'done' | 'partial'>('idle')
   const [progress, setProgress] = useState<Progress | null>(null)
-  const [hidden, setHidden] = useState(false)
-  const [online, setOnline] = useState(navigator.onLine)
   const abortRef = useRef<AbortController | null>(null)
-
-  useEffect(() => {
-    const on = () => setOnline(true)
-    const off = () => setOnline(false)
-    window.addEventListener('online', on)
-    window.addEventListener('offline', off)
-    return () => { window.removeEventListener('online', on); window.removeEventListener('offline', off) }
-  }, [])
 
   useEffect(() => {
     if (!offlineSupported() || import.meta.env.DEV) return
@@ -33,7 +23,7 @@ export default function OfflineDownload() {
     })
   }, [])
 
-  if (!manifest || hidden) return null
+  if (!manifest) return null
 
   const start = async () => {
     const ac = new AbortController()
@@ -47,14 +37,8 @@ export default function OfflineDownload() {
   const pct = progress ? Math.round((progress.done / Math.max(progress.total, 1)) * 100) : 0
   const base = 'fixed bottom-3 left-3 z-[2000] flex items-center gap-2 rounded-full border border-white/20 bg-black/70 px-3 py-2 text-xs text-white shadow-2xl backdrop-blur-xl'
 
-  if (state === 'done') {
-    return (
-      <div className={`${base} cursor-pointer opacity-80`} onClick={() => setHidden(true)} role="status" title="Hide">
-        <CheckCircle2 className="size-4 text-emerald-400" />
-        <span>Offline ready</span>
-      </div>
-    )
-  }
+  // finished: nothing to show
+  if (state === 'done') return null
   if (state === 'running') {
     return (
       <div className={`${base} min-w-56 flex-col items-stretch rounded-2xl`} role="status">
@@ -68,9 +52,6 @@ export default function OfflineDownload() {
         <span className="text-[10px] text-white/60">{progress ? `${progress.done}/${progress.total} files` : ''} · keep this tab open</span>
       </div>
     )
-  }
-  if (!online) {
-    return <div className={base} role="status"><WifiOff className="size-4 text-amber-300" /><span>Offline</span></div>
   }
   return (
     <button onClick={start} className={`${base} cursor-pointer hover:border-[#C89D54]`}>
