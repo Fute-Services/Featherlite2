@@ -1963,7 +1963,7 @@ export const pointsData: FloorPointsData[] = [
 
   {
     id: 10,
-    name: "2nd Floor",
+    name: "2nd Floor (Furnished)",
     image: image10,
     polygonpopup: "846,594,838,712,1077,712,1070,597",
     imagesvg: "0 0 2000 1125",
@@ -2114,7 +2114,7 @@ export const pointsData: FloorPointsData[] = [
 
       {
         id: 5,
-        name: 'ODU Balcony (352 sqrt)',
+        name: 'ODU Balcony (352 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',
@@ -2289,7 +2289,7 @@ export const pointsData: FloorPointsData[] = [
 
       {
         id: 5,
-        name: 'ODU Balcony (352 sqrt)',
+        name: 'ODU Balcony (352 sqft)',
         subtitle: 'Outdoor unit placement area',
         icon: balcony,
         iconType: 'box',

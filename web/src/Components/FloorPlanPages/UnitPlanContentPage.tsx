@@ -70,6 +70,42 @@ export default function UnitPlanContentPage({
         return orderMap;
     }, [filteredPoints]);
 
+    // Cards left of the centre grow leftwards (away from the building); right-hand cards grow rightwards.
+    const midLabelX = useMemo(() => {
+        const xs = filteredPoints.map((p) => p.labelX ?? 0);
+        return xs.length ? (Math.min(...xs) + Math.max(...xs)) / 2 : 0;
+    }, [filteredPoints]);
+
+    // Horizontal nudge away from the building so cards don't sit on its edge.
+    const cardOffsetX = (p: any) => ((p.labelX ?? 0) <= midLabelX ? -40 : 90);
+
+    // Cards in the same column must not overlap: sort by Y and push down any card
+    // that would sit on top of the one above it (heights are estimates in SVG units).
+    const adjustedLabelY = useMemo(() => {
+        const estHeight = (p: any) =>
+            (getVrSceneForUnit(p.name, p.vrScene) ? 240 : 175) +
+            ((p.name?.length ?? 0) > 24 ? 36 : 0) +
+            ((p.subtitle?.length ?? 0) > 40 ? 32 : 0);
+        const GAP = 28;
+        const result = new Map<string | number, number>();
+        const sorted = [...filteredPoints].sort((a, b) => (a.labelY ?? 0) - (b.labelY ?? 0));
+        const placed: { x: number; y: number; h: number }[] = [];
+        sorted.forEach((p) => {
+            const x = p.labelX ?? 0;
+            let y = p.labelY ?? 0;
+            const h = estHeight(p);
+            placed
+                .filter((q) => Math.abs(q.x - x) < 500)
+                .sort((a, b) => a.y - b.y)
+                .forEach((q) => {
+                    if (y < q.y + q.h + GAP && y + h > q.y) y = q.y + q.h + GAP;
+                });
+            placed.push({ x, y, h });
+            result.set(p.id, y);
+        });
+        return result;
+    }, [filteredPoints]);
+
     if (!pointsData || pointsData.length === 0) return null;
 
     return (
@@ -99,7 +135,17 @@ export default function UnitPlanContentPage({
             <g className="pointer-events-none bg-transparent">
                 {filteredPoints.map((point) => {
                     const isActive = point.id === selectedId;
-                    const pointsList = point.points || [];
+                    const basePoints = point.points || [];
+                    const shift = (adjustedLabelY.get(point.id) ?? point.labelY ?? 0) - (point.labelY ?? 0);
+                    const lastPt = basePoints[basePoints.length - 1];
+                    const dx = cardOffsetX(point);
+                    const pointsList = lastPt
+                        ? [
+                            ...basePoints,
+                            ...(shift > 0 ? [{ x: lastPt.x, y: lastPt.y + shift }] : []),
+                            { x: lastPt.x + dx, y: lastPt.y + (shift > 0 ? shift : 0) },
+                        ]
+                        : basePoints;
                     const startCoords = pointsList[0];
 
                     if (!startCoords) return null;
@@ -186,10 +232,10 @@ export default function UnitPlanContentPage({
                     return (
                         <foreignObject
                             key={`card-${point.id}`}
-                            x={(point.labelX ?? 0) - 150}
-                            y={(point.labelY ?? 0) - 50}
-                            width="330"
-                            height={hasVrButton ? "250" : "210"}
+                            x={(point.labelX ?? 0) - 150 - ((point.labelX ?? 0) <= midLabelX ? 170 : 0) + cardOffsetX(point)}
+                            y={(adjustedLabelY.get(point.id) ?? point.labelY ?? 0) - 50}
+                            width="500"
+                            height={hasVrButton ? "380" : "320"}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setSelectedId(point.id);
@@ -203,7 +249,7 @@ export default function UnitPlanContentPage({
                                 style={{ animationDelay: `${delaySeconds}s` }}
                             >
                                 <div
-                                    className={`w-full py-4 px-4 rounded-xl border 
+                                    className={`w-full py-6 px-6 rounded-xl border 
                                     transition-all duration-500 ease-out
                                     transform-gpu cursor-pointer shadow-2xl ${isActive
                                             ? 'bg-[#082842] border-white/60 shadow-[0_0_30px_rgba(56,189,248,0.5)] scale-105 opacity-100'
@@ -211,10 +257,10 @@ export default function UnitPlanContentPage({
                                         }`}
                                 >
                                     <div className="flex items-start gap-2 mb-1.5">
-                                        <span className="flex items-center justify-center shrink-0 w-6 h-6 rounded-full border-2 border-[#a17834] text-[15px] text-white/90 font-mono font-bold mt-0.5">
+                                        <span className="flex items-center justify-center shrink-0 w-9 h-9 rounded-full border-2 border-[#a17834] text-[22px] text-white/90 font-mono font-bold mt-0.5">
                                             {point.id}
                                         </span>
-                                        <h3 className="text-[15px] sm:text-[16px] font-semibold text-white tracking-wide leading-snug">
+                                        <h3 className="text-[24px] sm:text-[26px] font-semibold text-white tracking-wide leading-snug">
                                             {point.name}
                                         </h3>
                                     </div>
@@ -223,15 +269,15 @@ export default function UnitPlanContentPage({
                                             typeof point.icon === 'string' ? (
                                                 <img
                                                     src={point.icon}
-                                                    className="w-6 h-6 shrink-0 object-contain mt-0.5"
+                                                    className="w-9 h-9 shrink-0 object-contain mt-0.5"
                                                     alt={point.name || 'icon'}
                                                 />
                                             ) : (
-                                                <point.icon className="w-6 h-6 shrink-0 text-white/90 mt-0.5" />
+                                                <point.icon className="w-9 h-9 shrink-0 text-white/90 mt-0.5" />
                                             )
                                         )}
 
-                                        <p className="text-[14px] text-slate-300 leading-tight line-clamp-2">
+                                        <p className="text-[22px] text-slate-300 leading-tight line-clamp-2">
                                             {point.subtitle}
                                         </p>
                                     </div>
@@ -242,9 +288,9 @@ export default function UnitPlanContentPage({
                                                 e.stopPropagation();
                                                 navigate(`/vr-tour?scene=${vrSceneTarget}`);
                                             }}
-                                            className="mt-2.5 flex items-center justify-center gap-1.5 w-full py-1.5 px-3 bg-gradient-to-r from-amber-600/90 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 border border-amber-300/50 rounded-lg text-[12px] font-semibold text-white tracking-wide transition-all shadow-md active:scale-95 cursor-pointer"
+                                            className="mt-3.5 flex items-center justify-center gap-1.5 w-full py-2.5 px-3 bg-gradient-to-r from-amber-600/90 via-amber-500 to-yellow-500 hover:from-amber-500 hover:to-yellow-400 border border-amber-300/50 rounded-lg text-[19px] font-semibold text-white tracking-wide transition-all shadow-md active:scale-95 cursor-pointer"
                                         >
-                                            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                 <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/>
                                                 <path d="m3.3 7 8.7 5 8.7-5"/>
                                                 <path d="M12 22V12"/>

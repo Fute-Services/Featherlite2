@@ -305,7 +305,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                     {isOpen && activeTab === "layout" && (
                                         <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#E6D7BA]" />
                                     )}
-                                    <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-[11px] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                                    <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded-md bg-black/80 px-3 py-1.5 text-[14px] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                                         Master Plan
                                     </span>
                                 </Link>
@@ -341,7 +341,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                                     {isOpen && activeTab === "section" && (
                                         <span className="absolute -right-5 w-2 h-2 rounded-full bg-[#E6D7BA]" />
                                     )}
-                                    <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded-md bg-black/80 px-2 py-1 text-[11px] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                                    <span className="pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded-md bg-black/80 px-3 py-1.5 text-[14px] text-white opacity-0 transition-opacity duration-200 group-hover:opacity-100">
                                         Floor Plan
                                     </span>
                                 </Link>
@@ -691,7 +691,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         <div className="flex items-center gap-3">
                             <Maximize2 className="w-5 h-5 text-gray-300" />
                             <div>
-                                <p className="text-sm font-medium text-white">2 Acre</p>
+                                <p className="text-sm font-medium text-white">2 Acres</p>
                                 <p className="text-[11px] text-gray-400">
                                     Massive Site Coverage Area
                                 </p>

@@ -4,7 +4,7 @@ import { useTheme } from '../Context/ThemeContext'
 import { useIntro } from '../Context/IntroContext'
 const heroLight = '/home/hero-light.jpg'
 const heroDark = '/home/hero-dark.jpg'
-const stats = ['G+10 Floors', '2 Acre', '4,10,000 sq ft Area', '25% Green Cover']
+const stats = ['G+10 Floors', '2 Acres', '4,10,000 sq ft Area', '25% Green Cover']
 const headingLines = [
     ['Designed', 'For', 'A'],
     ['Better', 'Tomorrow'],
