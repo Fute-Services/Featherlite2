@@ -249,10 +249,10 @@ const Media = () => {
                 <span className="size-9 animate-spin rounded-full border-2 border-white/15 border-t-[#C89D54]" />
               </span>
               <iframe
-                src="https://www.youtube.com/embed/CgHy7kYATNo?autoplay=1&rel=0&playsinline=1"
+                src="https://player.vimeo.com/video/1242341287?autoplay=1&playsinline=1&title=0&byline=0&portrait=0"
                 className="relative z-10 h-full w-full flex-1 border-none"
                 title="Walkthrough Video"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                 allowFullScreen
               />
             </motion.div>
