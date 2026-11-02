@@ -23,7 +23,7 @@ precacheAndRoute(self.__WB_MANIFEST as never)
 // SPA: any page navigation falls back to the cached index.html
 // (except the mirrored Location tour, which is its own static page shown in an iframe)
 registerRoute(
-  new NavigationRoute(createHandlerBoundToURL('/index.html'), { denylist: [/^\/location-tour\//] }),
+  new NavigationRoute(createHandlerBoundToURL('/index.html'), { denylist: [/^\/location-tour\//, /\.[a-z0-9]{2,5}$/i] }),
 )
 
 // Remote image CDNs send CORS headers; re-request them in cors mode so the cached

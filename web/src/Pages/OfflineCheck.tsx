@@ -8,7 +8,7 @@ import {
 // and whether the key assets of Master Plan / Terrace / Media / Location really load.
 
 const CDN = 'https://imagedelivery.net/P8tnuaA1tzTsMrrU-cVoNg/assets/featherlite'
-const PROBES: { label: string; kind: 'img' | 'video' | 'fetch' | 'range'; url: string }[] = [
+const PROBES: { label: string; kind: 'img' | 'video' | 'fetch' | 'range' | 'reach'; url: string }[] = [
   { label: 'Masterplan - Ground image', kind: 'img', url: `${CDN}/floorplan/masterplan-2-jpg/web2560` },
   { label: 'Masterplan - Terrace image', kind: 'img', url: `${CDN}/floorplan/terrace-plan-2-jpg/web2560` },
   { label: 'Hotspot - Lobby.png (33 MB)', kind: 'img', url: '/hotspot-images/Lobby.png' },
@@ -19,6 +19,8 @@ const PROBES: { label: string; kind: 'img' | 'video' | 'fetch' | 'range'; url: s
   { label: 'VR - entry-gate.jpg', kind: 'img', url: '/vr-tour/entry-gate.jpg' },
   { label: 'VR (CDN) - reception-lobby', kind: 'img', url: `${CDN}/vr/reception-lobby/orig` },
   { label: 'Circulation video - ramp-access.mp4', kind: 'video', url: '/circulation-videos/ramp-access.mp4' },
+  { label: 'Walkthrough video (stored copy)', kind: 'video', url: '/media/walkthrough.mp4' },
+  { label: 'Vimeo reachable (needs internet)', kind: 'reach', url: 'https://player.vimeo.com/api/player.js' },
   { label: 'Brochure PDF (range request)', kind: 'range', url: '/media/brochure.pdf' },
   { label: 'Location tour - pano.xml', kind: 'fetch', url: '/location-tour/pano.xml' },
   { label: 'Location tour - tile', kind: 'img', url: '/location-tour/tiles/node2/cf_0/l_0/c_0/tile_0.jpg' },
@@ -48,6 +50,11 @@ async function probe(p: (typeof PROBES)[number]): Promise<string> {
       v.onerror = () => rej(new Error('video error ' + (v.error?.code ?? '')))
       v.src = p.url
     }), 40000)
+  }
+  if (p.kind === 'reach') {
+    // no-cors: success only means the connection (and its certificate) to that site works
+    await withTimeout(fetch(p.url, { mode: 'no-cors', cache: 'no-store' }), 8000)
+    return `reachable, ${ms()}`
   }
   const r = await withTimeout(fetch(p.url, p.kind === 'range' ? { headers: { Range: 'bytes=0-99' } } : undefined), 40000)
   if (!r.ok) throw new Error('HTTP ' + r.status)
