@@ -1,0 +1,1 @@
+{ "compilerOptions": { "target": "es2022", "lib": ["ES2022", "WebWorker"], "module": "esnext", "moduleResolution": "bundler", "skipLibCheck": true, "noEmit": true, "strict": true }, "include": ["sw.ts"] }

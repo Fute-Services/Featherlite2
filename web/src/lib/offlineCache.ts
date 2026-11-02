@@ -1,0 +1,76 @@
+// Pre-downloads every heavy asset (renders, panoramas, videos, brochure PDF, CDN
+// images) into the same cache the service worker serves from, so the whole app
+// works with no internet. Driven by dist/offline-manifest.json (built by Vite).
+
+// must match MEDIA_CACHE in sw/sw.ts
+export const MEDIA_CACHE = 'fl-media-v1'
+const DONE_KEY = 'fl-offline-built'
+
+export interface OfflineItem { url: string; size: number }
+export interface OfflineManifest { built: number; files: OfflineItem[]; remote: OfflineItem[] }
+
+export const offlineSupported = () => 'serviceWorker' in navigator && 'caches' in window
+
+export async function loadManifest(): Promise<OfflineManifest | null> {
+  try {
+    const res = await fetch('/offline-manifest.json', { cache: 'no-cache' })
+    if (!res.ok || !(res.headers.get('content-type') || '').includes('json')) return null
+    return (await res.json()) as OfflineManifest
+  } catch {
+    return null
+  }
+}
+
+export function isDownloaded(m: OfflineManifest) {
+  try { return localStorage.getItem(DONE_KEY) === String(m.built) } catch { return false }
+}
+
+export const totalBytes = (m: OfflineManifest) => m.files.reduce((s, f) => s + f.size, 0)
+
+export interface Progress { done: number; total: number; bytes: number; failed: number }
+
+/** Downloads everything not already cached. Resolves with the number of failures. */
+export async function downloadAll(
+  m: OfflineManifest,
+  onProgress: (p: Progress) => void,
+  signal: AbortSignal,
+  concurrency = 4,
+): Promise<number> {
+  const cache = await caches.open(MEDIA_CACHE)
+  try { await navigator.storage?.persist?.() } catch { /* ignore */ }
+
+  const items = [...m.files, ...m.remote]
+  const p: Progress = { done: 0, total: items.length, bytes: 0, failed: 0 }
+  onProgress({ ...p })
+  let i = 0
+
+  const worker = async () => {
+    while (!signal.aborted) {
+      const item = items[i++]
+      if (!item) return
+      try {
+        if (!(await cache.match(item.url))) {
+          const remote = item.url.startsWith('http')
+          const res = await fetch(item.url, remote ? { mode: 'cors', credentials: 'omit', signal } : { signal })
+          // a 4xx is permanent (dead link) - skip it instead of failing the whole download
+          if (res.status >= 400 && res.status < 500) { p.done++; onProgress({ ...p }); continue }
+          if (!res.ok || res.status !== 200) throw new Error(String(res.status))
+          // Vercel's SPA rewrite answers unknown paths with index.html - never cache that as an asset
+          if ((res.headers.get('content-type') || '').includes('text/html')) throw new Error('html')
+          await cache.put(item.url, res)
+        }
+        p.bytes += item.size
+      } catch {
+        if (signal.aborted) return
+        p.failed++
+      }
+      p.done++
+      onProgress({ ...p })
+    }
+  }
+  await Promise.all(Array.from({ length: concurrency }, worker))
+  if (!signal.aborted && p.failed === 0) {
+    try { localStorage.setItem(DONE_KEY, String(m.built)) } catch { /* ignore */ }
+  }
+  return p.failed
+}
