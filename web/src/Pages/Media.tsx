@@ -11,6 +11,11 @@ const technicalImg = `${CF_MEDIA}/technical-cover/orig`;
 const walkthroughImg = `${CF_MEDIA}/walkthrough-hero/orig`;
 
 const BrochureModal = lazy(() => import("./Media/BrochureModal"));
+const WalkthroughPlayer = lazy(() => import("./Media/WalkthroughPlayer"));
+
+// true when the page runs as the installed app (not in a normal browser tab)
+const isInstalledApp = () =>
+  ["fullscreen", "standalone", "minimal-ui"].some((m) => window.matchMedia(`(display-mode: ${m})`).matches);
 
 interface MediaCard {
   title: string;
@@ -43,7 +48,8 @@ const Media = () => {
   useEffect(() => {
     if (!isWalkthroughOpen) return;
     setWalkSource("checking");
-    if (!navigator.onLine) {
+    // installed app: always the copy saved with the app (works offline, no Vimeo needed)
+    if (isInstalledApp() || !navigator.onLine) {
       setWalkSource("local");
       return;
     }
@@ -289,14 +295,9 @@ const Media = () => {
                 />
               )}
               {walkSource === "local" && (
-                <video
-                  src="/media/walkthrough-v2.mp4"
-                  className="relative z-10 h-full w-full flex-1 bg-black object-contain"
-                  controls
-                  autoPlay
-                  playsInline
-                  preload="auto"
-                />
+                <Suspense fallback={null}>
+                  <WalkthroughPlayer className="relative z-10 h-full w-full flex-1 bg-black object-contain" />
+                </Suspense>
               )}
             </motion.div>
           </motion.div>

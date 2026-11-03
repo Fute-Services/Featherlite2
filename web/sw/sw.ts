@@ -37,7 +37,7 @@ const isMedia = (url: URL, req: Request) =>
   req.destination === 'image' ||
   req.destination === 'video' ||
   req.destination === 'audio' ||
-  /\.(?:png|jpe?g|webp|avif|gif|svg|mp4|webm|pdf|mjs|xml)$/i.test(url.pathname)
+  /\.(?:png|jpe?g|webp|avif|gif|svg|mp4|webm|pdf|mjs|xml|m3u8|m4s)$/i.test(url.pathname)
 
 // Same-origin media (videos, brochure PDF, renders): the request goes out untouched so
 // the browser's Range header survives (a video needs a 206 answer to its Range request).

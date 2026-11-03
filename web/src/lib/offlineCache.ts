@@ -31,7 +31,7 @@ export interface Progress { done: number; total: number; bytes: number; failed: 
 
 // A file shipped once and then replaced (the first, heavier walkthrough video). Devices that
 // already stored it drop it from the offline cache on their next open.
-const REMOVED_FILES = ['/media/walkthrough.mp4']
+const REMOVED_FILES = ['/media/walkthrough.mp4', '/media/walkthrough-v2.mp4']
 async function dropRemovedFiles() {
   try {
     const cache = await caches.open(MEDIA_CACHE)
