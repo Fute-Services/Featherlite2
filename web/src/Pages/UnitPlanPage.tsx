@@ -12,6 +12,7 @@ import { pointsData } from '../Data/UnitPlanData';
 const VRModel = lazy(() => import('../Components/FloorPlanPages/VRModel'));
 import BackButton from '../Components/FloorPlanPages/BackButton';
 import UnitPlanContentPage from '../Components/FloorPlanPages/UnitPlanContentPage';
+import FloorAreaCard from '../Components/FloorPlanPages/FloorAreaCard';
 // import UnitPlanPopupOverlay from '../Components/FloorPlanPages/UnitPlanPopupOverlay';
 
 // Per-floor 2D plans: src/assets/floorplan/2d/<floorId>.(png|jpg|webp). The card shows only for floors that have one.
@@ -211,6 +212,8 @@ export default function UnitPlanPage() {
                 )} */}
             </main>
             <BackButton />
+
+            <FloorAreaCard floorId={floorPoints.id} />
 
             {plan2d && (
                 <>
