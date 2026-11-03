@@ -14,7 +14,15 @@ export default function WalkthroughPlayer({ className }: { className?: string })
     if (!video) return;
 
     if (Hls.isSupported()) {
-      const hls = new Hls({ maxBufferLength: 30, maxMaxBufferLength: 60, backBufferLength: 20 });
+      // Small buffer: tablets give a video only a few MB of buffer room (MSE quota). A 30 s
+      // buffer of this 2560 px video (~20 MB) overran it and the video froze mid-play.
+      const hls = new Hls({
+        maxBufferLength: 12,
+        maxMaxBufferLength: 14,
+        maxBufferSize: 12 * 1000 * 1000,
+        backBufferLength: 6,
+        startFragPrefetch: true,
+      });
       let netRetries = 0;
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         void video.play().catch(() => {});
