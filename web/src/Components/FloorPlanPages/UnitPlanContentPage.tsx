@@ -298,11 +298,7 @@ export default function UnitPlanContentPage({
                             y={(adjustedLabelY.get(point.id) ?? point.labelY ?? 0) - 50}
                             width={500 * f}
                             height={(hasVrButton ? 380 : 320) * f}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedId(point.id);
-                            }}
-                            className="overflow-visible pointer-events-auto"
+                            className="overflow-visible pointer-events-none"
                             style={{ zIndex: isActive ? 50 : 10 }}
                         >
                             {/* Staggered entrance wrapper */}
@@ -311,8 +307,14 @@ export default function UnitPlanContentPage({
                                 className="animate-once-entrance w-full h-full"
                                 style={{ animationDelay: `${delaySeconds}s` }}
                             >
+                                {/* only the visible card takes clicks; the taller box around it must not
+                                    cover the card below (it made Fire Tower select the card above) */}
                                 <div
-                                    className={`w-full py-6 px-6 rounded-xl border 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSelectedId(point.id);
+                                    }}
+                                    className={`pointer-events-auto w-full py-6 px-6 rounded-xl border
                                     transition-all duration-500 ease-out
                                     transform-gpu cursor-pointer shadow-2xl ${isActive
                                             ? 'bg-[#082842] border-white/60 shadow-[0_0_30px_rgba(56,189,248,0.5)] scale-105 opacity-100'
